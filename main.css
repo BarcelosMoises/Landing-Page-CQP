@@ -254,6 +254,10 @@ footer {
     .card p {
         padding-top: 16px;
     }
+
+    .card h5 {
+        min-height: 72px;
+    }
     
     .card-button {
         font-family: Poppins, sans-serif;
