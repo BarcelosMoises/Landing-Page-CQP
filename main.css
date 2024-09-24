@@ -46,7 +46,7 @@ header{
     left: 0px;
     height: 100%;
     width: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.8);
 }
 
 .carousel-item {
@@ -59,6 +59,13 @@ header{
     object-fit: cover;
 }
 
+.carousel-caption h1 {
+    font-weight: 900;
+}
+
+.carousel-caption p{
+    margin-top: 80px;
+}
 
 .carousel-item a{
     position: absolute;
@@ -68,8 +75,8 @@ header{
 }
 
 .partially_transparent {
-    background-color: rgba(0, 0, 0, 0.6);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .navbar-scrolled {
@@ -172,6 +179,14 @@ header{
 
 svg {
     margin-bottom: -1px;
+    margin-top: -1px;
+}
+
+footer {
+    background-color: #7aeeee;
+    color: #fff;
+    height: 50px;
+    font-weight: bold;
 }
 
 @media (max-width: 767px) {
@@ -179,14 +194,52 @@ svg {
         height: 280px;
     }
 
+    .carousel-caption {
+        justify-content: center;
+    }
+
+    .carousel-caption button {
+        display: none;
+    }
+
+    .carousel-caption h1 {
+        font-weight: 900;
+        color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .carousel-caption p{
+       display: none;
+    }
+
     .card {
         margin-right: 5px;
     }
 }
 
-@media (min-width: 767px) {
+@media (min-width: 768px) {
     .middle-card {
         margin-left: 10px;
         margin-right: 0px;
     }
+
+    .carousel-caption a {
+        display: contents;
+    }
+
+    .carousel-caption button {
+        border: none;
+    }
+
+    .carousel-caption p {
+        margin-bottom: 80px;
+    }
+
+    .carousel-caption h1, p{
+        padding-top: 80px;
+    }
+
+    .carousel-caption img {
+        width: 32px;
+    }
+    
 }

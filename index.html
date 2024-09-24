@@ -51,29 +51,35 @@
             <div class="carousel slide" data-bs-ride="carousel" id="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active" data-bs-interval="3000">
-                        <video loop autoplay muted class="w-100 rounded" src="./video/background-video.mp4" type="video.mp4"></video>
+                        <video loop autoplay muted class="w-100 h-50 rounded" src="./video/background-video.mp4" type="video.mp4"></video>
                         <div class="black-overlay"></div>
-                        <div class="carousel-caption">
-                            <div class="pull-left details">
-                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget.</p>
-                            </div>
+                        <div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-top">
+                            <h1>Centro de Qualificação Profissional</h1>
+                             <p class="partially_transparent">
+                                Nossa organização é dedicada a oferecer cursos de alta qualidade em diversos formatos, incluindo presenciais, semi-presenciais e a distância. Com uma equipe de instrutores experientes e recursos educacionais avançados, estamos comprometidos em proporcionar uma experiência de aprendizado excepcional. Nosso objetivo é tornar a educação acessível e eficaz para todos, ajudando nossos alunos a alcançar seus objetivos acadêmicos e profissionais.
+                            </p>
+                            <button type="button"  class="bg-transparent">
+                                <a href="#conheca">
+                                    <img src="./images/outras/arrow-down.png" alt="">
+                                </a>
+                            </button>
                           </div>
                     </div>
                     
                 </div>
                 
             </div>
-            <div class="pt-5 pb-5">
+            <div class="pt-5 pb-5" id="conheca">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-5">
                            <video loop autoplay muted class="w-100 rounded" src="./video/estudantes.mp4" type="video.mp4"></video>
                         </div>
-                        <div class="col-md-7 mt-3 mt-md-0">
+                        <div class="col-md-7 mt-3 mt-md-0" >
                             <h2 class="section-title text-white">Conheça o CQP</h2>
-                            <p class="text-white">
+                            <span class="text-white">
                                 O Centro de Qualificação Profissional (CQP) é o seu parceiro dedicado ao desenvolvimento de habilidades e competências profissionais. Nossa missão é fornecer programas de treinamento abrangentes e especializados, projetados para capacitar indivíduos em diversas áreas de atuação. Com uma abordagem focada no aprendizado prático e no aprimoramento contínuo, estamos comprometidos em ajudar nossos alunos a alcançarem seus objetivos profissionais e se destacarem no mercado de trabalho.
-                            </p>
+                            </span>
                             
                         </div>
                     </div>
@@ -135,10 +141,10 @@
                         <aside>
                             <nav class="nav nav-pills flex-column nav-cardapio">
                                 <button type="button" data-bs-toggle="tab" data-bs-target="#cursos-tecnicos" class="fw-bold text-start nav-link  active">Cursos técnicos</button>
-                                <button type="button" data-bs-toggle="tab" data-bs-target="#" class="fw-bold text-start nav-link ">Treinamentos e NRs</button>
-                                <button type="button" data-bs-toggle="tab" data-bs-target="#" class="fw-bold text-start nav-link ">Cursos profissionalizantes</button>
-                                <button type="button" data-bs-toggle="tab" data-bs-target="#" class="fw-bold text-start nav-link ">Graduações e tecnólogos</button>
-                                <button type="button" data-bs-toggle="tab" data-bs-target="#" class="fw-bold text-start nav-link ">Idiomas</button>
+                                <button type="button" data-bs-toggle="tab" data-bs-target="#cursos-tecnicos" class="fw-bold text-start nav-link ">Treinamentos e NRs</button>
+                                <button type="button" data-bs-toggle="tab" data-bs-target="#cursos-tecnicos" class="fw-bold text-start nav-link ">Cursos profissionalizantes</button>
+                                <button type="button" data-bs-toggle="tab" data-bs-target="#cursos-tecnicos" class="fw-bold text-start nav-link ">Graduações e tecnólogos</button>
+                                <button type="button" data-bs-toggle="tab" data-bs-target="#cursos-tecnicos" class="fw-bold text-start nav-link ">Idiomas</button>
                                 
                             </nav>
                         </aside>
@@ -495,15 +501,21 @@
                                 <i class="bi bi-cursor-fill"></i>
                                 Endereço
                             </h3>
-                            <p>
+                            <span>
                                 Rua Prata Mancebo nº148 - Centro Carapebus - RJ, Brazil
-                            </p>
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
+
+    <footer class="d-flex justify-content-center align-items-center">
+        <span>
+            Todos os direitos reservados | 2024 &copy; Flex Ocupacional
+        </span>
+    </footer>
   
     <script>
         const navEl = document.querySelector('.navbar');
