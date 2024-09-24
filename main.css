@@ -241,5 +241,43 @@ footer {
     .carousel-caption img {
         width: 32px;
     }
+
+    .card {
+        border: none;
+        padding: 16px;
+        border-radius: 16px;
+        background: #ffffff;
+        box-shadow:  5px 5px 10px #33B8B8, -5px -5px 10px #33B8B8;
+        margin-bottom: 10px;
+    }
+    
+    .card p {
+        padding-top: 16px;
+    }
+    
+    .card-button {
+        font-family: Poppins, sans-serif;
+        border: none;
+        border-radius: 8px;
+        background-color: #33B8B8;
+        color: #fff;
+        font-weight: 500;
+        height: 35px;
+        margin-top: 16px;
+    }
+    
+    .card-button a {
+        text-decoration: none;
+        color: #fff;
+    }
+    
+    .card-button:hover {
+        background-color: #0c6161;
+    }
+    
+    .card-button i {
+        margin-left: 3px;
+    }
+    
     
 }
