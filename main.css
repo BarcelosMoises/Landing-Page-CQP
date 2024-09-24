@@ -170,7 +170,9 @@ header{
      position: absolute;
 }
 
-
+svg {
+    margin-bottom: -1px;
+}
 
 @media (max-width: 767px) {
     .carousel-item img {
