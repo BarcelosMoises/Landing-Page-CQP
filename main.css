@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
 *{
     font-family: Poppins, sans-serif;    
 }
@@ -61,6 +63,7 @@ header{
 
 .carousel-caption h1 {
     font-weight: 900;
+    
 }
 
 .carousel-caption p{
@@ -170,6 +173,14 @@ header{
     margin-left: 3px;
 }
 
+#kids img {
+    border-radius: 16px;
+}
+
+#idiomas img {
+    border-radius: 16px;
+}
+
 .google-map {
      padding-bottom: 50%;
      position: relative;
@@ -226,7 +237,203 @@ footer {
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 991px) {
+    .middle-card {
+        margin-left: 10px;
+        margin-right: 0px;
+    }
+
+    .carousel-caption a {
+        display: contents;
+    }
+
+    .carousel-caption button {
+        display: none;
+    }
+
+    .carousel-caption p {
+        margin-bottom: 80px;
+    }
+
+    .carousel-caption h1{
+        padding-top: 80px;
+    }
+
+    .carousel-caption img {
+        width: 32px;
+    }
+
+    .card {
+        border: none;
+        padding: 16px;
+        border-radius: 16px;
+        background: #ffffff;
+        box-shadow:  5px 5px 10px #33B8B8, -5px -5px 10px #33B8B8;
+        margin-bottom: 10px;
+        min-width: 190px;
+    }
+    
+    .card p {
+        padding-top: 16px;
+    }
+
+    .card h5 {
+        min-height: 96px;
+    }
+    
+    .card i {
+        display: none;
+    }
+    
+    .card-button {
+        font-family: Poppins, sans-serif;
+        border: none;
+        border-radius: 8px;
+        background-color: #33B8B8;
+        color: #fff;
+        font-weight: 500;
+        height: 35px;
+        margin-top: 16px;
+    }
+    
+    .card-button a {
+        text-decoration: none;
+        color: #fff;
+    }
+    
+    .card-button:hover {
+        background-color: #0c6161;
+    }
+    
+    .card-button i {
+        margin-left: 3px;
+    }
+
+    #nrs h5 {
+        min-height: 192px;
+    }
+
+    .nav-cardapio button {
+        
+        padding-left: 5px;
+        font-size: 0.7em;
+    }
+
+    aside {
+        margin-left: -16px;
+    }
+    
+    #kids .descricao {
+        min-height: 72px;
+    }
+
+    #idiomas .descricao {
+        min-height: 72px;
+    }
+
+    #cursos-profissionalizantes .descricao {
+        min-height: 72px;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1195px) {
+    .middle-card {
+        margin-left: 10px;
+        margin-right: 0px;
+    }
+
+    .carousel-caption a {
+        display: contents;
+    }
+
+    .carousel-caption button {
+        border: none;
+    }
+
+    .carousel-caption p {
+        margin-bottom: 60px;
+    }
+
+    .carousel-caption h1{
+        padding-top: 80px;
+    }
+
+    .carousel-caption img {
+        width: 32px;
+    }
+
+    .card {
+        border: none;
+        padding: 16px;
+        border-radius: 16px;
+        background: #ffffff;
+        box-shadow:  5px 5px 10px #33B8B8, -5px -5px 10px #33B8B8;
+        margin-bottom: 10px;
+    }
+    
+    .card p {
+        padding-top: 16px;
+    }
+
+    .card h5 {
+        min-height: 96px;
+    }
+    
+    .card-button {
+        font-family: Poppins, sans-serif;
+        border: none;
+        border-radius: 8px;
+        background-color: #33B8B8;
+        color: #fff;
+        font-weight: 500;
+        height: 35px;
+        margin-top: 16px;
+    }
+    
+    .card-button a {
+        text-decoration: none;
+        color: #fff;
+    }
+    
+    .card-button:hover {
+        background-color: #0c6161;
+    }
+    
+    .card-button i {
+        margin-left: 3px;
+    }
+
+   
+
+    #nrs h5{
+        min-height: 192px;
+    }
+    
+    .nav-cardapio button {
+        
+        padding-left: 5px;
+        font-size: 0.9em;
+    }
+
+    aside {
+        margin-left: -16px;
+    }
+    
+    #kids .descricao {
+        min-height: 72px;
+    }
+    
+    #idiomas .descricao {
+        min-height: 72px;
+    }
+
+    #cursos-profissionalizantes .descricao {
+        min-height: 72px;
+    }
+}
+
+@media(min-width: 1196px) {
+
     .middle-card {
         margin-left: 10px;
         margin-right: 0px;
@@ -244,7 +451,7 @@ footer {
         margin-bottom: 80px;
     }
 
-    .carousel-caption h1, p{
+    .carousel-caption h1{
         padding-top: 80px;
     }
 
@@ -292,6 +499,32 @@ footer {
     .card-button i {
         margin-left: 3px;
     }
+
+    #cursos-tecnicos h5 {
+        min-height: 96px;
+    }
+
+    #nrs h5 {
+        min-height: 144px;
+    }
+
+    #kids .descricao {
+        min-height: 47px;
+    }
     
-    
+    #idiomas .descricao {
+        min-height: 47px;
+    }
+
+    #cursos-profissionalizantes .descricao {
+        min-height: 47px;
+    }
+}
+
+@media(min-width: 2400px) {
+        
+    .carousel-caption h1{
+        font-size: 3.5em;
+        margin-top: -460px;
+    }
 }
