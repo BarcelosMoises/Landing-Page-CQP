@@ -181,6 +181,10 @@ header{
     border-radius: 16px;
 }
 
+#cursos-profissionalizantes img {
+    border-radius: 16px;
+}
+
 .google-map {
      padding-bottom: 50%;
      position: relative;
