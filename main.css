@@ -244,6 +244,12 @@ footer {
         display: none;
         
     }
+    #menu-navegacao {
+        -webkit-animation: none !important;
+        -moz-animation: none !important;
+        -ms-animation: none !important;
+        animation: none !important;
+        }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -343,6 +349,13 @@ footer {
     #cursos-profissionalizantes .descricao {
         min-height: 72px;
     }
+
+    #menu-navegacao {
+        -webkit-animation: none !important;
+        -moz-animation: none !important;
+        -ms-animation: none !important;
+        animation: none !important;
+        }
 }
 
 @media (min-width: 992px) and (max-width: 1195px) {
