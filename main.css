@@ -214,6 +214,10 @@ footer {
     font-weight: bold;
 }
 
+.animate__animated.animate__backInUp {
+    --animate-duration: 300ms
+}
+
 @media (max-width: 767px) {
     .carousel-item img {
         height: 280px;
