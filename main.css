@@ -214,8 +214,8 @@ footer {
     font-weight: bold;
 }
 
-.animate__animated.animate__backInUp {
-    --animate-duration: 300ms
+.animate__animated.animate__fadeInRight {
+    --animate-duration: 650ms
 }
 
 @media (max-width: 767px) {
