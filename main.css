@@ -215,7 +215,11 @@ footer {
 }
 
 .animate__animated.animate__fadeInRight {
-    --animate-duration: 650ms
+    --animate-duration: 550ms
+}
+
+#cardapio {
+    overflow-x: hidden;
 }
 
 @media (max-width: 767px) {
@@ -363,7 +367,9 @@ footer {
         -moz-animation: none !important;
         -ms-animation: none !important;
         animation: none !important;
-        }
+    }
+    
+    
 }
 
 @media (min-width: 992px) and (max-width: 1195px) {
