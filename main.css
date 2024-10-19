@@ -235,6 +235,11 @@ footer {
 }
 
 @media (max-width: 767px) {
+
+    .logo-symbol {
+        max-height: 40px;
+    }
+
     .carousel-item img {
         height: 280px;
     }
@@ -545,6 +550,12 @@ footer {
 
     #nrs h5 {
         min-height: 144px;
+    }
+
+    .nav-cardapio button {
+        
+        padding-left: 5px;
+        font-size: 0.9em;
     }
 
     #kids .descricao {
