@@ -18,9 +18,9 @@ header{
 }
 
 .navbar {
-    background: #5E6E8212;
+    background: transparent;
     transition: 1;
-    
+    position: relative;
 }
 
 #cabecalho .nav .nav-link.active {
@@ -120,12 +120,39 @@ header{
 
 .layer1 {
     background-image: url(images/SVGs/layer1.svg);
+    margin-bottom: -1px;
+    margin-top: -1px;
 }
 
 .layer2 {
     background-image: url(images/SVGs/layer2.svg);
+    margin-bottom: -1px;
+    margin-top: -1px;
 }
 
+.layer3 {
+    background-image: url(images/SVGs/layer3.svg);
+    margin-bottom: -1px;
+    margin-top: -1px;
+}
+
+.layer4 {
+    background-image: url(images/SVGs/layer4.svg);
+    margin-bottom: -1px;
+    margin-top: -1px;
+}
+
+.layer5 {
+    background-image: url(images/SVGs/layer5.svg);
+    margin-bottom: -1px;
+    margin-top: -1px;
+}
+
+.layer6 {
+    background-image: url(images/SVGs/layer6.svg);
+    margin-bottom: -1px;
+    margin-top: -1px;
+}
 /* Fim svg */
 
 /* catálogo */
@@ -302,6 +329,10 @@ header{
     background-color: #7aeeee;
 }
 
+#depoimentos .container {
+    padding-top: 150px;
+    padding-bottom: 150px;
+}
 .testimonials{
     max-width: 1000px;
     padding: 0 15px 50px;
