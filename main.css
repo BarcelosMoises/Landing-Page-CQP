@@ -116,6 +116,8 @@ header{
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    margin-bottom: -4px;
+    margin-top: -4px;
 }
 
 .layer1 {
@@ -400,10 +402,7 @@ header{
      position: absolute;
 }
 
-svg {
-    margin-bottom: -1px;
-    margin-top: -1px;
-}
+
 
 footer {
     background-color: #7aeeee;
