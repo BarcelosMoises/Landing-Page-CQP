@@ -16,17 +16,25 @@
     <meta property="og:url"         content="https://cqpmacae.com.br/" />
     <meta property="og:title"       content="CQP — Centro de Qualificação Profissional" />
     <meta property="og:description" content="+100 cursos técnicos, EAD e presenciais em Macaé/RJ. Mensalidades a partir de R$150." />
-    <meta property="og:image"       content="/images/og-cqp.webp" />
+    <meta property="og:image"       content="/images/logo/CQP-cropped.png" />
     <meta property="og:locale"      content="pt_BR" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card"        content="summary_large_image" />
     <meta name="twitter:title"       content="CQP — Centro de Qualificação Profissional" />
     <meta name="twitter:description" content="+100 cursos técnicos, EAD e presenciais em Macaé/RJ." />
-    <meta name="twitter:image"       content="/images/og-cqp.webp" />
+    <meta name="twitter:image"       content="/images/logo/CQP-cropped.png" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/webp" href="/images/cropped-logo-colored.webp" />
+    <!--
+      Favicon — stack de 3 camadas para cobertura total de browsers:
+      1. .ico  → Chrome, Firefox, Edge, Safari (melhor suporte)
+      2. .png  → fallback moderno (browsers que ignoram .ico)
+      3. apple-touch-icon → iOS "Adicionar à tela inicial"
+      O browser usa o PRIMEIRO formato que suporta (ordem importa).
+    -->
+    <link rel="icon" type="image/x-icon"  href="/images/logo/cropped-logo-up.ico" />
+    <link rel="icon" type="image/png"     href="/images/logo/CQP-cropped.png" sizes="32x32" />
+    <link rel="apple-touch-icon"          href="/images/logo/CQP-cropped.png" />
 
     <!-- Fontes: Fontshare CDN (Boska + Satoshi) -->
     <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
@@ -37,7 +45,6 @@
   </head>
   <body>
     <div id="root"></div>
-    <!-- Entry point: Vite bundla este script e injeta o hash no build -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
