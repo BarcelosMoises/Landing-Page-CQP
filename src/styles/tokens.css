@@ -1,0 +1,192 @@
+/*
+ * tokens.css — CQP Design System
+ * CSS Custom Properties globais.
+ * Importar antes de qualquer outro stylesheet.
+ *
+ * Art direction: escola profissionalizante em Macaé/RJ → mercado de O&G
+ * Paleta: navy profundo + teal vibrante → confiança + modernidade
+ * Tipografia: Boska (display) + Satoshi (body) — expressiva mas legível
+ * Densidade: equilibrada, generosa em mobile
+ */
+
+:root {
+  /* ---- Paleta de marca ---- */
+  --cqp-teal:        #33B8B8;
+  --cqp-teal-dark:   #0c6161;
+  --cqp-teal-light:  #7aeeee;
+  --cqp-navy:        #001220;
+  --cqp-navy-soft:   #061a2a;
+
+  /* ---- Superfícies (modo claro — seções brancas/neutras) ---- */
+  --color-bg:             #f7f6f2;
+  --color-surface:        #ffffff;
+  --color-surface-2:      #f3f0ec;
+  --color-border:         oklch(from #33B8B8 l c h / 0.15);
+  --color-border-strong:  oklch(from #33B8B8 l c h / 0.30);
+
+  /* ---- Texto ---- */
+  --color-text:           #001220;
+  --color-text-muted:     rgba(0, 18, 32, 0.62);
+  --color-text-faint:     rgba(0, 18, 32, 0.38);
+  --color-text-inverse:   #ffffff;
+
+  /* ---- Texto sobre navy ---- */
+  --color-text-on-navy:         #ffffff;
+  --color-text-muted-on-navy:   rgba(255, 255, 255, 0.62);
+  --color-text-faint-on-navy:   rgba(255, 255, 255, 0.38);
+
+  /* ---- Tipografia fluida ---- */
+  --font-display: 'Boska', Georgia, serif;
+  --font-body:    'Satoshi', 'Helvetica Neue', sans-serif;
+
+  --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+  --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1rem,     0.85rem + 0.75vw, 1.375rem);
+  --text-xl:   clamp(1.25rem,  1rem    + 1vw,    1.75rem);
+  --text-2xl:  clamp(1.5rem,   0.8rem  + 2.5vw,  3rem);
+  --text-3xl:  clamp(2rem,     1rem    + 3.5vw,  4.5rem);
+  --text-hero: clamp(2.25rem,  1rem    + 5vw,    5.5rem);
+
+  /* ---- Espaçamento 4px ---- */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* ---- Border radius ---- */
+  --radius-sm:   0.375rem;
+  --radius-md:   0.5rem;
+  --radius-lg:   0.75rem;
+  --radius-xl:   1rem;
+  --radius-2xl:  1.25rem;
+  --radius-full: 9999px;
+
+  /* ---- Sombras ---- */
+  --shadow-sm: 0 1px 3px rgba(0, 18, 32, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 18, 32, 0.10);
+  --shadow-lg: 0 12px 32px rgba(0, 18, 32, 0.14);
+  --shadow-xl: 0 24px 64px rgba(0, 18, 32, 0.18);
+
+  /* Sombra CTA (teal glow — somente no botão primário do hero) */
+  --shadow-cta: 0 4px 24px rgba(51, 184, 184, 0.35);
+
+  /* ---- Transições ---- */
+  --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:     cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 500ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- Larguras de conteúdo ---- */
+  --content-narrow:  640px;
+  --content-default: 960px;
+  --content-wide:    1200px;
+
+  /* ---- Z-index escala ---- */
+  --z-below:   -1;
+  --z-base:     0;
+  --z-raised:  10;
+  --z-overlay: 50;
+  --z-navbar:  60;
+  --z-modal:   80;
+  --z-toast:   90;
+  --z-float:   70; /* WhatsApp float, back-to-top */
+}
+
+/* ---- Base reset ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--space-20);
+  hanging-punctuation: first last;
+}
+
+body {
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  overflow-x: hidden;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul[role="list"], ol[role="list"] { list-style: none; }
+
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+  line-height: 1.15;
+  font-family: var(--font-display);
+}
+
+p, li, figcaption {
+  text-wrap: pretty;
+  max-width: 72ch;
+}
+
+::selection {
+  background: oklch(from #33B8B8 l c h / 0.25);
+  color: var(--color-text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--cqp-teal);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+button { cursor: pointer; background: none; border: none; }
+table  { border-collapse: collapse; width: 100%; }
+
+a, button, [role="button"] {
+  transition:
+    color var(--transition-fast),
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border-width: 0;
+}
