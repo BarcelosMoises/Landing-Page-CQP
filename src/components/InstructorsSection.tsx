@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { INSTRUTORES, AREA_LABELS, type Instrutor, type AreaId } from '../../data/instrutores';
 
 // ---------------------------------------------------------------------------
@@ -72,7 +72,6 @@ function Avatar({ instrutor, size = 96 }: { instrutor: Instrutor; size?: number 
     );
   }
 
-  // SVG placeholder com iniciais
   return (
     <svg
       width={size}
@@ -85,10 +84,8 @@ function Avatar({ instrutor, size = 96 }: { instrutor: Instrutor; size?: number 
     >
       <circle cx="48" cy="48" r="48" fill={`hsl(${hue} 40% 18%)`} />
       <circle cx="48" cy="48" r="47" fill="none" stroke={`hsl(${hue} 60% 50% / 0.35)`} strokeWidth="2" />
-      {/* Silhouette hint */}
       <circle cx="48" cy="36" r="14" fill={`hsl(${hue} 50% 55% / 0.25)`} />
       <ellipse cx="48" cy="76" rx="22" ry="14" fill={`hsl(${hue} 50% 55% / 0.18)`} />
-      {/* Initials */}
       <text
         x="48"
         y="54"
@@ -113,7 +110,6 @@ function BioModal({ instrutor, onClose }: { instrutor: Instrutor; onClose: () =>
   const closeRef = useRef<HTMLButtonElement>(null);
   const colors = AREA_COLORS[instrutor.area];
 
-  // Focus trap + Escape
   useEffect(() => {
     const prev = document.activeElement as HTMLElement;
     closeRef.current?.focus();
@@ -121,7 +117,6 @@ function BioModal({ instrutor, onClose }: { instrutor: Instrutor; onClose: () =>
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
       if (e.key === 'Tab') {
-        // Simple trap: only the close button is focusable
         e.preventDefault();
         closeRef.current?.focus();
       }
@@ -199,7 +194,8 @@ function InstructorCard({ instrutor, delay, onExpand }: {
   delay: number;
   onExpand: (i: Instrutor) => void;
 }) {
-  const cardRef = useRef<HTMLArticElement>(null);
+  // fix: HTMLArticElement não existe — usar HTMLElement
+  const cardRef = useRef<HTMLElement>(null);
   const colors = AREA_COLORS[instrutor.area];
 
   useEffect(() => {
@@ -266,7 +262,6 @@ export default function InstructorsSection({
 
   const handleClose = useCallback(() => setActiveInstrutor(null), []);
 
-  // Animate header
   useEffect(() => {
     const el = headerRef.current;
     if (!el) return;
@@ -290,7 +285,6 @@ export default function InstructorsSection({
   return (
     <>
       <style>{`
-        /* ---- Section ---- */
         .instr-section {
           position: relative;
           background: #001220;
@@ -299,7 +293,6 @@ export default function InstructorsSection({
           overflow: hidden;
         }
 
-        /* Wave divider top (navy → teal-light da seção anterior) */
         .instr-section::before {
           content: '';
           position: absolute;
@@ -312,7 +305,6 @@ export default function InstructorsSection({
           z-index: 1;
         }
 
-        /* Ambient glow bottom-left */
         .instr-section-glow {
           position: absolute;
           bottom: -100px;
@@ -330,7 +322,6 @@ export default function InstructorsSection({
           margin-inline: auto;
         }
 
-        /* ---- Header ---- */
         .instr-header {
           display: flex;
           flex-direction: column;
@@ -377,7 +368,6 @@ export default function InstructorsSection({
           margin: 0;
         }
 
-        /* TODO badge */
         .instr-todo-badge {
           display: inline-flex;
           align-items: center;
@@ -394,14 +384,12 @@ export default function InstructorsSection({
           margin-top: 0.25rem;
         }
 
-        /* ---- Grid ---- */
         .instr-grid {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
           gap: clamp(1rem, 2vw, 1.5rem);
         }
 
-        /* ---- Card ---- */
         .instr-card {
           display: flex;
           flex-direction: column;
@@ -423,9 +411,7 @@ export default function InstructorsSection({
           transform: translateY(-3px);
         }
 
-        .instr-card-avatar {
-          flex-shrink: 0;
-        }
+        .instr-card-avatar { flex-shrink: 0; }
 
         .instr-card-body {
           display: flex;
@@ -435,7 +421,6 @@ export default function InstructorsSection({
           align-self: stretch;
         }
 
-        /* ---- Badge ---- */
         .instr-badge {
           display: inline-flex;
           align-items: center;
@@ -451,7 +436,6 @@ export default function InstructorsSection({
           margin-bottom: 0.1rem;
         }
 
-        /* ---- Card text ---- */
         .instr-card-name {
           font-family: 'Boska', Georgia, serif;
           font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.3rem);
@@ -476,7 +460,6 @@ export default function InstructorsSection({
           flex: 1;
         }
 
-        /* ---- Ver bio button ---- */
         .instr-card-btn {
           display: inline-flex;
           align-items: center;
@@ -504,7 +487,6 @@ export default function InstructorsSection({
           border-radius: 3px;
         }
 
-        /* ---- Modal ---- */
         .instr-modal-overlay {
           position: fixed;
           inset: 0;
@@ -560,16 +542,8 @@ export default function InstructorsSection({
           transition: background 180ms, color 180ms;
         }
 
-        .instr-modal-close:hover {
-          background: rgba(255,255,255,0.12);
-          color: #ffffff;
-        }
-
-        .instr-modal-close:focus-visible {
-          outline: 2px solid #33B8B8;
-          outline-offset: 3px;
-        }
-
+        .instr-modal-close:hover { background: rgba(255,255,255,0.12); color: #ffffff; }
+        .instr-modal-close:focus-visible { outline: 2px solid #33B8B8; outline-offset: 3px; }
         .instr-modal-avatar { flex-shrink: 0; }
 
         .instr-modal-body {
@@ -588,12 +562,7 @@ export default function InstructorsSection({
           margin-top: 0.25rem;
         }
 
-        .instr-modal-spec {
-          font-size: 0.875rem;
-          font-weight: 600;
-          color: #33B8B8;
-          margin: 0;
-        }
+        .instr-modal-spec { font-size: 0.875rem; font-weight: 600; color: #33B8B8; margin: 0; }
 
         .instr-modal-bio {
           font-size: clamp(0.875rem, 0.82rem + 0.2vw, 0.9375rem);
@@ -616,32 +585,19 @@ export default function InstructorsSection({
 
         .instr-modal-link:hover { color: #7aeeee; }
 
-        /* Mobile modal: stack vertically */
         @media (max-width: 480px) {
-          .instr-modal-card {
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-          }
-          .instr-badge,
-          .instr-modal-link {
-            align-self: center;
-          }
+          .instr-modal-card { flex-direction: column; align-items: center; text-align: center; }
+          .instr-badge, .instr-modal-link { align-self: center; }
         }
 
-        /* Reduced motion */
         @media (prefers-reduced-motion: reduce) {
-          .instr-card,
-          .instr-card-btn,
-          .instr-modal-overlay,
-          .instr-modal-card {
+          .instr-card, .instr-card-btn, .instr-modal-overlay, .instr-modal-card {
             transition: none !important;
             animation: none !important;
           }
           .instr-card:hover { transform: none; }
         }
 
-        /* Note banner */
         .instr-note {
           display: flex;
           align-items: flex-start;
@@ -653,11 +609,7 @@ export default function InstructorsSection({
           margin-top: clamp(2rem, 3vw, 3rem);
         }
 
-        .instr-note-icon {
-          color: #FFA352;
-          flex-shrink: 0;
-          margin-top: 1px;
-        }
+        .instr-note-icon { color: #FFA352; flex-shrink: 0; margin-top: 1px; }
 
         .instr-note-text {
           font-size: 0.8125rem;
@@ -666,10 +618,7 @@ export default function InstructorsSection({
           margin: 0;
         }
 
-        .instr-note-text strong {
-          color: #FFA352;
-          font-weight: 700;
-        }
+        .instr-note-text strong { color: #FFA352; font-weight: 700; }
       `}</style>
 
       <section
@@ -680,14 +629,13 @@ export default function InstructorsSection({
         <div className="instr-section-glow" aria-hidden="true" />
 
         <div className="instr-inner">
-          {/* Header */}
           <header ref={headerRef} className="instr-header">
             <div className="instr-eyebrow" aria-hidden="true">
               <span className="instr-eyebrow-line" />
               Corpo docente
             </div>
             <h2 id="instr-section-title" className="instr-title">
-              Aprenda com quem vive o mercado
+              Aprenda com quem vive o mercado
             </h2>
             <p className="instr-subtitle">
               Nossos instrutores são profissionais ativos nas suas áreas —
@@ -701,7 +649,6 @@ export default function InstructorsSection({
             </span>
           </header>
 
-          {/* Grid */}
           <div
             className="instr-grid"
             role="list"
@@ -718,7 +665,6 @@ export default function InstructorsSection({
             ))}
           </div>
 
-          {/* Nota de placeholder */}
           <aside className="instr-note" aria-label="Nota de desenvolvimento">
             <svg className="instr-note-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 5a1 1 0 011 1v5a1 1 0 01-2 0V8a1 1 0 011-1zm0 10a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" />
@@ -733,7 +679,6 @@ export default function InstructorsSection({
         </div>
       </section>
 
-      {/* Bio Modal */}
       {activeInstrutor && (
         <BioModal instrutor={activeInstrutor} onClose={handleClose} />
       )}
