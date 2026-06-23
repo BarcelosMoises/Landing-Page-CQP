@@ -1,7 +1,7 @@
 // =============================================================================
 // data/cursos.ts
 // Fonte única de verdade para todos os cursos da CQP.
-// Gerado a partir do index.html original (301 KB).
+// Gerado a partir dos arquivos reais em /images — sem cursos inventados.
 // =============================================================================
 
 export type Modalidade = 'presencial' | 'online' | 'hibrido';
@@ -10,9 +10,9 @@ export interface Curso {
   id: string;
   nome: string;
   categoria: CategoriaSlug;
-  imagem: string;          // caminho relativo a /public
+  imagem: string;          // caminho relativo a /public (Next.js)
   modalidades: Modalidade[];
-  extra?: string;          // duração, certificação, carga horária
+  extra?: string;          // duração, carga horária, nível
   whatsapp?: string;       // mensagem pré-preenchida para o link
 }
 
@@ -62,7 +62,7 @@ export const CATEGORIAS: Categoria[] = [
   {
     slug: 'idiomas',
     label: 'Idiomas',
-    descricao: 'Inglês, Espanhol e mais com metodologia moderna',
+    descricao: 'Inglês, LIBRAS e mais com metodologia moderna',
     icone: 'Languages',
   },
   {
@@ -75,193 +75,186 @@ export const CATEGORIAS: Categoria[] = [
 
 // ---------------------------------------------------------------------------
 // Cursos Técnicos
+// Fonte: images/cursos-tecnicos/
 // ---------------------------------------------------------------------------
 export const CURSOS_TECNICOS: Curso[] = [
-  { id: 'tec-adm', nome: 'Administração', categoria: 'tecnicos', imagem: '/images/adm.jpg', modalidades: ['presencial', 'online'] },
-  { id: 'tec-contab', nome: 'Contabilidade', categoria: 'tecnicos', imagem: '/images/contabilidade.jpg', modalidades: ['presencial', 'online'] },
-  { id: 'tec-rh', nome: 'Recursos Humanos', categoria: 'tecnicos', imagem: '/images/rh.jpg', modalidades: ['presencial', 'online'] },
-  { id: 'tec-logistica', nome: 'Logística', categoria: 'tecnicos', imagem: '/images/logistica.jpg', modalidades: ['presencial', 'online'] },
-  { id: 'tec-informatica', nome: 'Informática', categoria: 'tecnicos', imagem: '/images/informatica.jpg', modalidades: ['presencial', 'online'] },
-  { id: 'tec-seguranca', nome: 'Segurança do Trabalho', categoria: 'tecnicos', imagem: '/images/seguranca.jpg', modalidades: ['presencial'] },
-  { id: 'tec-enfermagem', nome: 'Enfermagem', categoria: 'tecnicos', imagem: '/images/enfermagem.jpg', modalidades: ['presencial'] },
-  { id: 'tec-farmacia', nome: 'Farmácia', categoria: 'tecnicos', imagem: '/images/farmacia.jpg', modalidades: ['presencial'] },
-  { id: 'tec-radiologia', nome: 'Radiologia', categoria: 'tecnicos', imagem: '/images/radiologia.jpg', modalidades: ['presencial'] },
-  { id: 'tec-analises', nome: 'Análises Clínicas', categoria: 'tecnicos', imagem: '/images/analises.jpg', modalidades: ['presencial'] },
-  { id: 'tec-quimica', nome: 'Química', categoria: 'tecnicos', imagem: '/images/quimica.jpg', modalidades: ['presencial'] },
-  { id: 'tec-petroleo', nome: 'Petróleo e Gás', categoria: 'tecnicos', imagem: '/images/petroleo.jpg', modalidades: ['presencial'] },
-  { id: 'tec-eletrotecnica', nome: 'Eletrotécnica', categoria: 'tecnicos', imagem: '/images/eletrotecnica.jpg', modalidades: ['presencial'] },
-  { id: 'tec-mecanica', nome: 'Mecânica', categoria: 'tecnicos', imagem: '/images/mecanica.jpg', modalidades: ['presencial'] },
-  { id: 'tec-edificacoes', nome: 'Edificações', categoria: 'tecnicos', imagem: '/images/edificacoes.jpg', modalidades: ['presencial'] },
-  { id: 'tec-design', nome: 'Design Gráfico', categoria: 'tecnicos', imagem: '/images/design.jpg', modalidades: ['presencial', 'online'] },
-  { id: 'tec-marketing', nome: 'Marketing', categoria: 'tecnicos', imagem: '/images/marketing.jpg', modalidades: ['presencial', 'online'] },
-  { id: 'tec-turismo', nome: 'Guia de Turismo', categoria: 'tecnicos', imagem: '/images/turismo.jpg', modalidades: ['presencial'] },
+  { id: 'tec-adm',            nome: 'Administração',                      categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-administracao.png',                    modalidades: ['presencial', 'online'] },
+  { id: 'tec-agropecuaria',   nome: 'Agropecuária',                       categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-agropecuaria.png',                     modalidades: ['presencial'] },
+  { id: 'tec-comercio',       nome: 'Comércio',                           categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-comercio.png',                         modalidades: ['presencial', 'online'] },
+  { id: 'tec-dev-sistemas',   nome: 'Desenvolvimento de Sistemas',        categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-desenvolvimento-de-sistema.png',       modalidades: ['presencial', 'online'] },
+  { id: 'tec-edificacoes',    nome: 'Edificações',                        categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-edificacoes.png',                      modalidades: ['presencial'] },
+  { id: 'tec-eletroeletronica', nome: 'Eletroeletrônica',                 categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-eletroeletronica.png',                 modalidades: ['presencial'] },
+  { id: 'tec-eletrotecnica',  nome: 'Eletrotécnica',                      categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-eletrotecnica.png',                    modalidades: ['presencial'] },
+  { id: 'tec-info-internet',  nome: 'Informática para Internet',          categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-informatica-para-internet.png',        modalidades: ['presencial', 'online'] },
+  { id: 'tec-informatica',    nome: 'Informática',                        categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-informatica.png',                      modalidades: ['presencial', 'online'] },
+  { id: 'tec-logistica',      nome: 'Logística',                          categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-logistica.png',                        modalidades: ['presencial', 'online'] },
+  { id: 'tec-manut-info',     nome: 'Manutenção e Suporte em Informática',categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-manutencao-e-suporte-em-informatica.png', modalidades: ['presencial'] },
+  { id: 'tec-meio-ambiente',  nome: 'Meio Ambiente',                      categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-meio-ambiente.png',                    modalidades: ['presencial'] },
+  { id: 'tec-redes',          nome: 'Redes de Computadores',              categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-redes-de-computadores.png',            modalidades: ['presencial'] },
+  { id: 'tec-secretariado',   nome: 'Secretariado',                       categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-secretariado.png',                     modalidades: ['presencial', 'online'] },
+  { id: 'tec-seguranca',      nome: 'Segurança do Trabalho',              categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-seguranca-do-trabalho.png',            modalidades: ['presencial'] },
+  { id: 'tec-servicos-pub',   nome: 'Serviços Públicos',                  categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-servicos-publicos.png',                modalidades: ['presencial', 'online'] },
+  { id: 'tec-imobiliarias',   nome: 'Transações Imobiliárias',            categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-transacoes-imobiliarias.png',          modalidades: ['presencial'] },
+  { id: 'tec-vendas',         nome: 'Vendas',                             categoria: 'tecnicos', imagem: '/images/cursos-tecnicos/capa-curso-vendas.png',                           modalidades: ['presencial', 'online'] },
 ];
 
 // ---------------------------------------------------------------------------
 // Cursos Profissionalizantes
+// Fonte: images/cursos-profissionalizantes/
 // ---------------------------------------------------------------------------
 export const CURSOS_PROFISSIONALIZANTES: Curso[] = [
-  { id: 'pro-excel', nome: 'Excel Avançado', categoria: 'profissionalizantes', imagem: '/images/excel.jpg', modalidades: ['presencial', 'online'], extra: '40h' },
-  { id: 'pro-word', nome: 'Word e PowerPoint', categoria: 'profissionalizantes', imagem: '/images/word.jpg', modalidades: ['presencial', 'online'], extra: '30h' },
-  { id: 'pro-autocad', nome: 'AutoCAD', categoria: 'profissionalizantes', imagem: '/images/autocad.jpg', modalidades: ['presencial'], extra: '60h' },
-  { id: 'pro-photoshop', nome: 'Photoshop', categoria: 'profissionalizantes', imagem: '/images/photoshop.jpg', modalidades: ['presencial', 'online'], extra: '40h' },
-  { id: 'pro-corel', nome: 'CorelDRAW', categoria: 'profissionalizantes', imagem: '/images/corel.jpg', modalidades: ['presencial', 'online'], extra: '40h' },
-  { id: 'pro-contab-basica', nome: 'Contabilidade Básica', categoria: 'profissionalizantes', imagem: '/images/contabilidade-basica.jpg', modalidades: ['presencial', 'online'], extra: '40h' },
-  { id: 'pro-dp', nome: 'Departamento Pessoal', categoria: 'profissionalizantes', imagem: '/images/dp.jpg', modalidades: ['presencial', 'online'], extra: '60h' },
-  { id: 'pro-fiscal', nome: 'Rotinas Fiscais', categoria: 'profissionalizantes', imagem: '/images/fiscal.jpg', modalidades: ['presencial', 'online'], extra: '60h' },
-  { id: 'pro-bpo', nome: 'BPO Financeiro', categoria: 'profissionalizantes', imagem: '/images/bpo.jpg', modalidades: ['presencial', 'online'], extra: '40h' },
-  { id: 'pro-vendas', nome: 'Técnicas de Vendas', categoria: 'profissionalizantes', imagem: '/images/vendas.jpg', modalidades: ['presencial', 'online'], extra: '30h' },
-  { id: 'pro-atendimento', nome: 'Atendimento ao Cliente', categoria: 'profissionalizantes', imagem: '/images/atendimento.jpg', modalidades: ['presencial', 'online'], extra: '30h' },
-  { id: 'pro-recepcao', nome: 'Recepcionista', categoria: 'profissionalizantes', imagem: '/images/recepcao.jpg', modalidades: ['presencial', 'online'], extra: '40h' },
-  { id: 'pro-secretariado', nome: 'Secretariado', categoria: 'profissionalizantes', imagem: '/images/secretariado.jpg', modalidades: ['presencial', 'online'], extra: '40h' },
-  { id: 'pro-cuidador', nome: 'Cuidador de Idosos', categoria: 'profissionalizantes', imagem: '/images/cuidador.jpg', modalidades: ['presencial'], extra: '40h' },
-  { id: 'pro-auxiliar-adm', nome: 'Auxiliar Administrativo', categoria: 'profissionalizantes', imagem: '/images/aux-adm.jpg', modalidades: ['presencial', 'online'], extra: '40h' },
-  { id: 'pro-almoxarife', nome: 'Almoxarife e Estoque', categoria: 'profissionalizantes', imagem: '/images/almoxarife.jpg', modalidades: ['presencial', 'online'], extra: '40h' },
-  { id: 'pro-compras', nome: 'Compras e Suprimentos', categoria: 'profissionalizantes', imagem: '/images/compras.jpg', modalidades: ['presencial', 'online'], extra: '40h' },
-  { id: 'pro-pcp', nome: 'PCP - Planejamento e Controle', categoria: 'profissionalizantes', imagem: '/images/pcp.jpg', modalidades: ['presencial', 'online'], extra: '40h' },
-  { id: 'pro-qualidade', nome: 'Qualidade (ISO 9001)', categoria: 'profissionalizantes', imagem: '/images/qualidade.jpg', modalidades: ['presencial', 'online'], extra: '30h' },
-  { id: 'pro-manut-ind', nome: 'Manutenção Industrial', categoria: 'profissionalizantes', imagem: '/images/manutencao.jpg', modalidades: ['presencial'], extra: '60h' },
-  { id: 'pro-assist-cont', nome: 'Assistente Contábil', categoria: 'profissionalizantes', imagem: '/images/assist-cont.jpg', modalidades: ['presencial', 'online'], extra: '60h' },
-  { id: 'pro-financeiro', nome: 'Auxiliar Financeiro', categoria: 'profissionalizantes', imagem: '/images/financeiro.jpg', modalidades: ['presencial', 'online'], extra: '40h' },
-  { id: 'pro-lideranca', nome: 'Liderança e Gestão de Pessoas', categoria: 'profissionalizantes', imagem: '/images/lideranca.jpg', modalidades: ['presencial', 'online'], extra: '30h' },
-  { id: 'pro-projeto', nome: 'Gestão de Projetos (PMI)', categoria: 'profissionalizantes', imagem: '/images/projetos.jpg', modalidades: ['presencial', 'online'], extra: '40h' },
-  { id: 'pro-libras', nome: 'LIBRAS', categoria: 'profissionalizantes', imagem: '/images/libras.jpg', modalidades: ['presencial', 'online'], extra: '60h' },
+  { id: 'pro-agente-turismo',       nome: 'Agente de Turismo',                          categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/agente-de-turismo.png',                          modalidades: ['presencial', 'online'] },
+  { id: 'pro-assist-adm',           nome: 'Assistente Administrativo',                  categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/assistente-administrativo.png',                  modalidades: ['presencial', 'online'] },
+  { id: 'pro-assist-contabil',      nome: 'Assistente Contábil',                        categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/assistente-contabil.png',                        modalidades: ['presencial', 'online'] },
+  { id: 'pro-assist-financeiro',    nome: 'Assistente Financeiro',                      categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/assistente-financeiro.png',                      modalidades: ['presencial', 'online'] },
+  { id: 'pro-assist-marketing',     nome: 'Assistente de Marketing',                    categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/assistente-marketing.png',                       modalidades: ['presencial', 'online'] },
+  { id: 'pro-assist-rh',            nome: 'Assistente de Recursos Humanos',             categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/assistente-recursos-humanos.png',                 modalidades: ['presencial', 'online'] },
+  { id: 'pro-atend-farmacia',       nome: 'Atendente de Farmácia',                      categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/atendente-de-farmacia.png',                      modalidades: ['presencial'] },
+  { id: 'pro-aux-bancario',         nome: 'Auxiliar Bancário',                          categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/auxiliar-bancario.png',                          modalidades: ['presencial', 'online'] },
+  { id: 'pro-cabeleireiro',         nome: 'Cabeleireiro',                               categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/cabeleireiro.png',                               modalidades: ['presencial'] },
+  { id: 'pro-conteudo-midias',      nome: 'Criação de Conteúdo para Mídias Sociais',    categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/criacao-de-conteudo-para-midias-sociais.png',    modalidades: ['presencial', 'online'] },
+  { id: 'pro-edicao-video',         nome: 'Criação e Edição de Vídeos',                 categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/criacao-e-edicao-de-videos.png',                 modalidades: ['presencial', 'online'] },
+  { id: 'pro-cuidador-idosos',      nome: 'Cuidador de Idosos',                         categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/cuidador-de-idosos.png',                         modalidades: ['presencial'] },
+  { id: 'pro-empreendedorismo',     nome: 'Empreendedorismo Digital',                   categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/empreendedorismo-digital.png',                   modalidades: ['presencial', 'online'] },
+  { id: 'pro-estetica',             nome: 'Estética',                                   categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/estetica.png',                                   modalidades: ['presencial'] },
+  { id: 'pro-fotografia',           nome: 'Fotografia',                                 categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/fotografia.png',                                 modalidades: ['presencial', 'online'] },
+  { id: 'pro-manutencao-celular',   nome: 'Manutenção de Celular',                      categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/manutencao-de-celular.png',                      modalidades: ['presencial'] },
+  { id: 'pro-manicure',             nome: 'Manicure e Pedicure',                        categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/manicure-e-pedicure.png',                        modalidades: ['presencial'] },
+  { id: 'pro-mecanica-auto',        nome: 'Mecânica Automotiva',                        categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/mecanica-automotiva.png',                        modalidades: ['presencial'] },
+  { id: 'pro-power-bi',             nome: 'Power BI',                                   categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/power-bi.png',                                   modalidades: ['presencial', 'online'] },
+  { id: 'pro-programacao',          nome: 'Programação',                                categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/programacao.png',                                modalidades: ['presencial', 'online'] },
+  { id: 'pro-redes-computadores',   nome: 'Redes de Computadores',                      categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/redes-de-computadores.png',                      modalidades: ['presencial'] },
+  { id: 'pro-secretariado',         nome: 'Secretariado',                               categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/secretariado.png',                               modalidades: ['presencial', 'online'] },
+  { id: 'pro-youtuber',             nome: 'Youtuber',                                   categoria: 'profissionalizantes', imagem: '/images/cursos-profissionalizantes/youtuber.png',                                   modalidades: ['presencial', 'online'] },
 ];
 
 // ---------------------------------------------------------------------------
 // Treinamentos e NRs
+// Fonte: images/nrs/
 // ---------------------------------------------------------------------------
 export const CURSOS_TREINAMENTOS: Curso[] = [
-  { id: 'nr-01', nome: 'NR-01 – Disposições Gerais', categoria: 'treinamentos', imagem: '/images/nr01.jpg', modalidades: ['presencial', 'online'], extra: '4h' },
-  { id: 'nr-05', nome: 'NR-05 – CIPA', categoria: 'treinamentos', imagem: '/images/nr05.jpg', modalidades: ['presencial', 'online'], extra: '20h' },
-  { id: 'nr-06', nome: 'NR-06 – EPI', categoria: 'treinamentos', imagem: '/images/nr06.jpg', modalidades: ['presencial', 'online'], extra: '4h' },
-  { id: 'nr-07', nome: 'NR-07 – PCMSO', categoria: 'treinamentos', imagem: '/images/nr07.jpg', modalidades: ['presencial'], extra: '8h' },
-  { id: 'nr-10', nome: 'NR-10 – Segurança em Eletricidade', categoria: 'treinamentos', imagem: '/images/nr10.jpg', modalidades: ['presencial'], extra: '40h' },
-  { id: 'nr-11', nome: 'NR-11 – Operação de Empilhadeira', categoria: 'treinamentos', imagem: '/images/nr11.jpg', modalidades: ['presencial'], extra: '16h' },
-  { id: 'nr-12', nome: 'NR-12 – Máquinas e Equipamentos', categoria: 'treinamentos', imagem: '/images/nr12.jpg', modalidades: ['presencial'], extra: '8h' },
-  { id: 'nr-13', nome: 'NR-13 – Caldeiras e Vasos de Pressão', categoria: 'treinamentos', imagem: '/images/nr13.jpg', modalidades: ['presencial'], extra: '40h' },
-  { id: 'nr-15', nome: 'NR-15 – Atividades Insalubres', categoria: 'treinamentos', imagem: '/images/nr15.jpg', modalidades: ['presencial'], extra: '8h' },
-  { id: 'nr-16', nome: 'NR-16 – Atividades Perigosas', categoria: 'treinamentos', imagem: '/images/nr16.jpg', modalidades: ['presencial'], extra: '8h' },
-  { id: 'nr-17', nome: 'NR-17 – Ergonomia', categoria: 'treinamentos', imagem: '/images/nr17.jpg', modalidades: ['presencial', 'online'], extra: '8h' },
-  { id: 'nr-18', nome: 'NR-18 – Construção Civil', categoria: 'treinamentos', imagem: '/images/nr18.jpg', modalidades: ['presencial'], extra: '6h' },
-  { id: 'nr-20', nome: 'NR-20 – Inflamáveis e Combustíveis', categoria: 'treinamentos', imagem: '/images/nr20.jpg', modalidades: ['presencial'], extra: '16h' },
-  { id: 'nr-21', nome: 'NR-21 – Trabalho a Céu Aberto', categoria: 'treinamentos', imagem: '/images/nr21.jpg', modalidades: ['presencial'], extra: '4h' },
-  { id: 'nr-23', nome: 'NR-23 – Combate a Incêndio', categoria: 'treinamentos', imagem: '/images/nr23.jpg', modalidades: ['presencial'], extra: '8h' },
-  { id: 'nr-25', nome: 'NR-25 – Resíduos Industriais', categoria: 'treinamentos', imagem: '/images/nr25.jpg', modalidades: ['presencial'], extra: '4h' },
-  { id: 'nr-26', nome: 'NR-26 – Sinalização de Segurança', categoria: 'treinamentos', imagem: '/images/nr26.jpg', modalidades: ['presencial', 'online'], extra: '4h' },
-  { id: 'nr-33', nome: 'NR-33 – Espaço Confinado', categoria: 'treinamentos', imagem: '/images/nr33.jpg', modalidades: ['presencial'], extra: '16h' },
-  { id: 'nr-35', nome: 'NR-35 – Trabalho em Altura', categoria: 'treinamentos', imagem: '/images/nr35.jpg', modalidades: ['presencial'], extra: '8h' },
-  { id: 'nr-36', nome: 'NR-36 – Frigoríficos', categoria: 'treinamentos', imagem: '/images/nr36.jpg', modalidades: ['presencial'], extra: '8h' },
-  { id: 'nr-37', nome: 'NR-37 – Plataformas de Petróleo', categoria: 'treinamentos', imagem: '/images/nr37.jpg', modalidades: ['presencial'], extra: '16h' },
-  { id: 'tr-primeiros-socorros', nome: 'Primeiros Socorros', categoria: 'treinamentos', imagem: '/images/primeiros-socorros.jpg', modalidades: ['presencial'], extra: '8h' },
-  { id: 'tr-brigada', nome: 'Brigada de Incêndio', categoria: 'treinamentos', imagem: '/images/brigada.jpg', modalidades: ['presencial'], extra: '16h' },
-  { id: 'tr-rcp', nome: 'RCP e DEA', categoria: 'treinamentos', imagem: '/images/rcp.jpg', modalidades: ['presencial'], extra: '4h' },
-  { id: 'tr-dds', nome: 'DDS – Diálogo Diário de Segurança', categoria: 'treinamentos', imagem: '/images/dds.jpg', modalidades: ['presencial', 'online'], extra: '4h' },
-  { id: 'tr-perigo-quimico', nome: 'Perigo Químico', categoria: 'treinamentos', imagem: '/images/quimico.jpg', modalidades: ['presencial'], extra: '8h' },
-  { id: 'tr-direcao-defensiva', nome: 'Direção Defensiva', categoria: 'treinamentos', imagem: '/images/direcao.jpg', modalidades: ['presencial', 'online'], extra: '8h' },
-  { id: 'tr-integracao', nome: 'Integração de Segurança', categoria: 'treinamentos', imagem: '/images/integracao.jpg', modalidades: ['presencial'], extra: '4h' },
-  { id: 'tr-iso-45001', nome: 'ISO 45001 – SST', categoria: 'treinamentos', imagem: '/images/iso45001.jpg', modalidades: ['presencial', 'online'], extra: '16h' },
-  { id: 'tr-meio-ambiente', nome: 'Meio Ambiente (ISO 14001)', categoria: 'treinamentos', imagem: '/images/meio-ambiente.jpg', modalidades: ['presencial', 'online'], extra: '8h' },
-  { id: 'tr-acidente-trabalho', nome: 'Investigação de Acidentes', categoria: 'treinamentos', imagem: '/images/acidente.jpg', modalidades: ['presencial'], extra: '8h' },
-  { id: 'tr-ppra', nome: 'PPRA / PGR', categoria: 'treinamentos', imagem: '/images/ppra.jpg', modalidades: ['presencial', 'online'], extra: '8h' },
-  { id: 'tr-pcmat', nome: 'PCMAT', categoria: 'treinamentos', imagem: '/images/pcmat.jpg', modalidades: ['presencial'], extra: '8h' },
-  { id: 'tr-extintores', nome: 'Uso de Extintores', categoria: 'treinamentos', imagem: '/images/extintores.jpg', modalidades: ['presencial'], extra: '4h' },
-  { id: 'tr-trabalho-noturno', nome: 'Trabalho Noturno', categoria: 'treinamentos', imagem: '/images/noturno.jpg', modalidades: ['presencial', 'online'], extra: '4h' },
-  { id: 'tr-gestao-residuos', nome: 'Gestão de Resíduos', categoria: 'treinamentos', imagem: '/images/residuos.jpg', modalidades: ['presencial', 'online'], extra: '8h' },
-  { id: 'tr-esg', nome: 'ESG e Sustentabilidade', categoria: 'treinamentos', imagem: '/images/esg.jpg', modalidades: ['presencial', 'online'], extra: '16h' },
-  { id: 'tr-osha', nome: 'OSHA – Normas Americanas', categoria: 'treinamentos', imagem: '/images/osha.jpg', modalidades: ['presencial', 'online'], extra: '16h' },
-  { id: 'tr-andaimes', nome: 'Montagem de Andaimes', categoria: 'treinamentos', imagem: '/images/andaimes.jpg', modalidades: ['presencial'], extra: '16h' },
-  { id: 'tr-plataforma-aerea', nome: 'Plataforma Aérea (PEA)', categoria: 'treinamentos', imagem: '/images/pea.jpg', modalidades: ['presencial'], extra: '8h' },
-  { id: 'tr-operador-guincho', nome: 'Operador de Guincho', categoria: 'treinamentos', imagem: '/images/guincho.jpg', modalidades: ['presencial'], extra: '16h' },
-  { id: 'tr-nr10-sep', nome: 'NR-10 SEP – Alta Tensão', categoria: 'treinamentos', imagem: '/images/sep.jpg', modalidades: ['presencial'], extra: '40h' },
-  { id: 'tr-bombeiro-civil', nome: 'Bombeiro Civil', categoria: 'treinamentos', imagem: '/images/bombeiro.jpg', modalidades: ['presencial'], extra: '200h' },
-  { id: 'tr-vigilante', nome: 'Vigilante Patrimonial', categoria: 'treinamentos', imagem: '/images/vigilante.jpg', modalidades: ['presencial'], extra: '440h' },
-  { id: 'tr-motoboy', nome: 'Motoboy Profissional', categoria: 'treinamentos', imagem: '/images/motoboy.jpg', modalidades: ['presencial'], extra: '16h' },
-  { id: 'tr-habilitacao-offshore', nome: 'Habilitação Offshore (OPITO)', categoria: 'treinamentos', imagem: '/images/offshore.jpg', modalidades: ['presencial'], extra: '40h' },
-  { id: 'tr-huet', nome: 'HUET – Saída Subaquática', categoria: 'treinamentos', imagem: '/images/huet.jpg', modalidades: ['presencial'], extra: '16h' },
-  { id: 'tr-sea-survival', nome: 'Sea Survival', categoria: 'treinamentos', imagem: '/images/sea-survival.jpg', modalidades: ['presencial'], extra: '24h' },
-  { id: 'tr-rigging', nome: 'Rigging / Amarração', categoria: 'treinamentos', imagem: '/images/rigging.jpg', modalidades: ['presencial'], extra: '16h' },
-  { id: 'tr-trabalho-frio', nome: 'Trabalho a Frio / Permissão', categoria: 'treinamentos', imagem: '/images/trabalho-frio.jpg', modalidades: ['presencial'], extra: '8h' },
-  { id: 'tr-soldagem-segura', nome: 'Soldagem Segura', categoria: 'treinamentos', imagem: '/images/soldagem.jpg', modalidades: ['presencial'], extra: '16h' },
-  { id: 'tr-operador-ponte', nome: 'Operador de Ponte Rolante', categoria: 'treinamentos', imagem: '/images/ponte-rolante.jpg', modalidades: ['presencial'], extra: '16h' },
-  { id: 'tr-nr-quimica', nome: 'NR Especial – Indústria Química', categoria: 'treinamentos', imagem: '/images/nr-quimica.jpg', modalidades: ['presencial'], extra: '24h' },
+  // NRs numeradas
+  { id: 'nr-01',                nome: 'NR-01 – Disposições Gerais e GRO',                   categoria: 'treinamentos', imagem: '/images/nrs/nr-1-disposicoes-gerais-e-gerenciamentos-de-riscos-ocupacionais-gro.webp',                                                                                      modalidades: ['presencial', 'online'], extra: '4h' },
+  { id: 'nr-05-gr1',            nome: 'NR-05 – CIPA Grau de Risco 1',                        categoria: 'treinamentos', imagem: '/images/nrs/nr-5-comissao-interna-de-prevencao-de-acidentes-cipa-grau-de-risco-1.webp',                                                                               modalidades: ['presencial', 'online'], extra: '20h' },
+  { id: 'nr-05-gr2',            nome: 'NR-05 – CIPA Grau de Risco 2',                        categoria: 'treinamentos', imagem: '/images/nrs/nr-5-comissao-interna-de-prevencao-de-acidentes-cipa-grau-de-risco-2.webp',                                                                               modalidades: ['presencial', 'online'], extra: '20h' },
+  { id: 'nr-05-gr3',            nome: 'NR-05 – CIPA Grau de Risco 3',                        categoria: 'treinamentos', imagem: '/images/nrs/nr-5-risco-3.webp',                                                                                                                                   modalidades: ['presencial', 'online'], extra: '20h' },
+  { id: 'nr-05-gr4',            nome: 'NR-05 – CIPA Grau de Risco 4',                        categoria: 'treinamentos', imagem: '/images/nrs/nr-5-risco-4.webp',                                                                                                                                   modalidades: ['presencial', 'online'], extra: '20h' },
+  { id: 'nr-06',                nome: 'NR-06 – EPI',                                         categoria: 'treinamentos', imagem: '/images/nrs/nr-6.webp',                                                                                                                                           modalidades: ['presencial', 'online'], extra: '4h' },
+  { id: 'nr-10-basico',         nome: 'NR-10 – Segurança em Eletricidade (Básico)',          categoria: 'treinamentos', imagem: '/images/nrs/nr-10-curso-basico-seguranca-e-saude-em-trabalhos-com-eletricidade.webp',                                                                              modalidades: ['presencial'], extra: '40h' },
+  { id: 'nr-10-sep',            nome: 'NR-10 SEP – Alta Tensão',                             categoria: 'treinamentos', imagem: '/images/nrs/nr-10-curso-sep-seguranca-e-saude-em-servicos-eletricos-de-potencia.webp',                                                                           modalidades: ['presencial'], extra: '40h' },
+  { id: 'nr-10-reciclagem',     nome: 'NR-10 – Reciclagem',                                  categoria: 'treinamentos', imagem: '/images/nrs/reciclagem-nr-10-curso-basico-seguranca-e-saude-em-trabalhos-com-eletricidade.webp',                                                                   modalidades: ['presencial'], extra: '8h' },
+  { id: 'nr-11-empilhadeira',   nome: 'NR-11 – Operador de Empilhadeira',                    categoria: 'treinamentos', imagem: '/images/nrs/nr-11-operador-de-empilhadeira.webp',                                                                                                                   modalidades: ['presencial'], extra: '16h' },
+  { id: 'nr-11-guindauto',      nome: 'NR-11 – Operador de Guindauto',                       categoria: 'treinamentos', imagem: '/images/nrs/nr-11-operador-de-guindauto.webp',                                                                                                                      modalidades: ['presencial'], extra: '16h' },
+  { id: 'nr-11-mini-carreg',    nome: 'NR-11 – Operador de Mini Carregadeira',               categoria: 'treinamentos', imagem: '/images/nrs/nr-11-operador-de-mini-carregadeira.webp',                                                                                                              modalidades: ['presencial'], extra: '16h' },
+  { id: 'nr-11-plataforma',     nome: 'NR-11 – Operador de Plataforma Elevatória',           categoria: 'treinamentos', imagem: '/images/nrs/nr-11-operador-de-plataforma-elevatoria.webp',                                                                                                          modalidades: ['presencial'], extra: '8h' },
+  { id: 'nr-11-ponte-rolante',  nome: 'NR-11 – Operador de Ponte Rolante',                   categoria: 'treinamentos', imagem: '/images/nrs/nr-11-operador-de-ponte-rolante.webp',                                                                                                                  modalidades: ['presencial'], extra: '16h' },
+  { id: 'nr-11-retroescav',     nome: 'NR-11 – Operador de Retroescavadeira',                categoria: 'treinamentos', imagem: '/images/nrs/nr-11-operador-de-retroescavadeira.webp',                                                                                                              modalidades: ['presencial'], extra: '16h' },
+  { id: 'nr-12',                nome: 'NR-12 – Máquinas e Equipamentos',                     categoria: 'treinamentos', imagem: '/images/nrs/nr-12-seguranca-com-maquinas-e-equipamentos-no-geral.webp',                                                                                           modalidades: ['presencial'], extra: '8h' },
+  { id: 'nr-17-adm',            nome: 'NR-17 – Ergonomia para Atividades Administrativas',  categoria: 'treinamentos', imagem: '/images/nrs/nr-17-ergonomia-para-atividades-administrativas.webp',                                                                                                  modalidades: ['presencial', 'online'], extra: '8h' },
+  { id: 'nr-17-checkout',       nome: 'NR-17 – Ergonomia para Operador de Check-out',       categoria: 'treinamentos', imagem: '/images/nrs/nr-17-ergonomia-para-operador-de-check-out.webp',                                                                                                      modalidades: ['presencial'], extra: '8h' },
+  { id: 'nr-17-transporte',     nome: 'NR-17 – Ergonomia para Transporte Manual de Peso',   categoria: 'treinamentos', imagem: '/images/nrs/nr-17-ergonomia-para-transporte-manual-de-peso.webp',                                                                                                  modalidades: ['presencial'], extra: '8h' },
+  { id: 'nr-18',                nome: 'NR-18 – Construção Civil',                            categoria: 'treinamentos', imagem: '/images/nrs/nr-18-seguranca-e-saude-no-trabalho-de-construcao-civil.webp',                                                                                       modalidades: ['presencial'], extra: '6h' },
+  { id: 'nr-20-basico',         nome: 'NR-20 – Inflamáveis e Combustíveis (Básico)',         categoria: 'treinamentos', imagem: '/images/nrs/nr-20-curso-basico.webp',                                                                                                                               modalidades: ['presencial'], extra: '4h' },
+  { id: 'nr-20-especifico',     nome: 'NR-20 – Inflamáveis e Combustíveis (Específico)',     categoria: 'treinamentos', imagem: '/images/nrs/nr-20-curso-especifico.webp',                                                                                                                           modalidades: ['presencial'], extra: '16h' },
+  { id: 'nr-20-intermediario',  nome: 'NR-20 – Inflamáveis e Combustíveis (Intermediário)',  categoria: 'treinamentos', imagem: '/images/nrs/nr-20-curso-intermediario.webp',                                                                                                                       modalidades: ['presencial'], extra: '8h' },
+  { id: 'nr-20-avancado-i',     nome: 'NR-20 – Inflamáveis e Combustíveis (Avançado I)',     categoria: 'treinamentos', imagem: '/images/nrs/nr-20-curso-avancado-i.webp',                                                                                                                          modalidades: ['presencial'], extra: '20h' },
+  { id: 'nr-20-avancado-ii',    nome: 'NR-20 – Inflamáveis e Combustíveis (Avançado II)',    categoria: 'treinamentos', imagem: '/images/nrs/nr-20-avancado-ii.webp',                                                                                                                               modalidades: ['presencial'], extra: '20h' },
+  { id: 'nr-20-iniciacao',      nome: 'NR-20 – Iniciação sobre Inflamáveis e Combustíveis', categoria: 'treinamentos', imagem: '/images/nrs/nr-20-iniciacao-sobre-inflamaveis-e-combustiveis.webp',                                                                                               modalidades: ['presencial'], extra: '4h' },
+  { id: 'nr-22-cipamin',        nome: 'NR-22 – CIPAMIN',                                     categoria: 'treinamentos', imagem: '/images/nrs/nr-22-cipamin.webp',                                                                                                                                   modalidades: ['presencial'], extra: '20h' },
+  { id: 'nr-23',                nome: 'NR-23 – Combate a Incêndio',                          categoria: 'treinamentos', imagem: '/images/nrs/nr-23-protecao-contra-incendio.webp',                                                                                                                  modalidades: ['presencial'], extra: '8h' },
+  { id: 'nr-26-geral',          nome: 'NR-26 – Sinalização de Segurança',                    categoria: 'treinamentos', imagem: '/images/nrs/nr-26-sinalizacao-de-seguranca-no-geral.webp',                                                                                                        modalidades: ['presencial', 'online'], extra: '4h' },
+  { id: 'nr-26-laboratorio',    nome: 'NR-26 – Sinalização de Segurança para Laboratório',  categoria: 'treinamentos', imagem: '/images/nrs/nr-26-sinalizacao-de-seguranca-para-laboratorio.webp',                                                                                                modalidades: ['presencial'], extra: '4h' },
+  { id: 'nr-29-cpatp',          nome: 'NR-29 – CPATP',                                       categoria: 'treinamentos', imagem: '/images/nrs/nr-29-cpatp.webp',                                                                                                                                   modalidades: ['presencial'], extra: '20h' },
+  { id: 'nr-29-portuario',      nome: 'NR-29 – Segurança no Trabalho Portuário',             categoria: 'treinamentos', imagem: '/images/nrs/nr-29-seguranca-e-saude-no-trabalho-portuario.webp',                                                                                                  modalidades: ['presencial'], extra: '16h' },
+  { id: 'nr-29-sinaleiro',      nome: 'NR-29 – Trabalho de Sinaleiro',                       categoria: 'treinamentos', imagem: '/images/nrs/nr-29-seguranca-e-saude-para-o-trabalho-de-sinaleiro.webp',                                                                                           modalidades: ['presencial'], extra: '8h' },
+  { id: 'nr-31-cipatr',         nome: 'NR-31 – CIPATR',                                      categoria: 'treinamentos', imagem: '/images/nrs/nr-31-cipatr.webp',                                                                                                                                   modalidades: ['presencial'], extra: '20h' },
+  { id: 'nr-31-agrotoxicos',    nome: 'NR-31 – Uso de Agrotóxicos',                          categoria: 'treinamentos', imagem: '/images/nrs/nr-31-seguranca-e-saude-com-o-uso-de-agrotoxicos.webp',                                                                                               modalidades: ['presencial'], extra: '8h' },
+  { id: 'nr-31-rural-inicial',  nome: 'NR-31 – Trabalho Rural (Inicial)',                    categoria: 'treinamentos', imagem: '/images/nrs/nr-31-seguranca-e-saude-no-trabalho-rural-inicial.webp',                                                                                             modalidades: ['presencial'], extra: '16h' },
+  { id: 'nr-31-rural-periodico',nome: 'NR-31 – Trabalho Rural (Periódico)',                  categoria: 'treinamentos', imagem: '/images/nrs/nr-31-seguranca-e-saude-no-trabalho-rural-periodico.webp',                                                                                           modalidades: ['presencial'], extra: '8h' },
+  { id: 'nr-32',                nome: 'NR-32 – Segurança em Serviços de Saúde',              categoria: 'treinamentos', imagem: '/images/nrs/nr-32-seguranca-em-servicos-de-saude.webp',                                                                                                              modalidades: ['presencial'], extra: '8h' },
+  { id: 'nr-33-supervisor',     nome: 'NR-33 – Supervisor para Espaço Confinado',            categoria: 'treinamentos', imagem: '/images/nrs/nr-33-formacao-supervisor-para-espaco-confinado.webp',                                                                                                  modalidades: ['presencial'], extra: '16h' },
+  { id: 'nr-33-trabalhador',    nome: 'NR-33 – Trabalhador Autorizado e Vigias',             categoria: 'treinamentos', imagem: '/images/nrs/nr-33-formacao-trabalhador-autorizado-e-vigias-para-espaco-confinadoformacao-nr-33-trabalhador-autorizado-e-vigias-para-espaco-confinado.webp',      modalidades: ['presencial'], extra: '16h' },
+  { id: 'nr-33-rec-supervisor', nome: 'NR-33 – Reciclagem Supervisor',                       categoria: 'treinamentos', imagem: '/images/nrs/nr-33-supervisor-para-espaco-confinado-reciclagem.webp',                                                                                              modalidades: ['presencial'], extra: '8h' },
+  { id: 'nr-33-rec-trabalhador',nome: 'NR-33 – Reciclagem Trabalhador Autorizado',           categoria: 'treinamentos', imagem: '/images/nrs/nr-33-trabalhador-autorizado-e-vigias-para-espaco-confinado-reciclagem.webp',                                                                          modalidades: ['presencial'], extra: '8h' },
+  { id: 'nr-34-admissional',    nome: 'NR-34 – Trabalho Naval (Admissional)',                categoria: 'treinamentos', imagem: '/images/nrs/nr-34-admissional-seguranca-e-saude-no-trabalho-naval.webp',                                                                                            modalidades: ['presencial'], extra: '16h' },
+  { id: 'nr-34-periodico',      nome: 'NR-34 – Trabalho Naval (Periódico)',                  categoria: 'treinamentos', imagem: '/images/nrs/nr-34-periodico-seguranca-e-saude-no-trabalho-naval.webp',                                                                                              modalidades: ['presencial'], extra: '8h' },
+  { id: 'nr-35-formacao',       nome: 'NR-35 – Trabalho em Altura (Formação)',               categoria: 'treinamentos', imagem: '/images/nrs/formacao-nr-35-trabalho-em-altura.webp',                                                                                                               modalidades: ['presencial'], extra: '8h' },
+  { id: 'nr-35-reciclagem',     nome: 'NR-35 – Trabalho em Altura (Reciclagem)',             categoria: 'treinamentos', imagem: '/images/nrs/reciclagem-nr-35-trabalho-em-altura.webp',                                                                                                              modalidades: ['presencial'], extra: '4h' },
+  { id: 'nr-36',                nome: 'NR-36 – Frigoríficos',                                categoria: 'treinamentos', imagem: '/images/nrs/nr-36-seguranca-e-saude-nos-trabalhos-frigorificos.webp',                                                                                             modalidades: ['presencial'], extra: '8h' },
+  // Treinamentos avulsos
+  { id: 'tr-brigada',           nome: 'Brigada Voluntária',                                  categoria: 'treinamentos', imagem: '/images/nrs/brigada-voluntaria.webp',                                                                                                                               modalidades: ['presencial'], extra: '16h' },
+  { id: 'tr-direcao-def',       nome: 'Direção Defensiva',                                   categoria: 'treinamentos', imagem: '/images/nrs/direcao-defensiva.webp',                                                                                                                               modalidades: ['presencial', 'online'], extra: '8h' },
+  { id: 'tr-ginastica-laboral', nome: 'Ginástica Laboral',                                   categoria: 'treinamentos', imagem: '/images/nrs/importancia-da-ginastica-laboral.webp',                                                                                                              modalidades: ['presencial', 'online'], extra: '4h' },
+  { id: 'tr-normas-nrs',        nome: 'Normas e NRs (visão geral)',                          categoria: 'treinamentos', imagem: '/images/nrs/normas-nrs.webp',                                                                                                                                    modalidades: ['presencial', 'online'], extra: '4h' },
+  { id: 'tr-primeiros-socorros',nome: 'Primeiros Socorros',                                  categoria: 'treinamentos', imagem: '/images/nrs/primeiros-socorros.webp',                                                                                                                            modalidades: ['presencial'], extra: '8h' },
+  { id: 'tr-conserv-auditiva',  nome: 'Programa de Conservação Auditiva',                    categoria: 'treinamentos', imagem: '/images/nrs/sobre-programa-de-conservacao-auditiva.webp',                                                                                                       modalidades: ['presencial'], extra: '4h' },
+  { id: 'tr-prot-respiratoria', nome: 'Programa de Proteção Respiratória',                   categoria: 'treinamentos', imagem: '/images/nrs/sobre-programa-de-protecao-respiratoria.webp',                                                                                                      modalidades: ['presencial'], extra: '4h' },
+  { id: 'tr-telemarketing',     nome: 'Telemarketing',                                       categoria: 'treinamentos', imagem: '/images/nrs/telemarketing.webp',                                                                                                                                modalidades: ['presencial', 'online'], extra: '20h' },
 ];
 
 // ---------------------------------------------------------------------------
-// Graduações e Tecnólogos
+// Graduações, Tecnólogos e Pós-Graduações
+// Fonte: images/graduacoes/
 // ---------------------------------------------------------------------------
 export const CURSOS_GRADUACOES: Curso[] = [
-  // Bacharelados
-  { id: 'grad-adm', nome: 'Administração', categoria: 'graduacoes', imagem: '/images/grad-adm.jpg', modalidades: ['presencial', 'online'], extra: '4 anos' },
-  { id: 'grad-direito', nome: 'Direito', categoria: 'graduacoes', imagem: '/images/grad-direito.jpg', modalidades: ['presencial'], extra: '5 anos' },
-  { id: 'grad-pedagogia', nome: 'Pedagogia', categoria: 'graduacoes', imagem: '/images/grad-pedagogia.jpg', modalidades: ['presencial', 'online'], extra: '4 anos' },
-  { id: 'grad-psicologia', nome: 'Psicologia', categoria: 'graduacoes', imagem: '/images/grad-psicologia.jpg', modalidades: ['presencial'], extra: '5 anos' },
-  { id: 'grad-contabeis', nome: 'Ciências Contábeis', categoria: 'graduacoes', imagem: '/images/grad-contabeis.jpg', modalidades: ['presencial', 'online'], extra: '4 anos' },
-  { id: 'grad-eng-civil', nome: 'Engenharia Civil', categoria: 'graduacoes', imagem: '/images/grad-eng-civil.jpg', modalidades: ['presencial'], extra: '5 anos' },
-  { id: 'grad-eng-producao', nome: 'Engenharia de Produção', categoria: 'graduacoes', imagem: '/images/grad-eng-producao.jpg', modalidades: ['presencial'], extra: '5 anos' },
-  { id: 'grad-eng-mecanica', nome: 'Engenharia Mecânica', categoria: 'graduacoes', imagem: '/images/grad-eng-mecanica.jpg', modalidades: ['presencial'], extra: '5 anos' },
-  { id: 'grad-eng-eletrica', nome: 'Engenharia Elétrica', categoria: 'graduacoes', imagem: '/images/grad-eng-eletrica.jpg', modalidades: ['presencial'], extra: '5 anos' },
-  { id: 'grad-arquitetura', nome: 'Arquitetura e Urbanismo', categoria: 'graduacoes', imagem: '/images/grad-arquitetura.jpg', modalidades: ['presencial'], extra: '5 anos' },
-  { id: 'grad-medicina', nome: 'Medicina', categoria: 'graduacoes', imagem: '/images/grad-medicina.jpg', modalidades: ['presencial'], extra: '6 anos' },
-  { id: 'grad-enfermagem', nome: 'Enfermagem', categoria: 'graduacoes', imagem: '/images/grad-enfermagem.jpg', modalidades: ['presencial'], extra: '5 anos' },
-  { id: 'grad-fisioterapia', nome: 'Fisioterapia', categoria: 'graduacoes', imagem: '/images/grad-fisioterapia.jpg', modalidades: ['presencial'], extra: '5 anos' },
-  { id: 'grad-nutricao', nome: 'Nutrição', categoria: 'graduacoes', imagem: '/images/grad-nutricao.jpg', modalidades: ['presencial'], extra: '4 anos' },
-  { id: 'grad-farmacia', nome: 'Farmácia', categoria: 'graduacoes', imagem: '/images/grad-farmacia.jpg', modalidades: ['presencial'], extra: '5 anos' },
-  { id: 'grad-biomedicina', nome: 'Biomedicina', categoria: 'graduacoes', imagem: '/images/grad-biomedicina.jpg', modalidades: ['presencial'], extra: '4 anos' },
-  { id: 'grad-terapia-ocupacional', nome: 'Terapia Ocupacional', categoria: 'graduacoes', imagem: '/images/grad-to.jpg', modalidades: ['presencial'], extra: '4 anos' },
-  { id: 'grad-educacao-fisica', nome: 'Educação Física', categoria: 'graduacoes', imagem: '/images/grad-ef.jpg', modalidades: ['presencial'], extra: '4 anos' },
-  // Tecnólogos
-  { id: 'tec-rh-grad', nome: 'Tecnólogo em Recursos Humanos', categoria: 'graduacoes', imagem: '/images/tec-rh.jpg', modalidades: ['presencial', 'online'], extra: '2 anos' },
-  { id: 'tec-logistica-grad', nome: 'Tecnólogo em Logística', categoria: 'graduacoes', imagem: '/images/tec-logistica.jpg', modalidades: ['presencial', 'online'], extra: '2 anos' },
-  { id: 'tec-gestao-financeira', nome: 'Tecnólogo em Gestão Financeira', categoria: 'graduacoes', imagem: '/images/tec-financeiro.jpg', modalidades: ['presencial', 'online'], extra: '2 anos' },
-  { id: 'tec-marketing-grad', nome: 'Tecnólogo em Marketing', categoria: 'graduacoes', imagem: '/images/tec-marketing.jpg', modalidades: ['presencial', 'online'], extra: '2 anos' },
-  { id: 'tec-comercio-exterior', nome: 'Tecnólogo em Comércio Exterior', categoria: 'graduacoes', imagem: '/images/tec-comercio.jpg', modalidades: ['presencial', 'online'], extra: '2 anos' },
-  { id: 'tec-processos-gerenciais', nome: 'Tecnólogo em Processos Gerenciais', categoria: 'graduacoes', imagem: '/images/tec-processos.jpg', modalidades: ['presencial', 'online'], extra: '2 anos' },
-  { id: 'tec-seguranca-grad', nome: 'Tecnólogo em Segurança do Trabalho', categoria: 'graduacoes', imagem: '/images/tec-sst.jpg', modalidades: ['presencial', 'online'], extra: '2 anos' },
-  { id: 'tec-ti', nome: 'Tecnólogo em Análise e Des. de Sistemas', categoria: 'graduacoes', imagem: '/images/tec-ti.jpg', modalidades: ['presencial', 'online'], extra: '2 anos' },
-  { id: 'tec-design-moda', nome: 'Tecnólogo em Design de Moda', categoria: 'graduacoes', imagem: '/images/tec-moda.jpg', modalidades: ['presencial'], extra: '2 anos' },
-  { id: 'tec-radiologia-grad', nome: 'Tecnólogo em Radiologia', categoria: 'graduacoes', imagem: '/images/tec-radiologia.jpg', modalidades: ['presencial'], extra: '2,5 anos' },
-  // Pós-Graduações
-  { id: 'pos-gestao-pessoas', nome: 'Pós – Gestão de Pessoas', categoria: 'graduacoes', imagem: '/images/pos-gp.jpg', modalidades: ['presencial', 'online'], extra: 'MBA 360h' },
-  { id: 'pos-eng-seguranca', nome: 'Pós – Engenharia de Segurança', categoria: 'graduacoes', imagem: '/images/pos-eng-seg.jpg', modalidades: ['presencial'], extra: 'Especialização 360h' },
-  { id: 'pos-adm-financeira', nome: 'Pós – Administração Financeira', categoria: 'graduacoes', imagem: '/images/pos-adm-fin.jpg', modalidades: ['presencial', 'online'], extra: 'MBA 360h' },
-  { id: 'pos-logistica', nome: 'Pós – Logística Empresarial', categoria: 'graduacoes', imagem: '/images/pos-log.jpg', modalidades: ['presencial', 'online'], extra: 'MBA 360h' },
-  { id: 'pos-direito-empresarial', nome: 'Pós – Direito Empresarial', categoria: 'graduacoes', imagem: '/images/pos-dir.jpg', modalidades: ['presencial', 'online'], extra: 'Especialização 360h' },
-  { id: 'pos-saude-publica', nome: 'Pós – Saúde Pública e da Família', categoria: 'graduacoes', imagem: '/images/pos-saude.jpg', modalidades: ['presencial', 'online'], extra: 'Especialização 360h' },
-  { id: 'pos-neuropsicologia', nome: 'Pós – Neuropsicologia', categoria: 'graduacoes', imagem: '/images/pos-neuro.jpg', modalidades: ['presencial', 'online'], extra: 'Especialização 360h' },
-  { id: 'pos-gestao-projetos', nome: 'Pós – Gestão de Projetos', categoria: 'graduacoes', imagem: '/images/pos-proj.jpg', modalidades: ['presencial', 'online'], extra: 'MBA 360h' },
-  { id: 'pos-esg', nome: 'Pós – ESG e Sustentabilidade', categoria: 'graduacoes', imagem: '/images/pos-esg.jpg', modalidades: ['presencial', 'online'], extra: 'Especialização 360h' },
-  { id: 'pos-marketing-digital', nome: 'Pós – Marketing Digital', categoria: 'graduacoes', imagem: '/images/pos-mkt.jpg', modalidades: ['presencial', 'online'], extra: 'MBA 360h' },
-  { id: 'pos-docencia', nome: 'Pós – Docência para Educação Superior', categoria: 'graduacoes', imagem: '/images/pos-docencia.jpg', modalidades: ['presencial', 'online'], extra: 'Especialização 360h' },
-  { id: 'pos-nutricao-clinica', nome: 'Pós – Nutrição Clínica', categoria: 'graduacoes', imagem: '/images/pos-nutricao.jpg', modalidades: ['presencial', 'online'], extra: 'Especialização 360h' },
-  { id: 'pos-fisioterapia-esp', nome: 'Pós – Fisioterapia Hospitalar', categoria: 'graduacoes', imagem: '/images/pos-fisio.jpg', modalidades: ['presencial', 'online'], extra: 'Especialização 360h' },
-  { id: 'pos-educacao-especial', nome: 'Pós – Educação Especial/Inclusiva', categoria: 'graduacoes', imagem: '/images/pos-ee.jpg', modalidades: ['presencial', 'online'], extra: 'Especialização 360h' },
-  { id: 'pos-petro-gas', nome: 'Pós – Petróleo e Gás', categoria: 'graduacoes', imagem: '/images/pos-petroleo.jpg', modalidades: ['presencial', 'online'], extra: 'MBA 360h' },
+  { id: 'grad-adm',                  nome: 'Administração',                            categoria: 'graduacoes', imagem: '/images/graduacoes/administracao.png',                        modalidades: ['presencial', 'online'], extra: '4 anos' },
+  { id: 'grad-analise-sistemas',     nome: 'Análise e Desenvolvimento de Sistemas',    categoria: 'graduacoes', imagem: '/images/graduacoes/analise-e-desenvolvimento-de-sistemas.png', modalidades: ['presencial', 'online'], extra: '2,5 anos' },
+  { id: 'grad-arquitetura',          nome: 'Arquitetura e Urbanismo',                  categoria: 'graduacoes', imagem: '/images/graduacoes/arquitetura-e-urbanismo.png',              modalidades: ['presencial'], extra: '5 anos' },
+  { id: 'grad-ciencias-biologicas',  nome: 'Ciências Biológicas',                      categoria: 'graduacoes', imagem: '/images/graduacoes/ciencias-biologicas.png',                  modalidades: ['presencial'], extra: '4 anos' },
+  { id: 'grad-contabeis',            nome: 'Ciências Contábeis',                       categoria: 'graduacoes', imagem: '/images/graduacoes/ciencias-contabeis.png',                   modalidades: ['presencial', 'online'], extra: '4 anos' },
+  { id: 'grad-ciencias-economicas',  nome: 'Ciências Econômicas',                      categoria: 'graduacoes', imagem: '/images/graduacoes/ciencias-economicas.png',                  modalidades: ['presencial'], extra: '4 anos' },
+  { id: 'grad-ciencias-politicas',   nome: 'Ciências Políticas',                       categoria: 'graduacoes', imagem: '/images/graduacoes/ciencias-politicas.png',                   modalidades: ['presencial'], extra: '4 anos' },
+  { id: 'grad-coaching-digital',     nome: 'Coaching Digital',                         categoria: 'graduacoes', imagem: '/images/graduacoes/coaching-digital.jpg',                     modalidades: ['presencial', 'online'], extra: '2 anos' },
+  { id: 'grad-computacao-nuvem',     nome: 'Computação em Nuvem',                      categoria: 'graduacoes', imagem: '/images/graduacoes/computacao-em-nuvem.png',                  modalidades: ['presencial', 'online'], extra: '2,5 anos' },
+  { id: 'grad-ciencia-dados',        nome: 'Ciência de Dados',                         categoria: 'graduacoes', imagem: '/images/graduacoes/data-science.png',                         modalidades: ['presencial', 'online'], extra: '2,5 anos' },
+  { id: 'grad-educacao-especial',    nome: 'Educação Especial e Inclusiva',            categoria: 'graduacoes', imagem: '/images/graduacoes/educacao-especial.png',                    modalidades: ['presencial', 'online'], extra: '4 anos' },
+  { id: 'grad-empreendedorismo',     nome: 'Empreendedorismo Digital',                 categoria: 'graduacoes', imagem: '/images/graduacoes/empreendedorismo-digital.png',             modalidades: ['presencial', 'online'], extra: '2 anos' },
+  { id: 'grad-enfermagem',           nome: 'Enfermagem',                               categoria: 'graduacoes', imagem: '/images/graduacoes/enfermagem.png',                           modalidades: ['presencial'], extra: '5 anos' },
+  { id: 'grad-eng-producao',         nome: 'Engenharia de Produção',                   categoria: 'graduacoes', imagem: '/images/graduacoes/engenharia-de-producao.png',               modalidades: ['presencial'], extra: '5 anos' },
+  { id: 'grad-gestao-ambiental',     nome: 'Gestão Ambiental',                         categoria: 'graduacoes', imagem: '/images/graduacoes/gestao-ambiental.png',                     modalidades: ['presencial', 'online'], extra: '2,5 anos' },
+  { id: 'grad-gestao-comercial',     nome: 'Gestão Comercial',                         categoria: 'graduacoes', imagem: '/images/graduacoes/gestao-comercial.png',                     modalidades: ['presencial', 'online'], extra: '2,5 anos' },
+  { id: 'grad-gestao-qualidade',     nome: 'Gestão da Qualidade',                      categoria: 'graduacoes', imagem: '/images/graduacoes/gestao-de-qualidade.png',                  modalidades: ['presencial', 'online'], extra: '2,5 anos' },
+  { id: 'grad-gestao-jur',           nome: 'Gestão de Serviços Jurídicos',             categoria: 'graduacoes', imagem: '/images/graduacoes/gestao-de-servicos-juridicos.png',         modalidades: ['presencial', 'online'], extra: '2,5 anos' },
+  { id: 'grad-gestao-transito',      nome: 'Gestão de Trânsito',                       categoria: 'graduacoes', imagem: '/images/graduacoes/gestao-de-transito.png',                   modalidades: ['presencial', 'online'], extra: '2,5 anos' },
+  { id: 'grad-gestao-financeira',    nome: 'Gestão Financeira',                        categoria: 'graduacoes', imagem: '/images/graduacoes/gestao-financeira.png',                    modalidades: ['presencial', 'online'], extra: '2,5 anos' },
+  { id: 'grad-gestao-hospitalar',    nome: 'Gestão Hospitalar',                        categoria: 'graduacoes', imagem: '/images/graduacoes/gestao-hospitalar.png',                    modalidades: ['presencial', 'online'], extra: '2,5 anos' },
+  { id: 'grad-gestao-publica',       nome: 'Gestão Pública',                           categoria: 'graduacoes', imagem: '/images/graduacoes/gestao-publica.png',                       modalidades: ['presencial', 'online'], extra: '2,5 anos' },
+  { id: 'grad-gestao-rh',            nome: 'Gestão de Recursos Humanos',               categoria: 'graduacoes', imagem: '/images/graduacoes/gestao-rh.png',                            modalidades: ['presencial', 'online'], extra: '2,5 anos' },
+  { id: 'grad-gestao-ti',            nome: 'Gestão de TI',                             categoria: 'graduacoes', imagem: '/images/graduacoes/gestao-ti.png',                            modalidades: ['presencial', 'online'], extra: '2,5 anos' },
+  { id: 'grad-lic-espanhol',         nome: 'Licenciatura em Língua Espanhola',         categoria: 'graduacoes', imagem: '/images/graduacoes/licenciatura-espanhol.png',                modalidades: ['presencial'], extra: '4 anos' },
+  { id: 'grad-lic-ingles',           nome: 'Licenciatura em Língua Inglesa',           categoria: 'graduacoes', imagem: '/images/graduacoes/licenciatura-ingles.png',                  modalidades: ['presencial'], extra: '4 anos' },
+  { id: 'grad-lic-lingua-pt',        nome: 'Licenciatura em Língua Portuguesa',        categoria: 'graduacoes', imagem: '/images/graduacoes/licenciatura-lingua-portuguesa.png',       modalidades: ['presencial'], extra: '4 anos' },
+  { id: 'grad-logistica',            nome: 'Logística',                                categoria: 'graduacoes', imagem: '/images/graduacoes/logistica.png',                            modalidades: ['presencial', 'online'], extra: '2,5 anos' },
+  { id: 'grad-marketing',            nome: 'Marketing',                                categoria: 'graduacoes', imagem: '/images/graduacoes/marketing.png',                            modalidades: ['presencial', 'online'], extra: '2,5 anos' },
+  { id: 'grad-pedagogia',            nome: 'Pedagogia',                                categoria: 'graduacoes', imagem: '/images/graduacoes/pedagogia.png',                            modalidades: ['presencial', 'online'], extra: '4 anos' },
+  { id: 'grad-seguranca-publica',    nome: 'Segurança Pública',                        categoria: 'graduacoes', imagem: '/images/graduacoes/seguranca-publica.png',                    modalidades: ['presencial'], extra: '4 anos' },
 ];
 
 // ---------------------------------------------------------------------------
 // Idiomas
+// Fonte: images/idiomas/
+// ATENÇÃO: renomear ingles-avançado.png → ingles-avancado.png localmente
 // ---------------------------------------------------------------------------
 export const CURSOS_IDIOMAS: Curso[] = [
-  { id: 'id-ingles', nome: 'Inglês', categoria: 'idiomas', imagem: '/images/ingles.jpg', modalidades: ['presencial', 'online'], extra: 'Básico ao Avançado' },
-  { id: 'id-espanhol', nome: 'Espanhol', categoria: 'idiomas', imagem: '/images/espanhol.jpg', modalidades: ['presencial', 'online'], extra: 'Básico ao Avançado' },
-  { id: 'id-frances', nome: 'Francês', categoria: 'idiomas', imagem: '/images/frances.jpg', modalidades: ['presencial', 'online'], extra: 'Básico ao Avançado' },
-  { id: 'id-ingles-kids', nome: 'Inglês Kids', categoria: 'idiomas', imagem: '/images/ingles-kids.jpg', modalidades: ['presencial'], extra: 'A partir de 7 anos' },
-  { id: 'id-espanhol-kids', nome: 'Espanhol Kids', categoria: 'idiomas', imagem: '/images/espanhol-kids.jpg', modalidades: ['presencial'], extra: 'A partir de 7 anos' },
-  { id: 'id-ingles-negocios', nome: 'Inglês para Negócios', categoria: 'idiomas', imagem: '/images/ingles-biz.jpg', modalidades: ['presencial', 'online'], extra: 'Business English' },
+  { id: 'id-ingles-basico',        nome: 'Inglês Básico',        categoria: 'idiomas', imagem: '/images/idiomas/ingles-basico.png',        modalidades: ['presencial', 'online'], extra: 'Básico' },
+  { id: 'id-ingles-intermediario', nome: 'Inglês Intermediário', categoria: 'idiomas', imagem: '/images/idiomas/ingles-intermediario.png',  modalidades: ['presencial', 'online'], extra: 'Intermediário' },
+  { id: 'id-ingles-avancado',      nome: 'Inglês Avançado',      categoria: 'idiomas', imagem: '/images/idiomas/ingles-avancado.png',       modalidades: ['presencial', 'online'], extra: 'Avançado' },
+  { id: 'id-libras',               nome: 'LIBRAS',               categoria: 'idiomas', imagem: '/images/idiomas/libras.png',                modalidades: ['presencial', 'online'], extra: '60h' },
 ];
 
 // ---------------------------------------------------------------------------
 // Kids
+// Fonte: images/kids/
 // ---------------------------------------------------------------------------
 export const CURSOS_KIDS: Curso[] = [
-  { id: 'kids-informatica', nome: 'Informática para Crianças', categoria: 'kids', imagem: '/images/kids-informatica.jpg', modalidades: ['presencial'], extra: 'De 6 a 14 anos' },
-  { id: 'kids-robotica', nome: 'Robótica Educacional', categoria: 'kids', imagem: '/images/kids-robotica.jpg', modalidades: ['presencial'], extra: 'De 8 a 16 anos' },
-  { id: 'kids-ingles', nome: 'Inglês para Crianças', categoria: 'kids', imagem: '/images/kids-ingles.jpg', modalidades: ['presencial'], extra: 'De 5 a 12 anos' },
+  { id: 'kids-games',      nome: 'Games Kids',       categoria: 'kids', imagem: '/images/kids/games-kids.png',       modalidades: ['presencial'] },
+  { id: 'kids-informatica',nome: 'Informática Kids', categoria: 'kids', imagem: '/images/kids/informatica-kids.jpg', modalidades: ['presencial'] },
+  { id: 'kids-ingles',     nome: 'Inglês Kids',      categoria: 'kids', imagem: '/images/kids/ingles-kids.png',      modalidades: ['presencial'] },
+  { id: 'kids-robotica',   nome: 'Robótica Kids',    categoria: 'kids', imagem: '/images/kids/robotica-kids.png',    modalidades: ['presencial'] },
 ];
 
 // ---------------------------------------------------------------------------
-// Exports agregados
+// Agregado — todos os cursos em um único array
 // ---------------------------------------------------------------------------
 export const TODOS_OS_CURSOS: Curso[] = [
   ...CURSOS_TECNICOS,
@@ -271,53 +264,3 @@ export const TODOS_OS_CURSOS: Curso[] = [
   ...CURSOS_IDIOMAS,
   ...CURSOS_KIDS,
 ];
-
-export const CURSOS_POR_CATEGORIA: Record<CategoriaSlug, Curso[]> = {
-  tecnicos: CURSOS_TECNICOS,
-  profissionalizantes: CURSOS_PROFISSIONALIZANTES,
-  treinamentos: CURSOS_TREINAMENTOS,
-  graduacoes: CURSOS_GRADUACOES,
-  idiomas: CURSOS_IDIOMAS,
-  kids: CURSOS_KIDS,
-};
-
-export const TOTAL_CURSOS = TODOS_OS_CURSOS.length;
-
-// ---------------------------------------------------------------------------
-// Utilitários
-// ---------------------------------------------------------------------------
-
-/** Busca por nome (case-insensitive, sem acento) */
-export function buscarCursos(query: string): Curso[] {
-  if (!query.trim()) return TODOS_OS_CURSOS;
-  const normalizar = (s: string) =>
-    s
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
-  const q = normalizar(query);
-  return TODOS_OS_CURSOS.filter(
-    (c) =>
-      normalizar(c.nome).includes(q) ||
-      normalizar(c.extra ?? '').includes(q)
-  );
-}
-
-/** Número WhatsApp da CQP — DDI + DDD + número (sem espaços, traços ou parênteses) */
-export const WA_NUMBER = '5522988332218';
-
-/** Gera URL do WhatsApp com mensagem contextual por curso */
-export function getCursoWhatsAppUrl(curso: Curso): string {
-  const texto = encodeURIComponent(
-    `Olá! Gostaria de mais informações sobre o curso de ${curso.nome}.`
-  );
-  return `https://wa.me/${WA_NUMBER}?text=${texto}`;
-}
-
-/** Gera URL do WhatsApp genérico (sem curso específico) */
-export function getWhatsAppUrl(): string {
-  const texto = encodeURIComponent(
-    'Olá! Gostaria de mais informações sobre os cursos da CQP.'
-  );
-  return `https://wa.me/${WA_NUMBER}?text=${texto}`;
-}
