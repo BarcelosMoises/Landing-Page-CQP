@@ -264,3 +264,54 @@ export const TODOS_OS_CURSOS: Curso[] = [
   ...CURSOS_IDIOMAS,
   ...CURSOS_KIDS,
 ];
+
+// ---------------------------------------------------------------------------
+// CURSOS_POR_CATEGORIA — Record<CategoriaSlug, Curso[]>
+// Usado pelo CoursesSection para filtrar por aba.
+// ---------------------------------------------------------------------------
+export const CURSOS_POR_CATEGORIA: Record<CategoriaSlug, Curso[]> = {
+  tecnicos:            CURSOS_TECNICOS,
+  profissionalizantes: CURSOS_PROFISSIONALIZANTES,
+  treinamentos:        CURSOS_TREINAMENTOS,
+  graduacoes:          CURSOS_GRADUACOES,
+  idiomas:             CURSOS_IDIOMAS,
+  kids:                CURSOS_KIDS,
+};
+
+// ---------------------------------------------------------------------------
+// buscarCursos — busca case-insensitive no nome e id do curso
+// ---------------------------------------------------------------------------
+export function buscarCursos(query: string): Curso[] {
+  const q = query
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+  return TODOS_OS_CURSOS.filter((c) => {
+    const nome = c.nome
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+    const id = c.id.toLowerCase();
+    return nome.includes(q) || id.includes(q);
+  });
+}
+
+// ---------------------------------------------------------------------------
+// WhatsApp helpers
+// Número padrão da CQP — altere aqui para mudar em todo o site.
+// ---------------------------------------------------------------------------
+const WHATSAPP_NUMBER = '5500000000000'; // TODO: substituir pelo número real da CQP
+
+export function getWhatsAppUrl(mensagem?: string): string {
+  const base = `https://wa.me/${WHATSAPP_NUMBER}`;
+  if (!mensagem) return base;
+  return `${base}?text=${encodeURIComponent(mensagem)}`;
+}
+
+export function getCursoWhatsAppUrl(curso: Curso): string {
+  if (curso.whatsapp) {
+    return getWhatsAppUrl(curso.whatsapp);
+  }
+  const mensagem = `Olá! Tenho interesse no curso de *${curso.nome}* e gostaria de mais informações.`;
+  return getWhatsAppUrl(mensagem);
+}
