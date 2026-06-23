@@ -303,7 +303,8 @@ export function buscarCursos(query: string): Curso[] {
   );
 }
 
-const WA_NUMBER = '5522999999999'; // TODO: substituir pelo número real da CQP
+/** Número WhatsApp da CQP — DDI + DDD + número (sem espaços, traços ou parênteses) */
+export const WA_NUMBER = '5522988332218';
 
 /** Gera URL do WhatsApp com mensagem contextual por curso */
 export function getCursoWhatsAppUrl(curso: Curso): string {
