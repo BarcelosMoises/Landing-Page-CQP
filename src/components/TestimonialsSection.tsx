@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { DEPOIMENTOS, type Depoimento } from '../../data/depoimentos';
 
 // ---------------------------------------------------------------------------
@@ -88,7 +88,6 @@ function TestimonialSlide({ dep, active }: { dep: Depoimento; active: boolean })
       aria-label={`Depoimento de ${dep.nome}`}
       aria-hidden={!active}
     >
-      {/* Decorative quote mark */}
       <span className="test-quote" aria-hidden="true">&ldquo;</span>
 
       <blockquote className="test-blockquote">
@@ -119,7 +118,7 @@ export default function TestimonialsSection({
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const [animating, setAnimating] = useState(false);
-  const trackRef = useRef<HTMLDivElement>(null);
+  // trackRef removido — não era referenciado no JSX (TS6133)
   const sectionRef = useRef<HTMLElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const total = depoimentos.length;
@@ -145,7 +144,6 @@ export default function TestimonialsSection({
     return () => { timerRef.current && clearInterval(timerRef.current); };
   }, [paused, autoPlayInterval, total]);
 
-  // Keyboard nav on focused track
   const onKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'ArrowLeft') prev();
     if (e.key === 'ArrowRight') next();
@@ -175,7 +173,6 @@ export default function TestimonialsSection({
   return (
     <>
       <style>{`
-        /* ---- Section ---- */
         .test-section {
           position: relative;
           background: linear-gradient(160deg, #7aeeee 0%, #4fd4d4 55%, #33B8B8 100%);
@@ -184,7 +181,6 @@ export default function TestimonialsSection({
           overflow: hidden;
         }
 
-        /* Grain overlay */
         .test-section::before {
           content: '';
           position: absolute;
@@ -194,7 +190,6 @@ export default function TestimonialsSection({
           opacity: 0.6;
         }
 
-        /* Navy circle decoration */
         .test-section::after {
           content: '';
           position: absolute;
@@ -213,7 +208,6 @@ export default function TestimonialsSection({
           margin-inline: auto;
         }
 
-        /* ---- Header ---- */
         .test-header {
           text-align: center;
           margin-bottom: clamp(2.5rem, 4vw, 4rem);
@@ -252,7 +246,6 @@ export default function TestimonialsSection({
           margin: 0;
         }
 
-        /* ---- Carousel wrapper ---- */
         .test-carousel {
           position: relative;
           background: rgba(255,255,255,0.55);
@@ -265,7 +258,6 @@ export default function TestimonialsSection({
           box-shadow: 0 8px 32px rgba(0,18,32,0.12), 0 1px 0 rgba(255,255,255,0.8) inset;
         }
 
-        /* ---- Slide ---- */
         .test-slide {
           display: none;
           flex-direction: column;
@@ -273,16 +265,13 @@ export default function TestimonialsSection({
           animation: test-fade-in 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
         }
 
-        .test-slide--active {
-          display: flex;
-        }
+        .test-slide--active { display: flex; }
 
         @keyframes test-fade-in {
           from { opacity: 0; transform: translateX(16px); }
           to   { opacity: 1; transform: translateX(0); }
         }
 
-        /* ---- Quote decoration ---- */
         .test-quote {
           font-family: 'Boska', Georgia, serif;
           font-size: clamp(4rem, 6vw, 7rem);
@@ -295,10 +284,7 @@ export default function TestimonialsSection({
           user-select: none;
         }
 
-        /* ---- Text ---- */
-        .test-blockquote {
-          margin: 0;
-        }
+        .test-blockquote { margin: 0; }
 
         .test-text {
           font-family: 'Boska', Georgia, serif;
@@ -312,24 +298,11 @@ export default function TestimonialsSection({
           max-width: 64ch;
         }
 
-        /* ---- Author ---- */
-        .test-author {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-        }
+        .test-author { display: flex; align-items: center; gap: 1rem; }
 
-        .test-author-info {
-          display: flex;
-          flex-direction: column;
-          gap: 0.15rem;
-        }
+        .test-author-info { display: flex; flex-direction: column; gap: 0.15rem; }
 
-        .test-stars {
-          display: flex;
-          gap: 0.1rem;
-          margin-bottom: 0.15rem;
-        }
+        .test-stars { display: flex; gap: 0.1rem; margin-bottom: 0.15rem; }
 
         .test-author-name {
           font-size: clamp(0.9rem, 0.8rem + 0.4vw, 1.05rem);
@@ -339,21 +312,9 @@ export default function TestimonialsSection({
           line-height: 1.2;
         }
 
-        .test-author-course {
-          font-size: 0.8125rem;
-          font-weight: 600;
-          color: #0c6161;
-          margin: 0;
-        }
+        .test-author-course { font-size: 0.8125rem; font-weight: 600; color: #0c6161; margin: 0; }
+        .test-author-detail { font-size: 0.75rem; color: rgba(0,18,32,0.5); margin: 0; margin-top: 0.1rem; }
 
-        .test-author-detail {
-          font-size: 0.75rem;
-          color: rgba(0,18,32,0.5);
-          margin: 0;
-          margin-top: 0.1rem;
-        }
-
-        /* ---- Controls ---- */
         .test-controls {
           display: flex;
           align-items: center;
@@ -362,12 +323,7 @@ export default function TestimonialsSection({
           gap: 1rem;
         }
 
-        /* Dots */
-        .test-dots {
-          display: flex;
-          gap: 0.45rem;
-          align-items: center;
-        }
+        .test-dots { display: flex; gap: 0.45rem; align-items: center; }
 
         .test-dot {
           width: 8px;
@@ -381,25 +337,11 @@ export default function TestimonialsSection({
           flex-shrink: 0;
         }
 
-        .test-dot--active {
-          background: #001220;
-          width: 22px;
-        }
+        .test-dot--active { background: #001220; width: 22px; }
+        .test-dot:hover:not(.test-dot--active) { background: rgba(0,18,32,0.45); }
+        .test-dot:focus-visible { outline: 2px solid #001220; outline-offset: 3px; }
 
-        .test-dot:hover:not(.test-dot--active) {
-          background: rgba(0,18,32,0.45);
-        }
-
-        .test-dot:focus-visible {
-          outline: 2px solid #001220;
-          outline-offset: 3px;
-        }
-
-        /* Arrows */
-        .test-arrows {
-          display: flex;
-          gap: 0.5rem;
-        }
+        .test-arrows { display: flex; gap: 0.5rem; }
 
         .test-arrow {
           display: flex;
@@ -415,21 +357,10 @@ export default function TestimonialsSection({
           transition: background 180ms, transform 180ms cubic-bezier(0.16,1,0.3,1);
         }
 
-        .test-arrow:hover {
-          background: rgba(0,18,32,0.18);
-          transform: scale(1.06);
-        }
+        .test-arrow:hover { background: rgba(0,18,32,0.18); transform: scale(1.06); }
+        .test-arrow:focus-visible { outline: 2px solid #001220; outline-offset: 3px; }
+        .test-arrow:active { transform: scale(0.96); }
 
-        .test-arrow:focus-visible {
-          outline: 2px solid #001220;
-          outline-offset: 3px;
-        }
-
-        .test-arrow:active {
-          transform: scale(0.96);
-        }
-
-        /* ---- Progress bar ---- */
         .test-progress {
           position: absolute;
           bottom: 0;
@@ -446,7 +377,6 @@ export default function TestimonialsSection({
           transition: width 0.35s cubic-bezier(0.16,1,0.3,1);
         }
 
-        /* ---- Social proof strip ---- */
         .test-proof-strip {
           display: flex;
           flex-wrap: wrap;
@@ -457,12 +387,7 @@ export default function TestimonialsSection({
           text-align: center;
         }
 
-        .test-proof-item {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 0.1rem;
-        }
+        .test-proof-item { display: flex; flex-direction: column; align-items: center; gap: 0.1rem; }
 
         .test-proof-value {
           font-family: 'Boska', Georgia, serif;
@@ -481,30 +406,19 @@ export default function TestimonialsSection({
           letter-spacing: 0.07em;
         }
 
-        .test-proof-divider {
-          width: 1px;
-          height: 32px;
-          background: rgba(0,18,32,0.18);
-          flex-shrink: 0;
-        }
+        .test-proof-divider { width: 1px; height: 32px; background: rgba(0,18,32,0.18); flex-shrink: 0; }
 
-        /* ---- Responsive ---- */
         @media (max-width: 480px) {
-          .test-author {
-            flex-direction: column;
-            align-items: flex-start;
-          }
+          .test-author { flex-direction: column; align-items: flex-start; }
           .test-proof-divider { display: none; }
         }
 
-        /* ---- Reduced motion ---- */
         @media (prefers-reduced-motion: reduce) {
           .test-slide { animation: none !important; }
           .test-dot, .test-arrow, .test-progress-bar { transition: none !important; }
           .test-arrow:hover { transform: none; }
         }
 
-        /* ---- TODO badge ---- */
         .test-todo {
           display: inline-flex;
           align-items: center;
@@ -534,7 +448,6 @@ export default function TestimonialsSection({
       >
         <div className="test-inner">
 
-          {/* Header */}
           <header className="test-header">
             <div className="test-eyebrow" aria-hidden="true">
               <span className="test-eyebrow-line" />
@@ -554,7 +467,6 @@ export default function TestimonialsSection({
             </div>
           </header>
 
-          {/* Carousel */}
           <div
             className="test-carousel"
             role="region"
@@ -567,9 +479,7 @@ export default function TestimonialsSection({
               <TestimonialSlide key={dep.id} dep={dep} active={i === current} />
             ))}
 
-            {/* Controls */}
             <div className="test-controls">
-              {/* Dots */}
               <nav className="test-dots" aria-label="Navegação dos depoimentos">
                 {depoimentos.map((dep, i) => (
                   <button
@@ -582,24 +492,15 @@ export default function TestimonialsSection({
                 ))}
               </nav>
 
-              {/* Arrows */}
               <div className="test-arrows" role="group" aria-label="Controles do carrossel">
-                <button
-                  className="test-arrow"
-                  onClick={prev}
-                  aria-label="Depoimento anterior"
-                >
+                <button className="test-arrow" onClick={prev} aria-label="Depoimento anterior">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
                     strokeLinejoin="round" aria-hidden="true">
                     <path d="M15 18l-6-6 6-6" />
                   </svg>
                 </button>
-                <button
-                  className="test-arrow"
-                  onClick={next}
-                  aria-label="Próximo depoimento"
-                >
+                <button className="test-arrow" onClick={next} aria-label="Próximo depoimento">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
                     strokeLinejoin="round" aria-hidden="true">
@@ -609,7 +510,6 @@ export default function TestimonialsSection({
               </div>
             </div>
 
-            {/* Progress bar */}
             {autoPlayInterval > 0 && (
               <div className="test-progress" aria-hidden="true">
                 <div
@@ -620,7 +520,6 @@ export default function TestimonialsSection({
             )}
           </div>
 
-          {/* Social proof strip */}
           <div className="test-proof-strip" aria-label="Números de satisfação do CQP">
             {[
               { value: '4.9★', label: 'Avaliação média' },
