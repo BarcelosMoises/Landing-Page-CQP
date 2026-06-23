@@ -5,19 +5,22 @@ import path from 'path';
 /**
  * Vite config — CQP Landing Page
  *
- * publicDir: 'public' — pasta dedicada para assets estáticos.
- * Os arquivos images/ e video/ do protótipo original precisam ser
- * copiados (ou linkados) para public/images/ e public/video/
- * para ficarem disponíveis no build.
+ * REGRA FUNDAMENTAL DO VITE:
+ * O HTML entry point DEVE estar na raiz do projeto para que
+ * o Vite resolva imports relativos a src/ (ex: /src/main.tsx).
+ * Arquivos em public/ são copiados como assets estáticos puros
+ * — o Vite não processa scripts dentro deles.
  *
- * IMPORTANTE: NÃO usar publicDir: '.' pois isso copiaria o
- * index.html original (301 KB Bootstrap) para dist/, sobrescrevendo
- * o app React.
+ * Estrutura:
+ *   app.html          ← entry point (raiz) — Vite bundla src/main.tsx
+ *   public/           ← assets estáticos (copiados para dist/ sem hash)
+ *   index.html        ← protótipo Bootstrap original (preservado, ignorado pelo build)
  */
 export default defineConfig({
   plugins: [react()],
 
-  // Pasta de assets estáticos — copiados para dist/ sem hash
+  // Assets estáticos: images/, video/, favicon etc.
+  // NUNCA usar publicDir: '.' — copiaria o index.html Bootstrap para dist/
   publicDir: 'public',
 
   resolve: {
@@ -27,20 +30,20 @@ export default defineConfig({
   },
 
   build: {
-    // Vite usa public/index.html como entry point padrão
+    // Entry point na raiz do projeto
+    rollupOptions: {
+      input: path.resolve(__dirname, 'app.html'),
+    },
     outDir: 'dist',
     emptyOutDir: true,
     sourcemap: false,
     chunkSizeWarningLimit: 600,
-    rollupOptions: {
-      // Entry point explícito: public/index.html
-      input: path.resolve(__dirname, 'public/index.html'),
-    },
   },
 
   server: {
     port: 5173,
-    open: '/',
+    // Abre app.html no dev (não o index.html Bootstrap)
+    open: '/app.html',
   },
 
   preview: {
