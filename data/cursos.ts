@@ -265,6 +265,9 @@ export const TODOS_OS_CURSOS: Curso[] = [
   ...CURSOS_KIDS,
 ];
 
+// Contagem total de cursos — usado pelo BenefitsSection para o contador animado
+export const TOTAL_CURSOS: number = TODOS_OS_CURSOS.length;
+
 // ---------------------------------------------------------------------------
 // CURSOS_POR_CATEGORIA — Record<CategoriaSlug, Curso[]>
 // Usado pelo CoursesSection para filtrar por aba.
