@@ -5,40 +5,42 @@ import path from 'path';
 /**
  * Vite config — CQP Landing Page
  *
- * publicDir aponta para a raiz do repositório para que
- * /images/ e /video/ (do protótipo original) sejam servidos
- * diretamente sem precisar copiar os assets.
+ * publicDir: 'public' — pasta dedicada para assets estáticos.
+ * Os arquivos images/ e video/ do protótipo original precisam ser
+ * copiados (ou linkados) para public/images/ e public/video/
+ * para ficarem disponíveis no build.
  *
- * Em produção (build), os assets em public/ são copiados para dist/
- * sem hash — ideal para caminhos como /video/background-video.mp4
+ * IMPORTANTE: NÃO usar publicDir: '.' pois isso copiaria o
+ * index.html original (301 KB Bootstrap) para dist/, sobrescrevendo
+ * o app React.
  */
 export default defineConfig({
   plugins: [react()],
 
-  // Serve os assets originais (images/, video/) como arquivos estáticos
-  publicDir: '.',
+  // Pasta de assets estáticos — copiados para dist/ sem hash
+  publicDir: 'public',
 
   resolve: {
     alias: {
-      // '@/components/...' → 'src/components/...'
       '@': path.resolve(__dirname, './src'),
     },
   },
 
-  // Entry point customizado (evita conflito com index.html original da main)
   build: {
-    rollupOptions: {
-      input: path.resolve(__dirname, 'index-app.html'),
-    },
+    // Vite usa public/index.html como entry point padrão
     outDir: 'dist',
+    emptyOutDir: true,
     sourcemap: false,
-    // Divide vendor (react) do código da aplicação
     chunkSizeWarningLimit: 600,
+    rollupOptions: {
+      // Entry point explícito: public/index.html
+      input: path.resolve(__dirname, 'public/index.html'),
+    },
   },
 
   server: {
     port: 5173,
-    open: '/index-app.html',
+    open: '/',
   },
 
   preview: {
