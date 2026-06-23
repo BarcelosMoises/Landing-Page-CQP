@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import '../styles/tokens.css';
 
 import NavbarCQP        from '../components/NavbarCQP';
@@ -43,7 +43,7 @@ function BackToTop() {
         style={{
           position:   'fixed',
           right:      'clamp(1rem, 2vw, 1.5rem)',
-          bottom:     'calc(clamp(1rem, 2vw, 1.5rem) + 4.5rem)', // fica acima do botão flutuante do WhatsApp
+          bottom:     'calc(clamp(1rem, 2vw, 1.5rem) + 4.5rem)',
           zIndex:     70,
           width:      '2.75rem',
           height:     '2.75rem',
@@ -101,7 +101,6 @@ function FooterCQP({ whatsappNumber }: { whatsappNumber: string }) {
           gap:           '1rem',
         }}
       >
-        {/* Logotipo + copyright */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem' }}>
           <svg
             width="32" height="32"
@@ -132,7 +131,6 @@ function FooterCQP({ whatsappNumber }: { whatsappNumber: string }) {
           </span>
         </div>
 
-        {/* Links e copyright */}
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.5rem 1.5rem' }}>
           <a
             href={wa}
@@ -158,7 +156,6 @@ function FooterCQP({ whatsappNumber }: { whatsappNumber: string }) {
 export default function IndexPage() {
   return (
     <>
-      {/* Skip link — primeiro elemento focável da página */}
       <a
         href="#hero"
         style={{
@@ -180,9 +177,6 @@ export default function IndexPage() {
         Pular para o conteúdo
       </a>
 
-      {/* ---------------------------------------------------------------- */}
-      {/* 1. Navbar                                                        */}
-      {/* ---------------------------------------------------------------- */}
       <NavbarCQP
         whatsappNumber={WHATSAPP_NUMBER}
         heroId="hero"
@@ -197,69 +191,34 @@ export default function IndexPage() {
       />
 
       <main id="main-content">
-        {/* -------------------------------------------------------------- */}
-        {/* 2. Hero                                                         */}
-        {/* -------------------------------------------------------------- */}
         <HeroSection
           videoSrc={VIDEO_SRC}
           whatsappNumber={WHATSAPP_NUMBER}
           scrollTargetId="cursos"
         />
 
-        {/* -------------------------------------------------------------- */}
-        {/* 3. Cursos                                                       */}
-        {/* -------------------------------------------------------------- */}
         <CoursesSection
           sectionId="cursos"
           whatsappNumber={WHATSAPP_NUMBER}
         />
 
-        {/* -------------------------------------------------------------- */}
-        {/* 4. Benefícios / Por que CQP                                    */}
-        {/* -------------------------------------------------------------- */}
         <BenefitsSection sectionId="modalidades" />
 
-        {/* -------------------------------------------------------------- */}
-        {/* 5. Instrutores                                                  */}
-        {/* -------------------------------------------------------------- */}
         <InstructorsSection sectionId="instrutores" />
 
-        {/* -------------------------------------------------------------- */}
-        {/* 6. Depoimentos                                                  */}
-        {/* -------------------------------------------------------------- */}
         <TestimonialsSection
           sectionId="depoimentos"
           autoPlayInterval={5500}
         />
 
-        {/* -------------------------------------------------------------- */}
-        {/* 7. Contato                                                      */}
-        {/* -------------------------------------------------------------- */}
         <ContactSection
           sectionId="contato"
           whatsappNumber={WHATSAPP_NUMBER}
-          /*
-           * TODO (aguardando resposta do cliente):
-           * phoneNumber="(22) XXXXX-XXXX"
-           * email="contato@cqp.edu.br"
-           * address="Av. Rui Barbosa, 000 — Centro"
-           * cityState="Macaé, RJ"
-           * mapEmbedUrl="https://www.google.com/maps?q=..."
-           * instagramUrl="https://instagram.com/cqpmacae"
-           * facebookUrl="https://facebook.com/cqpmacae"
-           * youtubeUrl="https://youtube.com/@cqpmacae"
-           */
         />
       </main>
 
-      {/* ---------------------------------------------------------------- */}
-      {/* 8. Footer                                                        */}
-      {/* ---------------------------------------------------------------- */}
       <FooterCQP whatsappNumber={WHATSAPP_NUMBER} />
 
-      {/* ---------------------------------------------------------------- */}
-      {/* Utilitários globais                                              */}
-      {/* ---------------------------------------------------------------- */}
       <BackToTop />
     </>
   );
