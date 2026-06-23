@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -71,9 +71,6 @@ export default function HeroSection({
 
   return (
     <>
-      {/* ------------------------------------------------------------------ */}
-      {/* Inline styles — replaced by Tailwind / CSS Modules in next step     */}
-      {/* ------------------------------------------------------------------ */}
       <style>{`
         /* Design tokens — CQP brand */
         :root {
@@ -391,9 +388,6 @@ export default function HeroSection({
         }
       `}</style>
 
-      {/* ------------------------------------------------------------------ */}
-      {/* Hero section                                                        */}
-      {/* ------------------------------------------------------------------ */}
       <section
         id="hero"
         className="hero-section"
@@ -446,7 +440,6 @@ export default function HeroSection({
               className="hero-btn-primary"
               aria-label="Entre em contato pelo WhatsApp"
             >
-              {/* WhatsApp icon */}
               <svg
                 width="20"
                 height="20"
