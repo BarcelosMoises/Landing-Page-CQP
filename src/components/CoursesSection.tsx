@@ -83,7 +83,6 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
   useEffect(() => {
     const el = cardRef.current;
     if (!el) return;
-    // Initial invisible state (IntersectionObserver handles reveal)
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1)';
@@ -109,22 +108,16 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
 
   return (
     <div ref={cardRef} className="course-card">
-      {/* Image wrapper */}
+      {/* Image wrapper
+          Lógica de fallback (invertida):
+          - fallback fica VISÍVEL por padrão (display:flex no CSS)
+          - imagem fica OCULTA por padrão (display:none no CSS)
+          - onLoad: imagem aparece + fallback some → carregou com sucesso
+          - onError: não faz nada, fallback já está visível
+          Garante que cards nunca fiquem "quebrados" enquanto os paths
+          reais dos cursos ainda não estão mapeados em data/cursos.ts
+      */}
       <div className="course-card-img-wrap">
-        <img
-          src={curso.imagem}
-          alt={curso.nome}
-          loading="lazy"
-          decoding="async"
-          className="course-card-img"
-          onError={(e) => {
-            const t = e.currentTarget;
-            t.style.display = 'none';
-            const fallback = t.nextElementSibling as HTMLElement;
-            if (fallback) fallback.style.display = 'flex';
-          }}
-        />
-        {/* Image fallback */}
         <div className="course-card-img-fallback" aria-hidden="true">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#33B8B8" strokeWidth="1.25">
             <rect x="3" y="3" width="18" height="18" rx="3"/>
@@ -132,6 +125,27 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
             <path d="m21 15-5-5L5 21"/>
           </svg>
         </div>
+        <img
+          src={curso.imagem}
+          alt={curso.nome}
+          loading="lazy"
+          decoding="async"
+          className="course-card-img"
+          onLoad={(e) => {
+            // Imagem carregou com sucesso → exibe a imagem, esconde o fallback
+            const img = e.currentTarget;
+            img.style.display = 'block';
+            const fallback = img.previousElementSibling as HTMLElement;
+            if (fallback) fallback.style.display = 'none';
+          }}
+          onError={(e) => {
+            // Imagem falhou → garante que fallback fique visível (já está, mas reforça)
+            const img = e.currentTarget;
+            img.style.display = 'none';
+            const fallback = img.previousElementSibling as HTMLElement;
+            if (fallback) fallback.style.display = 'flex';
+          }}
+        />
       </div>
 
       {/* Card body */}
@@ -200,7 +214,6 @@ export default function CoursesSection({
   const filteredCourses = useMemo<Curso[]>(() => {
     let list: Curso[];
     if (debouncedQuery.trim()) {
-      // Search overrides tab — show across all categories
       list = buscarCursos(debouncedQuery);
     } else if (activeTab === ALL_SLUG) {
       list = TODOS_OS_CURSOS;
@@ -218,7 +231,6 @@ export default function CoursesSection({
     setSearchQuery('');
   }, []);
 
-  // Keyboard navigation on tab list
   const handleTabKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
       const tabs = tabListRef.current?.querySelectorAll<HTMLButtonElement>('[role="tab"]');
@@ -471,7 +483,7 @@ export default function CoursesSection({
           transform: translateY(-3px);
         }
 
-        /* Image */
+        /* Image wrapper — fallback VISÍVEL por padrão */
         .course-card-img-wrap {
           position: relative;
           aspect-ratio: 16 / 9;
@@ -479,24 +491,39 @@ export default function CoursesSection({
           overflow: hidden;
         }
 
-        .course-card-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: transform 400ms var(--ease-out-expo);
-        }
-
-        .course-card:hover .course-card-img {
-          transform: scale(1.04);
-        }
-
+        /*
+          FALLBACK: visível por padrão.
+          Só é ocultado via JS inline (fallback.style.display = 'none')
+          quando a imagem carrega com sucesso (onLoad).
+        */
         .course-card-img-fallback {
-          display: none;
+          display: flex;
           align-items: center;
           justify-content: center;
           width: 100%;
           height: 100%;
           background: linear-gradient(135deg, #e0f5f5 0%, #f0fafa 100%);
+          position: absolute;
+          inset: 0;
+        }
+
+        /*
+          IMAGEM: oculta por padrão.
+          Só é exibida via JS inline (img.style.display = 'block')
+          quando dispara o evento onLoad com sucesso.
+        */
+        .course-card-img {
+          display: none;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          position: absolute;
+          inset: 0;
+          transition: transform 400ms var(--ease-out-expo);
+        }
+
+        .course-card:hover .course-card-img {
+          transform: scale(1.04);
         }
 
         /* Body */
@@ -781,7 +808,7 @@ export default function CoursesSection({
               onChange={(e) => setSearchQuery(e.target.value)}
               aria-label="Buscar curso"
               autoComplete="off"
-              spellCheck="false"
+              spellCheck={false}
             />
             {searchQuery && (
               <button
@@ -815,7 +842,6 @@ export default function CoursesSection({
                 tabIndex={activeTab === slug ? 0 : -1}
                 type="button"
               >
-                {/* Icon */}
                 {icone === 'grid' ? (
                   <svg className="courses-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                     <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
