@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import '../styles/tokens.css';
+import '../styles/globals.css';
 
 import NavbarCQP        from '../components/NavbarCQP';
 import HeroSection      from '../components/HeroSection';
