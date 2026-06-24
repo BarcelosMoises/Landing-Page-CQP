@@ -10,7 +10,7 @@ import path from 'path';
  *
  * Regras:
  *   - publicDir: 'public'  ← copia public/ inteiro para dist/
- *   - Entry point: app.html na raiz  ← Vite processa src/main.tsx daqui
+ *   - Entry point: index.html na raiz  ← gera dist/index.html
  */
 export default defineConfig({
   plugins: [
@@ -27,7 +27,7 @@ export default defineConfig({
 
   build: {
     rollupOptions: {
-      input: path.resolve(__dirname, 'app.html'),
+      input: path.resolve(__dirname, 'index.html'),
     },
     outDir: 'dist',
     emptyOutDir: true,
@@ -37,7 +37,7 @@ export default defineConfig({
 
   server: {
     port: 5173,
-    open: '/app.html',
+    open: true,
     fs: {
       allow: ['.'],
     },
