@@ -301,9 +301,8 @@ export function buscarCursos(query: string): Curso[] {
 
 // ---------------------------------------------------------------------------
 // WhatsApp helpers
-// Número padrão da CQP — altere aqui para mudar em todo o site.
 // ---------------------------------------------------------------------------
-const WHATSAPP_NUMBER = '5500000000000'; // TODO: substituir pelo número real da CQP
+const WHATSAPP_NUMBER = '5522998684334';
 
 export function getWhatsAppUrl(mensagem?: string): string {
   const base = `https://wa.me/${WHATSAPP_NUMBER}`;
