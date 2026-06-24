@@ -10,7 +10,7 @@ import path from 'path';
  *
  * Regras:
  *   - publicDir: 'public'  ← copia public/ inteiro para dist/
- *   - Entry point: index.html na raiz  ← gera dist/index.html
+ *   - Entry point: app.html na raiz  ← gera dist/app.html (app React)
  */
 export default defineConfig({
   plugins: [
@@ -27,7 +27,7 @@ export default defineConfig({
 
   build: {
     rollupOptions: {
-      input: path.resolve(__dirname, 'index.html'),
+      input: path.resolve(__dirname, 'app.html'),
     },
     outDir: 'dist',
     emptyOutDir: true,
