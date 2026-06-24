@@ -9,3 +9,4 @@
   from   = "/*"
   to     = "/app.html"
   status = 200
+  force  = false
