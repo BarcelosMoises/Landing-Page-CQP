@@ -436,23 +436,7 @@ export default function TestimonialsSection({
           .test-arrow:hover { transform: none; }
         }
 
-        .test-todo {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.4rem;
-          font-family: var(--font-body);
-          font-size: 0.7rem;
-          font-weight: 700;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          color: #ff9e64;
-          background: rgba(255, 158, 100, 0.1);
-          border: 1px solid rgba(255, 158, 100, 0.2);
-          border-radius: 9999px;
-          padding: 0.25rem 0.8rem;
-          margin-top: 0.75rem;
-        }
-      `}</style>
+        `}</style>
 
       <section
         id={sectionId}
@@ -475,14 +459,6 @@ export default function TestimonialsSection({
             <h2 id="test-section-title" className="test-title">
               Quem estudou no CQP conta
             </h2>
-            <div>
-              <span className="test-todo" aria-label="Dados pendentes de atualização">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 5a1 1 0 011 1v5a1 1 0 01-2 0V8a1 1 0 011-1zm0 10a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" />
-                </svg>
-                Depoimentos reais pendentes — substituir antes do deploy
-              </span>
-            </div>
           </header>
 
           <div
