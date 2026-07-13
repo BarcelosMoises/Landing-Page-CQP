@@ -160,7 +160,7 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            objectPosition: 'center 25%',
+            objectPosition: 'top center',
             transition: 'transform 500ms var(--ease-out-expo)',
             transform: hovered ? 'scale(1.04)' : 'scale(1)',
           }}
@@ -347,7 +347,7 @@ export default function CoursesSection({
         .courses-search-clear { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: var(--color-surface-2); border: none; border-radius: 50%; cursor: pointer; color: var(--color-text-muted); transition: background 150ms, color 150ms; padding: 0; }
         .courses-search-clear:hover { background: var(--color-border); color: var(--color-text); }
         .courses-tabs { display: flex; gap: 0.375rem; flex-wrap: wrap; margin-bottom: clamp(1.5rem, 2.5vw, 2.5rem); }
-        .courses-tab { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.9rem; font-family: var(--font-body); font-size: 0.8125rem; font-weight: 600; color: var(--color-text-muted); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-sm); cursor: pointer; transition: color 160ms var(--ease-out-expo), background 160ms var(--ease-out-expo), border-color 160ms var(--ease-out-expo), box-shadow 160ms var(--ease-out-expo); white-space: nowrap; line-height: 1; }
+        .courses-tab { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1.15rem; font-family: var(--font-body); font-size: 0.8125rem; font-weight: 600; color: var(--color-text-muted); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-sm); cursor: pointer; transition: color 160ms var(--ease-out-expo), background 160ms var(--ease-out-expo), border-color 160ms var(--ease-out-expo), box-shadow 160ms var(--ease-out-expo); white-space: nowrap; line-height: 1; }
         .courses-tab:hover { color: var(--cqp-teal-dark); border-color: var(--cqp-teal); background: oklch(from var(--cqp-teal) l c h / 0.04); }
         .courses-tab[aria-selected="true"] { color: #ffffff; background: var(--cqp-teal-dark); border-color: var(--cqp-teal-dark); box-shadow: 0 2px 8px rgba(12,97,97,0.25); }
         .courses-tab-icon { width: 14px; height: 14px; flex-shrink: 0; }
