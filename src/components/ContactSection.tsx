@@ -23,9 +23,9 @@ interface ContactFormData {
 const DEFAULT_WHATSAPP = '5522998684334';
 const DEFAULT_PHONE = '(22) 99999-9999';
 const DEFAULT_EMAIL = 'contato@cqp.edu.br';
-const DEFAULT_ADDRESS = 'Av. Rui Barbosa, 000 — Centro';
-const DEFAULT_CITY_STATE = 'Macaé, RJ';
-const DEFAULT_MAP_EMBED = 'https://www.google.com/maps?q=Maca%C3%A9%20RJ&z=13&output=embed';
+const DEFAULT_ADDRESS = 'Rua Prata Mancebo nº148 — Centro';
+const DEFAULT_CITY_STATE = 'Carapebus — RJ, Brazil';
+const DEFAULT_MAP_EMBED = 'https://www.google.com/maps?q=Rua+Prata+Mancebo+148+Carapebus+RJ+Brazil&z=15&output=embed';
 
 function formatPhoneNumber(value: string) {
   const digits = value.replace(/\D/g, '').slice(0, 11);
