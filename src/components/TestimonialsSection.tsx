@@ -69,7 +69,7 @@ function Stars({ rating = 5 }: { rating?: number }) {
     <div className="test-stars" aria-label={`${rating} de 5 estrelas`}>
       {Array.from({ length: 5 }, (_, i) => (
         <svg key={i} width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"
-          fill={i < rating ? 'var(--cqp-teal)' : 'var(--color-text-faint)'}>
+          fill={i < rating ? 'var(--cqp-teal)' : 'rgba(255, 255, 255, 0.2)'}>
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
         </svg>
       ))}
@@ -118,7 +118,6 @@ export default function TestimonialsSection({
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const [animating, setAnimating] = useState(false);
-  // trackRef removido — não era referenciado no JSX (TS6133)
   const sectionRef = useRef<HTMLElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const total = depoimentos.length;
@@ -175,7 +174,7 @@ export default function TestimonialsSection({
       <style>{`
         .test-section {
           position: relative;
-          background: var(--color-surface-offset);
+          background: #001220; /* Mantém o fundo marinho escuro padrão das seções */
           padding-block: clamp(4rem, 7vw, 7rem);
           padding-inline: clamp(1rem, 4vw, 2.5rem);
           overflow: hidden;
@@ -187,7 +186,7 @@ export default function TestimonialsSection({
           inset: 0;
           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
           pointer-events: none;
-          opacity: 0.6;
+          opacity: 0.4;
         }
 
         .test-section::after {
@@ -197,7 +196,7 @@ export default function TestimonialsSection({
           right: -100px;
           width: 460px;
           height: 460px;
-          background: radial-gradient(circle, oklch(from var(--cqp-teal) l c h / 0.10) 0%, transparent 65%);
+          background: radial-gradient(circle, oklch(from var(--cqp-teal) l c h / 0.12) 0%, transparent 65%);
           pointer-events: none;
         }
 
@@ -222,7 +221,7 @@ export default function TestimonialsSection({
           font-weight: 700;
           letter-spacing: 0.10em;
           text-transform: uppercase;
-          color: var(--color-text-muted);
+          color: rgba(255, 255, 255, 0.5); /* Cor clara com opacidade para fundo escuro */
           margin-bottom: 0.75rem;
         }
 
@@ -240,21 +239,21 @@ export default function TestimonialsSection({
           font-weight: 800;
           line-height: 1.1;
           letter-spacing: -0.02em;
-          color: var(--color-text);
+          color: var(--color-text-inverse); /* CORRIGIDO: Agora legível em branco */
           text-wrap: balance;
           margin: 0;
         }
 
         .test-carousel {
           position: relative;
-          padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 4vw, 3rem);
+          padding: clamp(1rem, 2vw, 2rem) 0;
           overflow: hidden;
         }
 
         .test-slide {
           display: none;
           flex-direction: column;
-          gap: 1.75rem;
+          gap: 1.5rem;
           animation: test-fade-in 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
         }
 
@@ -271,9 +270,9 @@ export default function TestimonialsSection({
           font-weight: 900;
           line-height: 0.6;
           color: var(--cqp-teal);
-          opacity: 0.35;
+          opacity: 0.45;
           display: block;
-          height: clamp(2.5rem, 4vw, 4rem);
+          height: clamp(2rem, 3vw, 3rem);
           user-select: none;
         }
 
@@ -281,49 +280,64 @@ export default function TestimonialsSection({
 
         .test-text {
           font-family: var(--font-display);
-          font-size: clamp(1.05rem, 0.85rem + 1vw, 1.45rem);
+          font-size: clamp(1.15rem, 0.95rem + 1vw, 1.55rem);
           font-weight: 500;
           line-height: 1.65;
-          color: var(--color-text);
+          color: var(--color-text-inverse); /* CORRIGIDO: Texto do depoimento em alto contraste */
           margin: 0;
           font-style: italic;
           text-wrap: pretty;
           max-width: 64ch;
         }
 
-        .test-author { display: flex; align-items: center; gap: 1rem; }
+        .test-author { display: flex; align-items: center; gap: 1.25rem; }
 
-        .test-author-info { display: flex; flex-direction: column; gap: 0.15rem; }
+        .test-author-info { display: flex; flex-direction: column; gap: 0.2rem; }
 
-        .test-stars { display: flex; gap: 0.1rem; margin-bottom: 0.15rem; }
+        .test-stars { display: flex; gap: 0.15rem; margin-bottom: 0.1rem; }
 
         .test-author-name {
           font-family: var(--font-body);
-          font-size: clamp(0.9rem, 0.8rem + 0.4vw, 1.05rem);
-          font-weight: 800;
-          color: var(--color-text);
+          font-size: clamp(0.95rem, 0.85rem + 0.4vw, 1.1rem);
+          font-weight: 700;
+          color: var(--color-text-inverse); /* CORRIGIDO */
           margin: 0;
           line-height: 1.2;
         }
 
-        .test-author-course { font-family: var(--font-body); font-size: 0.8125rem; font-weight: 600; color: var(--cqp-teal-dark); margin: 0; }
-        .test-author-detail { font-family: var(--font-body); font-size: 0.75rem; color: var(--color-text-muted); margin: 0; margin-top: 0.1rem; }
+        .test-author-course {
+          font-family: var(--font-body);
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: var(--cqp-teal); /* Destaca a formação do aluno */
+          margin: 0;
+        }
+
+        .test-author-detail {
+          font-family: var(--font-body);
+          font-size: 0.75rem;
+          color: rgba(255, 255, 255, 0.4);
+          margin: 0;
+          margin-top: 0.1rem;
+        }
 
         .test-controls {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-top: clamp(1.5rem, 2.5vw, 2.25rem);
+          margin-top: clamp(2rem, 3vw, 3rem);
           gap: 1rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.08);
+          padding-top: 1.5rem;
         }
 
-        .test-dots { display: flex; gap: 0.45rem; align-items: center; }
+        .test-dots { display: flex; gap: 0.5rem; align-items: center; }
 
         .test-dot {
           width: 8px;
           height: 8px;
           border-radius: 9999px;
-          background: var(--color-text-faint);
+          background: rgba(255, 255, 255, 0.2);
           border: none;
           padding: 0;
           cursor: pointer;
@@ -331,36 +345,36 @@ export default function TestimonialsSection({
           flex-shrink: 0;
         }
 
-        .test-dot--active { background: var(--cqp-teal); width: 22px; }
-        .test-dot:hover:not(.test-dot--active) { background: var(--color-text-muted); }
+        .test-dot--active { background: var(--cqp-teal); width: 24px; }
+        .test-dot:hover:not(.test-dot--active) { background: rgba(255, 255, 255, 0.4); }
         .test-dot:focus-visible { outline: 2px solid var(--cqp-teal); outline-offset: 3px; }
 
-        .test-arrows { display: flex; gap: 0.5rem; }
+        .test-arrows { display: flex; gap: 0.6rem; }
 
         .test-arrow {
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 40px;
-          height: 40px;
+          width: 44px;
+          height: 44px;
           border-radius: 50%;
           background: transparent;
-          border: 1px solid var(--color-border);
-          color: var(--color-text);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          color: var(--color-text-inverse);
           cursor: pointer;
           transition: background 180ms, border-color 180ms, transform 180ms cubic-bezier(0.16,1,0.3,1);
         }
 
-        .test-arrow:hover { background: var(--color-surface); border-color: var(--cqp-teal); color: var(--cqp-teal-dark); transform: scale(1.06); }
+        .test-arrow:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--cqp-teal); color: var(--cqp-teal); transform: scale(1.05); }
         .test-arrow:focus-visible { outline: 2px solid var(--cqp-teal); outline-offset: 3px; }
-        .test-arrow:active { transform: scale(0.96); }
+        .test-arrow:active { transform: scale(0.95); }
 
         .test-progress {
           position: absolute;
           bottom: 0;
           left: 0;
-          height: 3px;
-          background: var(--color-border);
+          height: 2px;
+          background: rgba(255, 255, 255, 0.05);
           width: 100%;
         }
 
@@ -376,36 +390,44 @@ export default function TestimonialsSection({
           flex-wrap: wrap;
           align-items: center;
           justify-content: center;
-          gap: 0.5rem 2rem;
-          margin-top: clamp(2rem, 3.5vw, 3rem);
+          gap: 0.75rem 2.5rem;
+          margin-top: clamp(3rem, 5vw, 4.5rem);
           text-align: center;
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.04);
+          padding: 1.5rem 2rem;
+          border-radius: 1rem;
         }
 
-        .test-proof-item { display: flex; flex-direction: column; align-items: center; gap: 0.1rem; }
+        .test-proof-item { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
 
         .test-proof-value {
           font-family: var(--font-display);
-          font-size: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
-          font-weight: 900;
+          font-size: clamp(1.65rem, 1.2rem + 1.5vw, 2.5rem);
+          font-weight: 800;
           line-height: 1;
-          letter-spacing: -0.03em;
-          color: var(--color-text);
+          letter-spacing: -0.02em;
+          color: var(--color-text-inverse); /* CORRIGIDO */
         }
 
         .test-proof-label {
           font-family: var(--font-body);
           font-size: 0.75rem;
           font-weight: 600;
-          color: var(--color-text-muted);
+          color: rgba(255, 255, 255, 0.4);
           text-transform: uppercase;
-          letter-spacing: 0.07em;
+          letter-spacing: 0.08em;
         }
 
-        .test-proof-divider { width: 1px; height: 32px; background: var(--color-border); flex-shrink: 0; }
+        .test-proof-divider { width: 1px; height: 36px; background: rgba(255, 255, 255, 0.08); flex-shrink: 0; }
 
-        @media (max-width: 480px) {
-          .test-author { flex-direction: column; align-items: flex-start; }
+        @media (max-width: 580px) {
+          .test-author { flex-direction: column; align-items: flex-start; gap: 1rem; }
           .test-proof-divider { display: none; }
+          .test-proof-strip { flex-direction: column; gap: 1.5rem; align-items: center; }
+          .test-controls { flex-direction: column; items: flex-start; gap: 1.25rem; }
+          .test-arrows { width: 100%; justify-content: space-between; }
+          .test-arrow { flex: 1; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -423,12 +445,12 @@ export default function TestimonialsSection({
           font-weight: 700;
           letter-spacing: 0.08em;
           text-transform: uppercase;
-          color: #964219;
-          background: rgba(150, 66, 25, 0.10);
-          border: 1px solid rgba(150, 66, 25, 0.20);
+          color: #ff9e64;
+          background: rgba(255, 158, 100, 0.1);
+          border: 1px solid rgba(255, 158, 100, 0.2);
           border-radius: 9999px;
-          padding: 0.2rem 0.7rem;
-          margin-top: 0.5rem;
+          padding: 0.25rem 0.8rem;
+          margin-top: 0.75rem;
         }
       `}</style>
 
@@ -475,46 +497,47 @@ export default function TestimonialsSection({
               <TestimonialSlide key={dep.id} dep={dep} active={i === current} />
             ))}
 
-            <div className="test-controls">
-              <nav className="test-dots" aria-label="Navegação dos depoimentos">
-                {depoimentos.map((dep, i) => (
-                  <button
-                    key={dep.id}
-                    className={`test-dot${i === current ? ' test-dot--active' : ''}`}
-                    onClick={() => goTo(i)}
-                    aria-label={`Depoimento ${i + 1} de ${total}: ${dep.nome}`}
-                    aria-current={i === current ? 'true' : undefined}
-                  />
-                ))}
-              </nav>
-
-              <div className="test-arrows" role="group" aria-label="Controles do carrossel">
-                <button className="test-arrow" onClick={prev} aria-label="Depoimento anterior">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
-                    strokeLinejoin="round" aria-hidden="true">
-                    <path d="M15 18l-6-6 6-6" />
-                  </svg>
-                </button>
-                <button className="test-arrow" onClick={next} aria-label="Próximo depoimento">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
-                    strokeLinejoin="round" aria-hidden="true">
-                    <path d="M9 18l6-6-6-6" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            {autoPlayInterval > 0 && (
-              <div className="test-progress" aria-hidden="true">
-                <div
-                  className="test-progress-bar"
-                  style={{ width: `${((current + 1) / total) * 100}%` }}
-                />
-              </div>
-            )}
           </div>
+
+          <div className="test-controls">
+            <nav className="test-dots" aria-label="Navegação dos depoimentos">
+              {depoimentos.map((dep, i) => (
+                <button
+                  key={dep.id}
+                  className={`test-dot${i === current ? ' test-dot--active' : ''}`}
+                  onClick={() => goTo(i)}
+                  aria-label={`Depoimento ${i + 1} de ${total}: ${dep.nome}`}
+                  aria-current={i === current ? 'true' : undefined}
+                />
+              ))}
+            </nav>
+
+            <div className="test-arrows" role="group" aria-label="Controles do carrossel">
+              <button className="test-arrow" onClick={prev} aria-label="Depoimento anterior">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
+                  strokeLinejoin="round" aria-hidden="true">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+              <button className="test-arrow" onClick={next} aria-label="Próximo depoimento">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
+                  strokeLinejoin="round" aria-hidden="true">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {autoPlayInterval > 0 && (
+            <div className="test-progress" aria-hidden="true">
+              <div
+                className="test-progress-bar"
+                style={{ width: `${((current + 1) / total) * 100}%` }}
+              />
+            </div>
+          )}
 
           <div className="test-proof-strip" aria-label="Números de satisfação do CQP">
             {[
