@@ -461,8 +461,8 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
             <BenefitItem
               number="02"
               title="Mensalidades que cabem no seu bolso"
-              description="Planos a partir de R$\u00a0150/mês com parcelamento facilitado. Sem taxa de matrícula oculta e com bolsas de estudo para quem se qualificar."
-              detail="A partir de R$\u00a0150 por mês"
+              description="Planos a partir de R$150/mês com parcelamento facilitado. Sem taxa de matrícula oculta e com bolsas de estudo para quem se qualificar."
+              detail="A partir de R$150 por mês"
               delay={120}
             />
             <BenefitItem
@@ -479,7 +479,7 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
               { value: '+2.000', label: 'Alunos formados' },
               { value: '17', label: 'Cursos técnicos com diploma' },
               { value: '+50', label: 'NRs e treinamentos' },
-              { value: '10\u00a0anos', label: 'De experiência em Macaé' },
+              { value: `${new Date().getFullYear() - 2020}\xa0anos`, label: 'De experiência em Carapebus' },
             ].map(({ value, label }) => (
               <div key={label} className="benefits-stat-item" role="listitem">
                 <span className="benefits-stat-item-value">{value}</span>
