@@ -596,6 +596,8 @@ export default function ContactSection({
                   </SocialLink>
                 </div>
 
+              </article>
+
               <article className="contact-map-card" ref={mapRef} aria-labelledby="contact-map-title">
                 <div className="contact-map-card-head">
                   <h3 id="contact-map-title">Onde estamos</h3>
