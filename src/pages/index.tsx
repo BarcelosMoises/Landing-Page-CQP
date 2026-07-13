@@ -6,7 +6,6 @@ import NavbarCQP        from '../components/NavbarCQP';
 import HeroSection      from '../components/HeroSection';
 import CoursesSection   from '../components/CoursesSection';
 import BenefitsSection  from '../components/BenefitsSection';
-import InstructorsSection from '../components/InstructorsSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import ContactSection   from '../components/ContactSection';
 
@@ -179,14 +178,10 @@ export default function IndexPage() {
       </a>
 
       <NavbarCQP
-        whatsappNumber={WHATSAPP_NUMBER}
         heroId="hero"
         navItems={[
           { label: 'Início',      href: '#hero' },
           { label: 'Cursos',      href: '#cursos' },
-          { label: 'Por que CQP', href: '#modalidades' },
-          { label: 'Instrutores', href: '#instrutores' },
-          { label: 'Depoimentos', href: '#depoimentos' },
           { label: 'Contato',     href: '#contato' },
         ]}
       />
@@ -204,8 +199,6 @@ export default function IndexPage() {
         />
 
         <BenefitsSection sectionId="modalidades" />
-
-        <InstructorsSection sectionId="instrutores" />
 
         <TestimonialsSection
           sectionId="depoimentos"
