@@ -3,7 +3,6 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 export interface ContactSectionProps {
   sectionId?: string;
   whatsappNumber?: string;
-  phoneNumber?: string;
   email?: string;
   address?: string;
   cityState?: string;
@@ -21,7 +20,6 @@ interface ContactFormData {
 }
 
 const DEFAULT_WHATSAPP = '5522998684334';
-const DEFAULT_PHONE = '(22) 99999-9999';
 const DEFAULT_EMAIL = 'contato@cqp.edu.br';
 const DEFAULT_ADDRESS = 'Rua Prata Mancebo nº148 — Centro';
 const DEFAULT_CITY_STATE = 'Carapebus — RJ, Brazil';
@@ -110,7 +108,6 @@ function SocialLink({ href, label, children }: { href?: string; label: string; c
 export default function ContactSection({
   sectionId = 'contato',
   whatsappNumber = DEFAULT_WHATSAPP,
-  phoneNumber = DEFAULT_PHONE,
   email = DEFAULT_EMAIL,
   address = DEFAULT_ADDRESS,
   cityState = DEFAULT_CITY_STATE,
