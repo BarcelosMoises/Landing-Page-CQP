@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 export interface ContactSectionProps {
   sectionId?: string;
   whatsappNumber?: string;
+  whatsappDisplay?: string;
   email?: string;
   address?: string;
   cityState?: string;
@@ -20,6 +21,7 @@ interface ContactFormData {
 }
 
 const DEFAULT_WHATSAPP = '5522998684334';
+const DEFAULT_WHATSAPP_DISPLAY = '(22) 99868-4334';
 const DEFAULT_EMAIL = 'contato@cqp.edu.br';
 const DEFAULT_ADDRESS = 'Rua Prata Mancebo nº148 — Centro';
 const DEFAULT_CITY_STATE = 'Carapebus — RJ, Brazil';
@@ -108,6 +110,7 @@ function SocialLink({ href, label, children }: { href?: string; label: string; c
 export default function ContactSection({
   sectionId = 'contato',
   whatsappNumber = DEFAULT_WHATSAPP,
+  whatsappDisplay = DEFAULT_WHATSAPP_DISPLAY,
   email = DEFAULT_EMAIL,
   address = DEFAULT_ADDRESS,
   cityState = DEFAULT_CITY_STATE,
@@ -310,7 +313,7 @@ export default function ContactSection({
           text-transform: uppercase;
           color: rgba(255,255,255,0.42);
           margin-bottom: 0.2rem;
-          display: inline-block;
+          display: block;
           font-weight: 700;
         }
 
@@ -556,7 +559,7 @@ export default function ContactSection({
                     </ContactIcon>
                     <div>
                       <span className="contact-list-item-label">WhatsApp</span>
-                      <a href={floatingWhatsappHref} target="_blank" rel="noopener noreferrer">{whatsappNumber}</a>
+                      <a href={floatingWhatsappHref} target="_blank" rel="noopener noreferrer">{whatsappDisplay}</a>
                     </div>
                   </div>
 
