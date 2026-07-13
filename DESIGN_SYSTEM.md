@@ -1,7 +1,7 @@
 # Design System — CQP
 
 > Referência de tokens de design, tipografia, paleta de cores e padrões de componentes.
-> Todo código CSS e Tailwind deve referenciar estes tokens — nunca valores hexadecimais hardcoded.
+> Todo código deve referenciar estes tokens — nunca valores hexadecimais hardcoded.
 
 ---
 
@@ -13,7 +13,7 @@ A CQP usa uma paleta **teal + navy** que transmite confiança, profissionalismo 
 |---|---|---|
 | Cor primária | `#33B8B8` (teal) | `var(--color-primary)` → `#01696f` |
 | Cor primária clara | `#7aeeee` | `var(--color-primary-highlight)` |
-| Fundo escuro | `#001220` (navy) | `navy-800` no Tailwind |
+| Fundo escuro | `#001220` (navy) | `#001220` (navy) |
 | Fundo seções | `#7aeeee` | Substituído por `var(--color-surface)` |
 | Sombra de card | `5px 5px 10px #33B8B8` | `shadow-card` → sombra com OKLCH |
 
@@ -24,7 +24,7 @@ A CQP usa uma paleta **teal + navy** que transmite confiança, profissionalismo 
 
 ## Paleta de Cores (CSS Custom Properties)
 
-Definidas em `src/styles/globals.css`. O `tailwind.config.ts` mapeia estas variáveis para classes utilitárias.
+Definidas em `src/styles/tokens.css`.
 
 ### Modo Claro (`:root, [data-theme="light"]`)
 
@@ -67,8 +67,6 @@ Definidas em `src/styles/globals.css`. O `tailwind.config.ts` mapeia estas vari�
 --color-primary-hover:    #227f8b;
 ```
 
-> O dark mode é ativado pelo toggle (ícone sol/lua) na NavbarCQP. A preferência do sistema (`prefers-color-scheme`) é respeitada como padrão.
-
 ---
 
 ## Tipografia
@@ -83,7 +81,7 @@ Definidas em `src/styles/globals.css`. O `tailwind.config.ts` mapeia estas vari�
 **Substitui**: Poppins (única fonte do protótipo original — pouco contraste display/body).
 
 ```html
-<!-- Carregar no <head> de Base.astro -->
+<!-- Carregar no <head> do index.html -->
 <link href="https://api.fontshare.com/v2/css?f[]=boska@400,500,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
 ```
 
@@ -91,15 +89,15 @@ Definidas em `src/styles/globals.css`. O `tailwind.config.ts` mapeia estas vari�
 
 Todos os tamanhos usam `clamp()` — a fonte cresce suavemente com a viewport, sem quebras bruscas.
 
-| Token CSS | Tailwind | Resolução | Uso |
-|---|---|---|---|
-| `--text-xs` | `text-fluid-xs` | 12–14px | Labels, badges, metadata |
-| `--text-sm` | `text-fluid-sm` | 14–16px | Botões, links de nav |
-| `--text-base` | `text-fluid-base` | 16–18px | **Padrão para corpo de texto** |
-| `--text-lg` | `text-fluid-lg` | 18–24px | Subtítulos, headings de seção |
-| `--text-xl` | `text-fluid-xl` | 24–36px | Títulos de página (Boska) |
-| `--text-2xl` | `text-fluid-2xl` | 32–56px | Hero heading |
-| `--text-hero` | `text-fluid-hero` | 48–128px | Momento hero máximo |
+| Token CSS | Resolução | Uso |
+|---|---|---|
+| `--text-xs` | 12–14px | Labels, badges, metadata |
+| `--text-sm` | 14–16px | Botões, links de nav |
+| `--text-base` | 16–18px | **Padrão para corpo de texto** |
+| `--text-lg` | 18–24px | Subtítulos, headings de seção |
+| `--text-xl` | 24–36px | Títulos de página (Boska) |
+| `--text-2xl` | 32–56px | Hero heading |
+| `--text-hero` | 48–128px | Momento hero máximo |
 
 **Regra**: fonte **Boska** apenas em `--text-xl` (24px) e acima. Abaixo disso, sempre **Satoshi**.
 
@@ -120,13 +118,13 @@ Sistema de 4px. Todos os `margin`, `padding` e `gap` referenciam tokens — nunc
 --space-24: 6rem;     /* 96px */
 ```
 
-No Tailwind, use as classes nativas (`p-4`, `gap-6`, `mb-8`) — elas já seguem esta escala.
+Use `clamp()` para espaçamento responsivo entre seções.
 
 ---
 
 ## Sombras
 
-| Token Tailwind | Uso |
+| Token | Uso |
 |---|---|
 | `shadow-sm` | Cards em repouso |
 | `shadow-md` | Dropdowns, popovers |
@@ -145,7 +143,15 @@ No Tailwind, use as classes nativas (`p-4`, `gap-6`, `mb-8`) — elas já seguem
 ### Botão Primário
 
 ```tsx
-<button className="bg-primary hover:bg-primary-hover text-text-inverse font-body font-medium text-fluid-sm px-6 py-3 rounded-lg transition-interactive">
+<button style={{
+  background: 'var(--color-primary)',
+  color: 'var(--color-text-inverse)',
+  fontWeight: 600,
+  padding: '0.75rem 1.5rem',
+  borderRadius: '0.5rem',
+  border: 'none',
+  cursor: 'pointer',
+}}>
   Saiba mais
 </button>
 ```
@@ -154,10 +160,20 @@ No Tailwind, use as classes nativas (`p-4`, `gap-6`, `mb-8`) — elas já seguem
 
 ```tsx
 <a
-  href={getWhatsAppUrl()}
+  href={`https://wa.me/${WHATSAPP_NUMBER}`}
   target="_blank"
   rel="noopener noreferrer"
-  className="bg-whatsapp hover:brightness-110 text-white font-medium flex items-center gap-2 px-6 py-3 rounded-full shadow-wa transition-interactive"
+  style={{
+    background: '#25D366',
+    color: '#fff',
+    fontWeight: 600,
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+    padding: '0.75rem 1.5rem',
+    borderRadius: '9999px',
+    textDecoration: 'none',
+  }}
 >
   <WhatsAppIcon /> Fale conosco
 </a>
@@ -166,14 +182,18 @@ No Tailwind, use as classes nativas (`p-4`, `gap-6`, `mb-8`) — elas já seguem
 ### Card de Curso
 
 ```tsx
-<article className="bg-surface rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden group">
-  <img src={curso.imagem} alt={curso.nome} className="w-full aspect-video object-cover" loading="lazy" />
-  <div className="p-4">
-    <h3 className="font-display text-fluid-lg font-semibold text-text">{curso.nome}</h3>
-    {curso.extra && <p className="text-fluid-sm text-text-muted mt-1">{curso.extra}</p>}
-    <a href={getCursoWhatsAppUrl(curso)} className="mt-4 card-button ...">
-      Tenho interesse
-    </a>
+<article style={{
+  background: 'var(--color-surface)',
+  borderRadius: '0.75rem',
+  overflow: 'hidden',
+  boxShadow: 'var(--shadow-card)',
+  transition: 'box-shadow 300ms ease',
+}}>
+  <img src={curso.imagem} alt={curso.nome} style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover' }} loading="lazy" />
+  <div style={{ padding: '1rem' }}>
+    <h3 style={{ fontFamily: 'Boska, Georgia, serif', fontWeight: 600 }}>{curso.nome}</h3>
+    {curso.extra && <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem' }}>{curso.extra}</p>}
+    <a href={getCursoWhatsAppUrl(curso)}>Tenho interesse</a>
   </div>
 </article>
 ```
@@ -189,4 +209,4 @@ No Tailwind, use as classes nativas (`p-4`, `gap-6`, `mb-8`) — elas já seguem
 | Valores mágicos | `margin-top: -460px`, `padding-top: 150px` | Tokens de espaçamento com `clamp()` |
 | Fonte única | Poppins para tudo | Boska (display) + Satoshi (body) |
 | Paleta sem sistema | `#33B8B8`, `#7aeeee`, `#0c6161`, `#001220` espalhados | CSS Custom Properties semânticas |
-| Bootstrap acoplado ao HTML | Classes `col-md-4`, `d-flex` no markup | Tailwind + CSS Grid nativos |
+| Bootstrap acoplado ao HTML | Classes `col-md-4`, `d-flex` no markup | CSS Grid + estilos inline |

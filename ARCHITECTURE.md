@@ -7,14 +7,14 @@
 
 ## Visão Geral
 
-Este projeto é uma **landing page institucional** da CQP (Centro de Qualificação Profissional), uma escola privada que oferece cursos técnicos, profissionalizantes, treinamentos em NRs, graduações, tecnólogos, pós-graduações, idiomas e cursos kids, localizada em Macaé/RJ.
+Este projeto é uma **landing page institucional** da CQP (Centro de Qualificação Profissional), uma escola privada que oferece cursos técnicos, profissionalizantes, treinamentos em NRs, graduações, tecnólogos, pós-graduações, idiomas e cursos kids, localizada em Carapebus/RJ.
 
 ### Stack de Modernização (branch `feat/modernization`)
 
 | Camada | Tecnologia | Justificativa |
 |---|---|---|
-| Framework | Astro 4.x | Output HTML estático, zero JS por padrão, componentes isolados |
-| Estilização | Tailwind CSS v3 + CSS Custom Properties | Tokens da marca em variáveis nativas, utilitários Tailwind para composição |
+| Framework | Vite + React | Build rápido, HMR, componentes React com TypeScript |
+| Estilização | CSS Custom Properties + estilos inline | Tokens da marca em variáveis nativas, sem dependência de frameworks CSS |
 | Linguagem | TypeScript | Tipagem dos dados de cursos, segurança em refatorações |
 | Fonte de dados | `data/cursos.ts` | Única fonte de verdade; elimina o HTML de 301 KB com cursos estáticos |
 | Deploy | Vercel / Netlify (recomendado) | CI/CD automático a partir do GitHub |
@@ -34,19 +34,19 @@ landing-page-cqp/
 │
 ├── src/
 │   ├── components/
-│   │   ├── NavbarCQP.tsx    # Navbar fixa com scroll-aware, dark mode toggle, menu mobile
-│   │   ├── HeroCQP.tsx      # Seção hero com contador de cursos animado e CTA WhatsApp
-│   │   ├── CursosCQP.tsx    # Tabs por categoria + busca em tempo real + cards de cursos
-│   │   ├── Instrutores.tsx  # Grid de instrutores com foto e especialidade
-│   │   ├── Depoimentos.tsx  # Carrossel de depoimentos de alunos
-│   │   ├── Contato.tsx      # Formulário de contato + mapa + CTA WhatsApp
-│   │   └── FooterCQP.tsx    # Rodapé com links, redes sociais e copyright
+│   │   ├── NavbarCQP.tsx        # Navbar fixa com scroll-aware, menu mobile
+│   │   ├── HeroSection.tsx      # Seção hero com vídeo de fundo e CTA
+│   │   ├── CoursesSection.tsx   # Tabs por categoria + busca em tempo real + cards de cursos
+│   │   ├── BenefitsSection.tsx  # Seção de benefícios/modalidades
+│   │   ├── TestimonialsSection.tsx  # Carrossel de depoimentos de alunos
+│   │   └── ContactSection.tsx   # Formulário de contato + mapa + informações
 │   │
-│   ├── layouts/
-│   │   └── Base.astro       # Layout base: <head>, fontes, dark mode, SEO
+│   ├── styles/
+│   │   ├── globals.css          # Estilos globais e tokens CSS
+│   │   └── tokens.css           # CSS Custom Properties (cores, tipografia, espaçamento)
 │   │
 │   └── pages/
-│       └── index.astro      # Página principal — compõe os componentes em ordem
+│       └── index.tsx            # Página principal — compõe os componentes em ordem
 │
 ├── public/
 │   ├── images/              # Imagens dos cursos (migradas de /images no protótipo)
@@ -58,8 +58,7 @@ landing-page-cqp/
 ├── CONTENT.md               # Inventário de seções e copy
 ├── CONTRIBUTING.md          # Como adicionar cursos, fazer deploy
 ├── data/cursos.ts           # Fonte de dados dos cursos
-├── tailwind.config.ts       # Tokens Tailwind da marca CQP
-├── astro.config.mjs         # Configuração do Astro
+├── vite.config.ts           # Configuração do Vite
 ├── tsconfig.json            # Configuração TypeScript
 └── package.json
 ```
@@ -68,12 +67,12 @@ landing-page-cqp/
 
 ## Decisões Técnicas
 
-### Por que Astro?
+### Por que Vite + React?
 
-- **Output HTML puro**: sem JavaScript no cliente por padrão. Ideal para SEO e velocidade.
-- **Componentes isolados**: cada seção da página é um componente independente, facilitando manutenção.
-- **Content Collections**: suporte nativo a dados em `.ts`/`.json`/`.md` como fonte para componentes.
-- **Compatível com React/Vue/Svelte**: se no futuro precisar de interatividade mais rica, os componentes existentes continuam funcionando.
+- **Build rápido**: Vite oferece HMR instantâneo e build otimizado com esbuild/rollup.
+- **Componentes isolados**: cada seção da página é um componente React independente, facilitando manutenção.
+- **TypeScript nativo**: suporte first-class a TypeScript sem configuração adicional.
+- **CSS Custom Properties**: sistema de design tokens sem dependência de frameworks CSS.
 
 ### Por que os cursos saíram do HTML?
 
@@ -84,16 +83,9 @@ O `index.html` original tem **301 KB** porque contém os cursos como markup HTML
 
 Com `data/cursos.ts`, um curso novo é adicionado com 3 linhas de código. A busca opera sobre um array TypeScript tipado.
 
-### Por que não remover Bootstrap completamente agora?
-
-O protótipo usa classes Bootstrap em todo o HTML. A remoção completa seria uma reescrita total do markup. A estratégia adotada é:
-1. Novos componentes usam **Tailwind** (sem Bootstrap).
-2. O protótipo original permanece na branch `main` como referência.
-3. A branch `feat/modernization` constrói a versão nova do zero.
-
 ### Número de WhatsApp
 
-O número está centralizado em `data/cursos.ts`, na constante `WA_NUMBER`. **Altere apenas neste arquivo** — todos os botões WhatsApp do site usam `getCursoWhatsAppUrl()` e `getWhatsAppUrl()` que lêem essa constante.
+O número está centralizado em `src/pages/index.tsx`, na constante `WHATSAPP_NUMBER`. **Altere apenas neste arquivo** — todos os componentes que usam WhatsApp recebem o número via prop.
 
 ---
 
@@ -102,10 +94,8 @@ O número está centralizado em `data/cursos.ts`, na constante `WA_NUMBER`. **Al
 ```
 data/cursos.ts
     │
-    ├──► CursosCQP.tsx       (tabs, busca, cards)
-    ├──► HeroCQP.tsx         (TOTAL_CURSOS → contador animado)
-    ├──► NavbarCQP.tsx       (pode exibir categorias no mega menu)
-    └──► Contato.tsx         (pode pré-preencher curso no formulário)
+    ├──► CoursesSection.tsx   (tabs, busca, cards)
+    └──► ContactSection.tsx   (pode pré-preencher curso no formulário)
 ```
 
 ---
@@ -137,6 +127,6 @@ npm run preview
 | Branch | Conteúdo |
 |---|---|
 | `main` | Protótipo original (HTML + Bootstrap + CSS + JS) |
-| `feat/modernization` | Versão modernizada (Astro + Tailwind + TypeScript) |
+| `feat/modernization` | Versão modernizada (Vite + React + TypeScript) |
 
 Quando a modernização estiver completa e validada, `feat/modernization` será mergeada em `main`.

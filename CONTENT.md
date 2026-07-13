@@ -10,12 +10,12 @@
 | # | ID / Seção | Componente | Fundo | CTA principal |
 |---|---|---|---|---|
 | 1 | Navbar | `NavbarCQP.tsx` | Transparente → sólido no scroll | Menu de navegação |
-| 2 | Hero (Carrossel) | `HeroCQP.tsx` | Imagem com overlay escuro | "Conheça nossos cursos" |
-| 3 | Cursos (`#cardapio`) | `CursosCQP.tsx` | `#7aeeee` → `var(--color-surface-offset)` | "Tenho interesse" por card |
-| 4 | Instrutores (`#instrutores`) | `Instrutores.tsx` | `#001220` (navy) | — |
-| 5 | Depoimentos (`#depoimentos`) | `Depoimentos.tsx` | `#7aeeee` → `var(--color-surface-offset)` | — |
-| 6 | Contato (`#fale-conosco`) | `Contato.tsx` | `#001220` (navy) | Formulário + WhatsApp |
-| 7 | Footer | `FooterCQP.tsx` | `#7aeeee` → teal escuro | Redes sociais |
+| 2 | Hero | `HeroSection.tsx` | Vídeo com overlay escuro | "Conheça nossos cursos" |
+| 3 | Cursos (`#cursos`) | `CoursesSection.tsx` | `var(--color-surface-offset)` | "Tenho interesse" por card |
+| 4 | Benefícios (`#modalidades`) | `BenefitsSection.tsx` | `#001220` (navy) | — |
+| 5 | Depoimentos (`#depoimentos`) | `TestimonialsSection.tsx` | `var(--color-surface-offset)` | — |
+| 6 | Contato (`#contato`) | `ContactSection.tsx` | `#001220` (navy) | Formulário + WhatsApp |
+| 7 | Footer | `FooterCQP` (inline) | `#001220` (navy) | Redes sociais |
 
 ---
 
@@ -26,36 +26,24 @@
 **Links de navegação**:
 - Início
 - Cursos
-- Instrutores
-- Depoimentos
-- Fale Conosco
+- Contato
 
 **Outros elementos**:
 - Logo da CQP (`max-height: 90px`)
-- Botão toggle dark mode (a adicionar na modernização)
 
 ---
 
-## Seção 2 — Hero (Carrossel)
+## Seção 2 — Hero
 
-**Tipo**: Bootstrap Carousel com 3 slides.
+**Tipo**: Vídeo de fundo com overlay escuro.
 
-Cada slide tem:
-- Imagem de fundo (com overlay `rgba(0,0,0,0.8)`)
-- Título `<h1>` em peso 900
-- Parágrafo descritivo (oculto em mobile)
-- CTA botão
-
-**Copy sugerido para modernização**:
+**Copy**:
 
 ```
 Título: Construa sua carreira em Macaé
 Subtítulo: Mais de 150 cursos técnicos, profissionalizantes, graduações e NRs para sua formação.
 CTA: Ver todos os cursos →
-CTA secundário: Falar pelo WhatsApp
 ```
-
-**Elemento de destaque a manter**: contador animado com o número total de cursos (`TOTAL_CURSOS` de `data/cursos.ts`).
 
 ---
 
@@ -85,17 +73,11 @@ CTA secundário: Falar pelo WhatsApp
 
 ---
 
-## Seção 4 — Instrutores
+## Seção 4 — Benefícios (Modalidades)
 
 **Fundo**: navy (`#001220`).
 
-**Estrutura de cada instrutor**:
-- Foto (card sem padding)
-- Nome (`<h3>`)
-- Especialidade (`<span>`, `font-size: 0.9em`)
-- Breve bio (`<p>` com padding lateral)
-
-> 📌 **Ação pendente**: os instrutores ainda estão como HTML estático no `index.html`. Para a modernização, criar `data/instrutores.ts` com a mesma estrutura de `cursos.ts`.
+**Conteúdo**: cards com ícones destacando as modalidades de ensino (presencial, online, híbrido) e diferenciais da escola.
 
 ---
 
@@ -111,7 +93,7 @@ CTA secundário: Falar pelo WhatsApp
 
 **Implementação atual**: Bootstrap Carousel com setas teal.
 
-**Modernização**: substituir pelo componente `Depoimentos.tsx` com carrossel CSS puro + `IntersectionObserver` para animação de entrada.
+**Modernização**: componente `TestimonialsSection.tsx` com carrossel CSS puro + `IntersectionObserver` para animação de entrada.
 
 ---
 
@@ -120,11 +102,12 @@ CTA secundário: Falar pelo WhatsApp
 **Fundo**: navy.
 
 **Elementos**:
-- Mapa do Google (`<iframe>` com `padding-bottom: 50%` para aspect ratio responsivo)
+- Mapa do Google (`<iframe>`)
+- Informações de contato: WhatsApp, E-mail, Endereço
 - Formulário com campos: Nome, E-mail, Telefone, Mensagem
-- Botão de envio (cor `#7aeeee` no protótipo → `bg-primary` na modernização)
+- Botão de envio via WhatsApp
 
-**CTA WhatsApp**: presente como botão flutuante em toda a página.
+**Endereço**: Rua Prata Mancebo nº148 — Centro, Carapebus — RJ, Brazil
 
 ---
 
@@ -158,17 +141,13 @@ O protótipo tem `.btn-3` (botão circular preto que expande para "Back to Top" 
 
 ## Informações de Contato
 
-> 📌 **Ação pendente**: preencher com os dados reais da escola antes do deploy.
-
 ```ts
-// Em data/escola.ts (a criar)
-export const ESCOLA = {
-  nome: 'CQP — Centro de Qualificação Profissional',
-  cidade: 'Macaé',
-  estado: 'RJ',
-  whatsapp: '5522999999999',  // TODO: número real
-  email: 'contato@cqp.com.br', // TODO: e-mail real
-  instagram: 'https://instagram.com/cqpmacae', // TODO: verificar
-  facebook: 'https://facebook.com/cqpmacae',   // TODO: verificar
-};
+// Em src/pages/index.tsx
+const WHATSAPP_NUMBER = '5522998684334';
+
+// Em src/components/ContactSection.tsx
+const DEFAULT_WHATSAPP_DISPLAY = '(22) 99868-4334';
+const DEFAULT_EMAIL = 'contato@cqp.edu.br';
+const DEFAULT_ADDRESS = 'Rua Prata Mancebo nº148 — Centro';
+const DEFAULT_CITY_STATE = 'Carapebus — RJ, Brazil';
 ```

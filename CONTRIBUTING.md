@@ -49,25 +49,32 @@ Coloque o arquivo em `public/images/` com o mesmo nome que você usou no campo `
 npm run dev
 ```
 
-Abra `http://localhost:4321`, vá até a seção de cursos e confirme que o novo curso aparece na aba correta e na busca.
+Abra `http://localhost:5173`, vá até a seção de cursos e confirme que o novo curso aparece na aba correta e na busca.
 
 ---
 
 ## Atualizar o Número de WhatsApp
 
-O número está em uma única constante em `data/cursos.ts`:
+O número está centralizado em `src/pages/index.tsx`:
 
 ```ts
-const WA_NUMBER = '5522999999999'; // formato: código país + DDD + número (sem espaços ou traços)
+const WHATSAPP_NUMBER = '5522998684334'; // formato: código país + DDD + número (sem espaços ou traços)
 ```
 
-Alterado aqui, todos os botões do site são atualizados automaticamente.
+Alterado aqui, todos os componentes que usam WhatsApp são atualizados automaticamente.
 
 ---
 
 ## Atualizar Informações da Escola
 
-Nome, cidade, e-mail, redes sociais → edite `data/escola.ts` (quando criado).
+Endereço, e-mail e telefone de exibição → edite as constantes em `src/components/ContactSection.tsx`:
+
+```ts
+const DEFAULT_WHATSAPP_DISPLAY = '(22) 99868-4334';
+const DEFAULT_EMAIL = 'contato@cqp.edu.br';
+const DEFAULT_ADDRESS = 'Rua Prata Mancebo nº148 — Centro';
+const DEFAULT_CITY_STATE = 'Carapebus — RJ, Brazil';
+```
 
 ---
 
@@ -75,7 +82,7 @@ Nome, cidade, e-mail, redes sociais → edite `data/escola.ts` (quando criado).
 
 ```
 main                  ← protótipo original (HTML + Bootstrap)
-feat/modernization    ← versão modernizada (Astro + Tailwind + TypeScript)
+feat/modernization    ← versão modernizada (Vite + React + TypeScript)
 ```
 
 **Nunca faça commits diretamente em `main`.**
@@ -106,7 +113,7 @@ Use o padrão **Conventional Commits**:
 | `feat:` | Nova funcionalidade ou novo curso |
 | `fix:` | Correção de bug ou erro de conteúdo |
 | `docs:` | Alteração em arquivos `.md` |
-| `style:` | Mudança de CSS/Tailwind sem alterar lógica |
+| `style:` | Mudança de CSS/estilos sem alterar lógica |
 | `refactor:` | Refatoração de código sem mudar comportamento |
 | `chore:` | Atualização de dependências, configurações |
 
@@ -122,20 +129,20 @@ style: ajustar espaçamento da seção de depoimentos no mobile
 
 ## Deploy
 
-### Opção 1 — Vercel (recomendado)
+### Vercel (recomendado)
 
 1. Acesse [vercel.com](https://vercel.com) e conecte sua conta GitHub.
 2. Importe o repositório `Landing-Page-CQP`.
 3. Configure:
-   - **Framework Preset**: Astro
-   - **Branch de deploy**: `feat/modernization` (ou `main` após o merge)
+   - **Framework Preset**: Vite
    - **Build command**: `npm run build`
    - **Output directory**: `dist`
+   - **Node.js Version**: 24.x
 4. Clique em **Deploy**.
 
 A partir daí, cada commit na branch configurada dispara um novo deploy automaticamente.
 
-### Opção 2 — Netlify
+### Netlify
 
 1. Acesse [netlify.com](https://netlify.com) e conecte o GitHub.
 2. Importe o repositório.
@@ -143,18 +150,6 @@ A partir daí, cada commit na branch configurada dispara um novo deploy automati
    - **Build command**: `npm run build`
    - **Publish directory**: `dist`
 4. Clique em **Deploy site**.
-
-### Opção 3 — GitHub Pages (limitado)
-
-GitHub Pages não suporta roteamento dinâmico do Astro out-of-the-box. Para sites puramente estáticos (sem rotas dinâmicas), adicione ao `astro.config.mjs`:
-
-```js
-export default defineConfig({
-  output: 'static',
-  site: 'https://barcelosmoises.github.io',
-  base: '/Landing-Page-CQP',
-});
-```
 
 ---
 
@@ -165,4 +160,4 @@ export default defineConfig({
 - [ ] Imagem do curso está em `public/images/` com dimensões corretas
 - [ ] Link WhatsApp do novo curso abre com a mensagem pré-preenchida
 - [ ] Página funciona em mobile (375px) e desktop (1280px)
-- [ ] Nenhum valor hexadecimal hardcoded no código novo — apenas tokens CSS ou classes Tailwind
+- [ ] Nenhum valor hexadecimal hardcoded no código novo — apenas tokens CSS ou variáveis
