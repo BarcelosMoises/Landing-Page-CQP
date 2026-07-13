@@ -40,7 +40,7 @@ function Avatar({ dep, size = 72 }: { dep: Depoimento; size?: number }) {
         style={{
           width: size, height: size,
           borderRadius: '50%', objectFit: 'cover',
-          border: '3px solid #001220', flexShrink: 0,
+          border: `3px solid var(--cqp-teal)`, flexShrink: 0,
         }}
       />
     );
@@ -49,13 +49,13 @@ function Avatar({ dep, size = 72 }: { dep: Depoimento; size?: number }) {
     <svg width={size} height={size} viewBox="0 0 72 72" fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-label={`Foto de ${dep.nome} (placeholder)`}
-      style={{ borderRadius: '50%', flexShrink: 0, border: '3px solid #001220' }}
+      style={{ borderRadius: '50%', flexShrink: 0, border: '3px solid var(--cqp-teal)' }}
     >
       <circle cx="36" cy="36" r="36" fill={`hsl(${hue} 35% 22%)`} />
       <circle cx="36" cy="27" r="11" fill={`hsl(${hue} 45% 55% / 0.3)`} />
       <ellipse cx="36" cy="58" rx="17" ry="11" fill={`hsl(${hue} 45% 55% / 0.22)`} />
       <text x="36" y="41" textAnchor="middle" dominantBaseline="middle"
-        fontFamily="'Boska',Georgia,serif" fontWeight="800" fontSize="17"
+        fontFamily="var(--font-display)" fontWeight="800" fontSize="17"
         fill={`hsl(${hue} 65% 72%)`}>{getInitials(dep.nome)}</text>
     </svg>
   );
@@ -69,7 +69,7 @@ function Stars({ rating = 5 }: { rating?: number }) {
     <div className="test-stars" aria-label={`${rating} de 5 estrelas`}>
       {Array.from({ length: 5 }, (_, i) => (
         <svg key={i} width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"
-          fill={i < rating ? '#001220' : 'rgba(0,18,32,0.18)'}>
+          fill={i < rating ? 'var(--cqp-teal)' : 'var(--color-text-faint)'}>
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
         </svg>
       ))}
@@ -175,7 +175,7 @@ export default function TestimonialsSection({
       <style>{`
         .test-section {
           position: relative;
-          background: linear-gradient(160deg, #7aeeee 0%, #4fd4d4 55%, #33B8B8 100%);
+          background: var(--color-surface-offset);
           padding-block: clamp(4rem, 7vw, 7rem);
           padding-inline: clamp(1rem, 4vw, 2.5rem);
           overflow: hidden;
@@ -197,7 +197,7 @@ export default function TestimonialsSection({
           right: -100px;
           width: 460px;
           height: 460px;
-          background: radial-gradient(circle, rgba(0,18,32,0.12) 0%, transparent 65%);
+          background: radial-gradient(circle, oklch(from var(--cqp-teal) l c h / 0.10) 0%, transparent 65%);
           pointer-events: none;
         }
 
@@ -217,12 +217,12 @@ export default function TestimonialsSection({
           display: inline-flex;
           align-items: center;
           gap: 0.4rem;
+          font-family: var(--font-body);
           font-size: 0.75rem;
           font-weight: 700;
           letter-spacing: 0.10em;
           text-transform: uppercase;
-          color: #001220;
-          opacity: 0.65;
+          color: var(--color-text-muted);
           margin-bottom: 0.75rem;
         }
 
@@ -230,32 +230,25 @@ export default function TestimonialsSection({
           display: block;
           width: 20px;
           height: 2px;
-          background: #001220;
+          background: var(--cqp-teal);
           border-radius: 9999px;
-          opacity: 0.65;
         }
 
         .test-title {
-          font-family: 'Boska', Georgia, serif;
+          font-family: var(--font-display);
           font-size: clamp(1.75rem, 1rem + 3vw, 3.25rem);
           font-weight: 800;
           line-height: 1.1;
           letter-spacing: -0.02em;
-          color: #001220;
+          color: var(--color-text);
           text-wrap: balance;
           margin: 0;
         }
 
         .test-carousel {
           position: relative;
-          background: rgba(255,255,255,0.55);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
-          border: 1px solid rgba(255,255,255,0.70);
-          border-radius: 1.25rem;
           padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 4vw, 3rem);
           overflow: hidden;
-          box-shadow: 0 8px 32px rgba(0,18,32,0.12), 0 1px 0 rgba(255,255,255,0.8) inset;
         }
 
         .test-slide {
@@ -273,12 +266,12 @@ export default function TestimonialsSection({
         }
 
         .test-quote {
-          font-family: 'Boska', Georgia, serif;
+          font-family: var(--font-display);
           font-size: clamp(4rem, 6vw, 7rem);
           font-weight: 900;
           line-height: 0.6;
-          color: #33B8B8;
-          opacity: 0.5;
+          color: var(--cqp-teal);
+          opacity: 0.35;
           display: block;
           height: clamp(2.5rem, 4vw, 4rem);
           user-select: none;
@@ -287,11 +280,11 @@ export default function TestimonialsSection({
         .test-blockquote { margin: 0; }
 
         .test-text {
-          font-family: 'Boska', Georgia, serif;
+          font-family: var(--font-display);
           font-size: clamp(1.05rem, 0.85rem + 1vw, 1.45rem);
           font-weight: 500;
           line-height: 1.65;
-          color: #001220;
+          color: var(--color-text);
           margin: 0;
           font-style: italic;
           text-wrap: pretty;
@@ -305,15 +298,16 @@ export default function TestimonialsSection({
         .test-stars { display: flex; gap: 0.1rem; margin-bottom: 0.15rem; }
 
         .test-author-name {
+          font-family: var(--font-body);
           font-size: clamp(0.9rem, 0.8rem + 0.4vw, 1.05rem);
           font-weight: 800;
-          color: #001220;
+          color: var(--color-text);
           margin: 0;
           line-height: 1.2;
         }
 
-        .test-author-course { font-size: 0.8125rem; font-weight: 600; color: #0c6161; margin: 0; }
-        .test-author-detail { font-size: 0.75rem; color: rgba(0,18,32,0.5); margin: 0; margin-top: 0.1rem; }
+        .test-author-course { font-family: var(--font-body); font-size: 0.8125rem; font-weight: 600; color: var(--cqp-teal-dark); margin: 0; }
+        .test-author-detail { font-family: var(--font-body); font-size: 0.75rem; color: var(--color-text-muted); margin: 0; margin-top: 0.1rem; }
 
         .test-controls {
           display: flex;
@@ -329,7 +323,7 @@ export default function TestimonialsSection({
           width: 8px;
           height: 8px;
           border-radius: 9999px;
-          background: rgba(0,18,32,0.22);
+          background: var(--color-text-faint);
           border: none;
           padding: 0;
           cursor: pointer;
@@ -337,9 +331,9 @@ export default function TestimonialsSection({
           flex-shrink: 0;
         }
 
-        .test-dot--active { background: #001220; width: 22px; }
-        .test-dot:hover:not(.test-dot--active) { background: rgba(0,18,32,0.45); }
-        .test-dot:focus-visible { outline: 2px solid #001220; outline-offset: 3px; }
+        .test-dot--active { background: var(--cqp-teal); width: 22px; }
+        .test-dot:hover:not(.test-dot--active) { background: var(--color-text-muted); }
+        .test-dot:focus-visible { outline: 2px solid var(--cqp-teal); outline-offset: 3px; }
 
         .test-arrows { display: flex; gap: 0.5rem; }
 
@@ -350,15 +344,15 @@ export default function TestimonialsSection({
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          background: rgba(0,18,32,0.10);
-          border: 1px solid rgba(0,18,32,0.15);
-          color: #001220;
+          background: transparent;
+          border: 1px solid var(--color-border);
+          color: var(--color-text);
           cursor: pointer;
-          transition: background 180ms, transform 180ms cubic-bezier(0.16,1,0.3,1);
+          transition: background 180ms, border-color 180ms, transform 180ms cubic-bezier(0.16,1,0.3,1);
         }
 
-        .test-arrow:hover { background: rgba(0,18,32,0.18); transform: scale(1.06); }
-        .test-arrow:focus-visible { outline: 2px solid #001220; outline-offset: 3px; }
+        .test-arrow:hover { background: var(--color-surface); border-color: var(--cqp-teal); color: var(--cqp-teal-dark); transform: scale(1.06); }
+        .test-arrow:focus-visible { outline: 2px solid var(--cqp-teal); outline-offset: 3px; }
         .test-arrow:active { transform: scale(0.96); }
 
         .test-progress {
@@ -366,13 +360,13 @@ export default function TestimonialsSection({
           bottom: 0;
           left: 0;
           height: 3px;
-          background: rgba(0,18,32,0.15);
+          background: var(--color-border);
           width: 100%;
         }
 
         .test-progress-bar {
           height: 100%;
-          background: #001220;
+          background: var(--cqp-teal);
           border-radius: 0 9999px 9999px 0;
           transition: width 0.35s cubic-bezier(0.16,1,0.3,1);
         }
@@ -390,23 +384,24 @@ export default function TestimonialsSection({
         .test-proof-item { display: flex; flex-direction: column; align-items: center; gap: 0.1rem; }
 
         .test-proof-value {
-          font-family: 'Boska', Georgia, serif;
+          font-family: var(--font-display);
           font-size: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
           font-weight: 900;
           line-height: 1;
           letter-spacing: -0.03em;
-          color: #001220;
+          color: var(--color-text);
         }
 
         .test-proof-label {
+          font-family: var(--font-body);
           font-size: 0.75rem;
           font-weight: 600;
-          color: rgba(0,18,32,0.6);
+          color: var(--color-text-muted);
           text-transform: uppercase;
           letter-spacing: 0.07em;
         }
 
-        .test-proof-divider { width: 1px; height: 32px; background: rgba(0,18,32,0.18); flex-shrink: 0; }
+        .test-proof-divider { width: 1px; height: 32px; background: var(--color-border); flex-shrink: 0; }
 
         @media (max-width: 480px) {
           .test-author { flex-direction: column; align-items: flex-start; }
@@ -423,13 +418,14 @@ export default function TestimonialsSection({
           display: inline-flex;
           align-items: center;
           gap: 0.4rem;
+          font-family: var(--font-body);
           font-size: 0.7rem;
           font-weight: 700;
           letter-spacing: 0.08em;
           text-transform: uppercase;
-          color: #FFA352;
-          background: rgba(255,163,82,0.15);
-          border: 1px solid rgba(255,163,82,0.28);
+          color: #964219;
+          background: rgba(150, 66, 25, 0.10);
+          border: 1px solid rgba(150, 66, 25, 0.20);
           border-radius: 9999px;
           padding: 0.2rem 0.7rem;
           margin-top: 0.5rem;

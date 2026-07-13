@@ -23,13 +23,15 @@ export default function HeroSection({
   const headingRef = useRef<HTMLHeadingElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
 
-  // Entrance animation via IntersectionObserver — no dependency on animate.css
+  // Entrance animation via IntersectionObserver
   useEffect(() => {
     const elements = [
       { el: headingRef.current, delay: 0 },
       { el: subRef.current, delay: 120 },
       { el: ctaRef.current, delay: 240 },
+      { el: statsRef.current, delay: 420 },
     ];
 
     const observer = new IntersectionObserver(
@@ -72,41 +74,6 @@ export default function HeroSection({
   return (
     <>
       <style>{`
-        /* Design tokens — CQP brand */
-        :root {
-          --cqp-teal:        #33B8B8;
-          --cqp-teal-dark:   #0c6161;
-          --cqp-navy:        #001220;
-          --cqp-teal-light:  #7aeeee;
-
-          /* Fluid type scale */
-          --text-hero: clamp(2.25rem, 1rem + 5vw, 5.5rem);
-          --text-2xl:  clamp(1.5rem,  0.8rem + 2.5vw, 3rem);
-          --text-lg:   clamp(1rem,    0.85rem + 0.75vw, 1.375rem);
-          --text-sm:   clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
-
-          /* Spacing */
-          --space-4:  1rem;
-          --space-6:  1.5rem;
-          --space-8:  2rem;
-          --space-12: 3rem;
-          --space-16: 4rem;
-
-          /* Transitions */
-          --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* Respect reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-          .hero-heading,
-          .hero-sub,
-          .hero-cta {
-            transition: none !important;
-            opacity: 1 !important;
-            transform: none !important;
-          }
-        }
-
         /* Hero wrapper */
         .hero-section {
           position: relative;
@@ -119,6 +86,20 @@ export default function HeroSection({
           background-color: var(--cqp-navy);
         }
 
+        /* Subtle geometric grid pattern over the video */
+        .hero-grid-pattern {
+          position: absolute;
+          inset: 0;
+          z-index: 2;
+          pointer-events: none;
+          background-image:
+            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+          background-size: clamp(48px, 6vw, 80px) clamp(48px, 6vw, 80px);
+          mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+          -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+        }
+
         /* Background video */
         .hero-video {
           position: absolute;
@@ -129,16 +110,19 @@ export default function HeroSection({
           pointer-events: none;
         }
 
-        /* Dark overlay */
+        /* Dark overlay with depth gradient */
         .hero-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(
-            to bottom,
-            rgba(0, 18, 32, 0.75) 0%,
-            rgba(0, 18, 32, 0.60) 50%,
-            rgba(0, 18, 32, 0.85) 100%
-          );
+          z-index: 1;
+          background:
+            radial-gradient(ellipse at 50% 0%, rgba(0, 18, 32, 0.55) 0%, transparent 60%),
+            linear-gradient(
+              to bottom,
+              rgba(0, 18, 32, 0.72) 0%,
+              rgba(0, 18, 32, 0.52) 50%,
+              rgba(0, 18, 32, 0.88) 100%
+            );
         }
 
         /* Content */
@@ -159,6 +143,7 @@ export default function HeroSection({
           display: inline-flex;
           align-items: center;
           gap: 0.375rem;
+          font-family: var(--font-body);
           font-size: var(--text-sm);
           font-weight: 600;
           letter-spacing: 0.08em;
@@ -187,6 +172,7 @@ export default function HeroSection({
 
         /* Heading */
         .hero-heading {
+          font-family: var(--font-display);
           font-size: var(--text-hero);
           font-weight: 900;
           line-height: 1.05;
@@ -217,6 +203,7 @@ export default function HeroSection({
 
         /* Subheading */
         .hero-sub {
+          font-family: var(--font-body);
           font-size: var(--text-lg);
           font-weight: 400;
           line-height: 1.65;
@@ -235,7 +222,7 @@ export default function HeroSection({
           align-items: center;
         }
 
-        /* Primary CTA — WhatsApp */
+        /* Primary CTA */
         .hero-btn-primary {
           display: inline-flex;
           align-items: center;
@@ -243,6 +230,7 @@ export default function HeroSection({
           padding: 0.875rem 1.75rem;
           background: var(--cqp-teal);
           color: #fff;
+          font-family: var(--font-body);
           font-weight: 700;
           font-size: var(--text-sm);
           border: none;
@@ -252,7 +240,7 @@ export default function HeroSection({
           transition: background 200ms var(--ease-out-expo),
                       box-shadow 200ms var(--ease-out-expo),
                       transform 200ms var(--ease-out-expo);
-          box-shadow: 0 4px 24px rgba(51, 184, 184, 0.35);
+          box-shadow: var(--shadow-cta);
         }
 
         .hero-btn-primary:hover,
@@ -266,11 +254,6 @@ export default function HeroSection({
           transform: translateY(0);
         }
 
-        /* WhatsApp icon inline SVG */
-        .hero-btn-primary svg {
-          flex-shrink: 0;
-        }
-
         /* Secondary CTA — ghost */
         .hero-btn-secondary {
           display: inline-flex;
@@ -279,6 +262,7 @@ export default function HeroSection({
           padding: 0.875rem 1.75rem;
           background: transparent;
           color: rgba(255, 255, 255, 0.85);
+          font-family: var(--font-body);
           font-weight: 600;
           font-size: var(--text-sm);
           border: 1px solid rgba(255, 255, 255, 0.25);
@@ -297,13 +281,20 @@ export default function HeroSection({
           background: rgba(51, 184, 184, 0.08);
         }
 
-        /* Stats row */
+        /* Stats row — cohesive translucent panel */
         .hero-stats {
-          display: flex;
+          display: inline-flex;
           flex-wrap: wrap;
-          gap: var(--space-8);
+          gap: 0;
           justify-content: center;
           margin-top: var(--space-12);
+          padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1.25rem, 3vw, 2.25rem);
+          background: rgba(15, 23, 42, 0.5);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 9999px;
+          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
         }
 
         .hero-stat {
@@ -311,9 +302,11 @@ export default function HeroSection({
           flex-direction: column;
           align-items: center;
           gap: 0.2rem;
+          padding-inline: clamp(1rem, 2.5vw, 1.75rem);
         }
 
         .hero-stat-value {
+          font-family: var(--font-display);
           font-size: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
           font-weight: 800;
           color: var(--cqp-teal);
@@ -322,7 +315,8 @@ export default function HeroSection({
         }
 
         .hero-stat-label {
-          font-size: var(--text-sm);
+          font-family: var(--font-body);
+          font-size: var(--text-xs);
           color: rgba(255, 255, 255, 0.55);
           text-transform: uppercase;
           letter-spacing: 0.06em;
@@ -331,9 +325,9 @@ export default function HeroSection({
 
         .hero-stat-divider {
           width: 1px;
-          height: 40px;
-          background: rgba(255, 255, 255, 0.12);
-          align-self: center;
+          align-self: stretch;
+          min-height: 40px;
+          background: rgba(255, 255, 255, 0.1);
         }
 
         /* Scroll arrow */
@@ -380,7 +374,11 @@ export default function HeroSection({
             padding: var(--space-16) var(--space-4);
           }
           .hero-stats {
+            border-radius: var(--radius-xl);
             gap: var(--space-4);
+          }
+          .hero-stat {
+            padding-inline: var(--space-4);
           }
           .hero-stat-divider {
             display: none;
@@ -408,6 +406,9 @@ export default function HeroSection({
         {/* Gradient overlay */}
         <div className="hero-overlay" aria-hidden="true" />
 
+        {/* Geometric grid pattern */}
+        <div className="hero-grid-pattern" aria-hidden="true" />
+
         {/* Main content */}
         <div className="hero-content">
           {/* Eyebrow badge */}
@@ -416,7 +417,7 @@ export default function HeroSection({
             Matrículas abertas 2026
           </div>
 
-          {/* H1 — one per page */}
+          {/* H1 */}
           <h1 ref={headingRef} className="hero-heading">
             Centro de{' '}
             <span className="hero-heading-accent">Qualificação</span>
@@ -469,9 +470,9 @@ export default function HeroSection({
           </div>
 
           {/* Stats row */}
-          <div className="hero-stats" role="list" aria-label="Números do CQP">
+          <div ref={statsRef} className="hero-stats" role="list" aria-label="Números do CQP">
             <div className="hero-stat" role="listitem">
-              <span className="hero-stat-value">+100</span>
+              <span className="hero-stat-value">+150</span>
               <span className="hero-stat-label">Cursos</span>
             </div>
             <div className="hero-stat-divider" aria-hidden="true" />
@@ -486,7 +487,7 @@ export default function HeroSection({
             </div>
             <div className="hero-stat-divider" aria-hidden="true" />
             <div className="hero-stat" role="listitem">
-              <span className="hero-stat-value">CRECI</span>
+              <span className="hero-stat-value">CREA</span>
               <span className="hero-stat-label">Certificado</span>
             </div>
           </div>
@@ -496,7 +497,7 @@ export default function HeroSection({
         <button
           className="hero-scroll-btn"
           onClick={handleScrollDown}
-          aria-label={`Rolar para a próxima seção`}
+          aria-label="Rolar para a próxima seção"
           type="button"
         >
           <svg

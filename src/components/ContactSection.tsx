@@ -373,7 +373,7 @@ export default function ContactSection({
           aspect-ratio: 16 / 11;
           border: 0;
           display: block;
-          filter: saturate(0.9) contrast(1.04);
+          filter: grayscale(1) invert(0.9);
         }
 
         .contact-map-fallback {
@@ -390,7 +390,7 @@ export default function ContactSection({
         .contact-form-card {
           padding: clamp(1.25rem, 2vw, 1.75rem);
           display: grid;
-          gap: 1.1rem;
+          gap: 1.5rem;
         }
 
         .contact-form-grid {
@@ -401,7 +401,7 @@ export default function ContactSection({
 
         .contact-field {
           display: grid;
-          gap: 0.45rem;
+          gap: 0.35rem;
         }
 
         .contact-field--full {
@@ -419,19 +419,20 @@ export default function ContactSection({
         .contact-field input,
         .contact-field textarea {
           width: 100%;
-          border: 1px solid rgba(255,255,255,0.08);
-          background: rgba(255,255,255,0.04);
+          border: 0;
+          border-bottom: 1px solid rgba(255,255,255,0.18);
+          border-radius: 0;
+          background: transparent;
           color: #ffffff;
-          border-radius: 0.875rem;
-          padding: 0.95rem 1rem;
-          min-height: 3.1rem;
+          padding: 0.85rem 0;
+          min-height: 2.75rem;
           outline: none;
           resize: vertical;
-          transition: border-color 180ms cubic-bezier(0.16,1,0.3,1), box-shadow 180ms cubic-bezier(0.16,1,0.3,1), background 180ms cubic-bezier(0.16,1,0.3,1);
+          transition: border-color 180ms cubic-bezier(0.16,1,0.3,1), background 180ms cubic-bezier(0.16,1,0.3,1);
         }
 
         .contact-field textarea {
-          min-height: 8rem;
+          min-height: 6rem;
         }
 
         .contact-field input::placeholder,
@@ -441,9 +442,8 @@ export default function ContactSection({
 
         .contact-field input:focus-visible,
         .contact-field textarea:focus-visible {
-          border-color: rgba(51,184,184,0.45);
-          box-shadow: 0 0 0 3px rgba(51,184,184,0.12);
-          background: rgba(255,255,255,0.06);
+          border-bottom-color: var(--cqp-teal);
+          background: rgba(255,255,255,0.02);
         }
 
         .contact-actions {

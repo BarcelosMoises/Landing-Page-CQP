@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { TOTAL_CURSOS, getWhatsAppUrl } from '../../data/cursos';
 
 // ---------------------------------------------------------------------------
@@ -6,6 +6,14 @@ import { TOTAL_CURSOS, getWhatsAppUrl } from '../../data/cursos';
 // ---------------------------------------------------------------------------
 export interface BenefitsSectionProps {
   sectionId?: string;
+}
+
+interface BenefitItemProps {
+  number: string;
+  title: string;
+  description: string;
+  detail: string;
+  delay?: number;
 }
 
 // ---------------------------------------------------------------------------
@@ -26,7 +34,6 @@ function useCountUp(target: number, duration = 1400) {
           const start = performance.now();
           const tick = (now: number) => {
             const progress = Math.min((now - start) / duration, 1);
-            // ease-out-expo
             const eased = 1 - Math.pow(1 - progress, 4);
             el.textContent = String(Math.round(eased * target));
             if (progress < 1) requestAnimationFrame(tick);
@@ -47,95 +54,15 @@ function useCountUp(target: number, duration = 1400) {
 }
 
 // ---------------------------------------------------------------------------
-// Illustrations (inline SVG por card)
+// Single open-column benefit item
 // ---------------------------------------------------------------------------
-function IllustrationModality() {
-  return (
-    <svg viewBox="0 0 120 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      {/* Monitor */}
-      <rect x="18" y="10" width="60" height="42" rx="5" fill="#33B8B8" fillOpacity=".15" stroke="#33B8B8" strokeWidth="1.5"/>
-      <rect x="28" y="18" width="40" height="26" rx="2" fill="#33B8B8" fillOpacity=".25"/>
-      <rect x="42" y="52" width="12" height="8" fill="#33B8B8" fillOpacity=".2"/>
-      <rect x="34" y="60" width="28" height="3" rx="1.5" fill="#33B8B8" fillOpacity=".3"/>
-      {/* Phone */}
-      <rect x="86" y="30" width="22" height="38" rx="4" fill="#0c6161" fillOpacity=".25" stroke="#33B8B8" strokeWidth="1.5"/>
-      <rect x="90" y="38" width="14" height="20" rx="1.5" fill="#33B8B8" fillOpacity=".2"/>
-      <circle cx="97" cy="63" r="2" fill="#33B8B8" fillOpacity=".5"/>
-      {/* Wi-fi arcs */}
-      <path d="M54 36 Q60 30 66 36" stroke="#33B8B8" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
-      <path d="M50 32 Q60 22 70 32" stroke="#33B8B8" strokeWidth="1.25" strokeLinecap="round" fill="none" opacity=".5"/>
-      {/* Play button */}
-      <polygon points="56,40 64,44 56,48" fill="#33B8B8" fillOpacity=".7"/>
-      {/* Deco dots */}
-      <circle cx="24" cy="74" r="3" fill="#33B8B8" fillOpacity=".3"/>
-      <circle cx="34" cy="80" r="2" fill="#33B8B8" fillOpacity=".2"/>
-      <circle cx="44" cy="76" r="4" fill="#7aeeee" fillOpacity=".15"/>
-    </svg>
-  );
-}
-
-function IllustrationPrice() {
-  return (
-    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      {/* Coin stack */}
-      <ellipse cx="40" cy="58" rx="22" ry="7" fill="#33B8B8" fillOpacity=".18"/>
-      <ellipse cx="40" cy="50" rx="22" ry="7" fill="#33B8B8" fillOpacity=".22"/>
-      <ellipse cx="40" cy="42" rx="22" ry="7" fill="#33B8B8" fillOpacity=".3"/>
-      <ellipse cx="40" cy="34" rx="22" ry="7" fill="#0c6161" fillOpacity=".35" stroke="#33B8B8" strokeWidth="1.25"/>
-      {/* R$ sign */}
-      <text x="40" y="38" textAnchor="middle" fontFamily="'Boska',Georgia,serif" fontWeight="800" fontSize="11" fill="#33B8B8">R$</text>
-      {/* Sparkle */}
-      <path d="M68 16 L70 20 L74 22 L70 24 L68 28 L66 24 L62 22 L66 20Z" fill="#33B8B8" fillOpacity=".5"/>
-      <path d="M14 10 L15 13 L18 14 L15 15 L14 18 L13 15 L10 14 L13 13Z" fill="#7aeeee" fillOpacity=".4"/>
-    </svg>
-  );
-}
-
-function IllustrationPlatform() {
-  return (
-    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      {/* Dashboard window */}
-      <rect x="10" y="14" width="60" height="50" rx="6" fill="#0c6161" fillOpacity=".2" stroke="#33B8B8" strokeWidth="1.5"/>
-      {/* Title bar */}
-      <rect x="10" y="14" width="60" height="10" rx="6" fill="#33B8B8" fillOpacity=".25"/>
-      <circle cx="18" cy="19" r="2" fill="#33B8B8" fillOpacity=".6"/>
-      <circle cx="25" cy="19" r="2" fill="#33B8B8" fillOpacity=".4"/>
-      <circle cx="32" cy="19" r="2" fill="#33B8B8" fillOpacity=".25"/>
-      {/* Progress bars */}
-      <rect x="18" y="30" width="44" height="4" rx="2" fill="#33B8B8" fillOpacity=".1"/>
-      <rect x="18" y="30" width="30" height="4" rx="2" fill="#33B8B8" fillOpacity=".5"/>
-      <rect x="18" y="40" width="44" height="4" rx="2" fill="#33B8B8" fillOpacity=".1"/>
-      <rect x="18" y="40" width="20" height="4" rx="2" fill="#7aeeee" fillOpacity=".5"/>
-      <rect x="18" y="50" width="44" height="4" rx="2" fill="#33B8B8" fillOpacity=".1"/>
-      <rect x="18" y="50" width="38" height="4" rx="2" fill="#33B8B8" fillOpacity=".35"/>
-      {/* Check badge */}
-      <circle cx="62" cy="58" r="9" fill="#0c6161"/>
-      <path d="M57 58 L61 62 L67 54" stroke="#33B8B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Single benefit card
-// ---------------------------------------------------------------------------
-interface BenefitCardProps {
-  tag: string;
-  title: string;
-  description: string;
-  detail: string;
-  illustration: React.ReactNode;
-  accent?: boolean; // card de destaque (fundo ligeiramente diferente)
-  delay?: number;
-}
-
-function BenefitCard({ tag, title, description, detail, illustration, accent = false, delay = 0 }: BenefitCardProps) {
-  const cardRef = useRef<HTMLDivElement>(null);
+function BenefitItem({ number, title, description, detail, delay = 0 }: BenefitItemProps) {
+  const itemRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = cardRef.current;
+    const el = itemRef.current;
     if (!el) return;
 
-    // Set initial hidden state
     el.style.opacity = '0';
     el.style.transform = 'translateY(28px)';
     el.style.transition = `opacity 0.65s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.65s cubic-bezier(0.16,1,0.3,1) ${delay}ms`;
@@ -155,18 +82,12 @@ function BenefitCard({ tag, title, description, detail, illustration, accent = f
   }, [delay]);
 
   return (
-    <div
-      ref={cardRef}
-      className={`benefit-card${accent ? ' benefit-card--accent' : ''}`}
-    >
-      <div className="benefit-card-illus" aria-hidden="true">
-        {illustration}
-      </div>
-      <div className="benefit-card-body">
-        <span className="benefit-card-tag">{tag}</span>
-        <h3 className="benefit-card-title">{title}</h3>
-        <p className="benefit-card-desc">{description}</p>
-        <p className="benefit-card-detail">{detail}</p>
+    <div ref={itemRef} className="benefit-item">
+      <span className="benefit-number" aria-hidden="true">{number}</span>
+      <div className="benefit-body">
+        <h3 className="benefit-title">{title}</h3>
+        <p className="benefit-desc">{description}</p>
+        <p className="benefit-detail">{detail}</p>
       </div>
     </div>
   );
@@ -179,7 +100,6 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
   const countRef = useCountUp(TOTAL_CURSOS, 1600);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Animate section header
   useEffect(() => {
     const el = sectionRef.current?.querySelector('.benefits-header') as HTMLElement | null;
     if (!el) return;
@@ -202,24 +122,7 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
 
   return (
     <>
-      {/* ------------------------------------------------------------------ */}
-      {/* Styles                                                              */}
-      {/* ------------------------------------------------------------------ */}
       <style>{`
-        :root {
-          --cqp-teal:        #33B8B8;
-          --cqp-teal-dark:   #0c6161;
-          --cqp-teal-light:  #7aeeee;
-          --cqp-navy:        #001220;
-          --text-sm:   clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
-          --text-lg:   clamp(1rem, 0.85rem + 0.75vw, 1.375rem);
-          --text-2xl:  clamp(1.5rem, 0.8rem + 2.5vw, 3rem);
-          --radius-lg: 0.75rem;
-          --radius-xl: 1rem;
-          --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* ---- Section ---- */
         .benefits-section {
           position: relative;
           background: var(--cqp-navy);
@@ -228,7 +131,6 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
           overflow: hidden;
         }
 
-        /* Subtle grain overlay via SVG filter */
         .benefits-section::before {
           content: '';
           position: absolute;
@@ -238,7 +140,6 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
           opacity: 0.5;
         }
 
-        /* Teal ambient glow — top-right */
         .benefits-section::after {
           content: '';
           position: absolute;
@@ -257,7 +158,6 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
           margin-inline: auto;
         }
 
-        /* ---- Header ---- */
         .benefits-header {
           display: flex;
           flex-wrap: wrap;
@@ -267,12 +167,11 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
           margin-bottom: clamp(2.5rem, 4vw, 4rem);
         }
 
-        .benefits-header-left {}
-
         .benefits-eyebrow {
           display: inline-flex;
           align-items: center;
           gap: 0.4rem;
+          font-family: var(--font-body);
           font-size: 0.75rem;
           font-weight: 700;
           letter-spacing: 0.1em;
@@ -290,7 +189,7 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
         }
 
         .benefits-title {
-          font-family: 'Boska', Georgia, serif;
+          font-family: var(--font-display);
           font-size: var(--text-2xl);
           font-weight: 800;
           line-height: 1.1;
@@ -313,7 +212,7 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
         }
 
         .benefits-stat-number {
-          font-family: 'Boska', Georgia, serif;
+          font-family: var(--font-display);
           font-size: clamp(3rem, 2rem + 3vw, 5.5rem);
           font-weight: 900;
           line-height: 1;
@@ -322,6 +221,7 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
         }
 
         .benefits-stat-label {
+          font-family: var(--font-body);
           font-size: var(--text-sm);
           font-weight: 500;
           color: rgba(255,255,255,0.45);
@@ -330,112 +230,40 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
           text-align: right;
         }
 
-        /* ---- Card grid ---- */
-        /* Asymmetric: 1 tall card left + 2 stacked right */
+        /* Open columns layout */
         .benefits-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          grid-template-rows: auto auto;
-          gap: clamp(0.875rem, 1.5vw, 1.25rem);
+          grid-template-columns: repeat(3, 1fr);
+          gap: clamp(1.5rem, 3vw, 3rem);
         }
 
-        /* First card spans both rows on the left */
-        .benefit-card:first-child {
-          grid-row: 1 / 3;
-        }
-
-        /* ---- Card base ---- */
-        .benefit-card {
-          position: relative;
+        .benefit-item {
           display: flex;
           flex-direction: column;
-          background: rgba(255,255,255,0.04);
-          border: 1px solid oklch(from #33B8B8 l c h / 0.14);
-          border-radius: var(--radius-xl);
-          overflow: hidden;
-          padding: clamp(1.5rem, 2.5vw, 2.25rem);
-          gap: 1.5rem;
-          transition:
-            background 220ms var(--ease-out-expo),
-            border-color 220ms var(--ease-out-expo),
-            transform 220ms var(--ease-out-expo);
+          gap: 1.25rem;
+          padding-top: 1.5rem;
+          border-top: 1px solid oklch(from var(--cqp-teal) l c h / 0.18);
         }
 
-        .benefit-card::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(135deg, rgba(51,184,184,0.06) 0%, transparent 60%);
-          opacity: 0;
-          transition: opacity 300ms var(--ease-out-expo);
-          pointer-events: none;
-        }
-
-        .benefit-card:hover {
-          background: rgba(255,255,255,0.07);
-          border-color: oklch(from #33B8B8 l c h / 0.30);
-          transform: translateY(-3px);
-        }
-
-        .benefit-card:hover::before {
-          opacity: 1;
-        }
-
-        /* Accent card — slightly brighter border */
-        .benefit-card--accent {
-          background: rgba(51,184,184,0.07);
-          border-color: oklch(from #33B8B8 l c h / 0.22);
-        }
-
-        .benefit-card--accent:hover {
-          background: rgba(51,184,184,0.11);
-        }
-
-        /* ---- Illustration ---- */
-        .benefit-card-illus {
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-        }
-
-        /* First (tall) card gets a larger illustration */
-        .benefit-card:first-child .benefit-card-illus svg {
-          width: 120px;
-          height: 96px;
-        }
-
-        .benefit-card-illus svg {
-          width: 80px;
-          height: 80px;
-          flex-shrink: 0;
-        }
-
-        /* ---- Card body ---- */
-        .benefit-card-body {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-          flex: 1;
-        }
-
-        .benefit-card-tag {
-          display: inline-flex;
-          align-items: center;
-          font-size: 0.7rem;
-          font-weight: 700;
-          letter-spacing: 0.10em;
-          text-transform: uppercase;
+        .benefit-number {
+          font-family: var(--font-display);
+          font-size: clamp(2.5rem, 2rem + 2vw, 4rem);
+          font-weight: 900;
+          line-height: 1;
+          letter-spacing: -0.04em;
           color: var(--cqp-teal);
-          background: rgba(51,184,184,0.12);
-          border: 1px solid rgba(51,184,184,0.20);
-          border-radius: 9999px;
-          padding: 0.15rem 0.6rem;
-          align-self: flex-start;
+          opacity: 0.35;
         }
 
-        .benefit-card-title {
-          font-family: 'Boska', Georgia, serif;
-          font-size: clamp(1.125rem, 0.9rem + 1vw, 1.6rem);
+        .benefit-body {
+          display: flex;
+          flex-direction: column;
+          gap: 0.6rem;
+        }
+
+        .benefit-title {
+          font-family: var(--font-display);
+          font-size: clamp(1.125rem, 0.9rem + 1vw, 1.5rem);
           font-weight: 800;
           line-height: 1.2;
           letter-spacing: -0.02em;
@@ -444,7 +272,8 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
           text-wrap: balance;
         }
 
-        .benefit-card-desc {
+        .benefit-desc {
+          font-family: var(--font-body);
           font-size: var(--text-sm);
           line-height: 1.65;
           color: rgba(255,255,255,0.65);
@@ -452,7 +281,8 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
           max-width: 42ch;
         }
 
-        .benefit-card-detail {
+        .benefit-detail {
+          font-family: var(--font-body);
           font-size: 0.8125rem;
           font-weight: 600;
           color: var(--cqp-teal);
@@ -463,7 +293,7 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
           gap: 0.35rem;
         }
 
-        .benefit-card-detail::before {
+        .benefit-detail::before {
           content: '';
           display: block;
           width: 16px;
@@ -473,13 +303,12 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
           flex-shrink: 0;
         }
 
-        /* ---- Footer stats strip ---- */
         .benefits-stats {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
           gap: 1px;
-          background: oklch(from #33B8B8 l c h / 0.12);
-          border: 1px solid oklch(from #33B8B8 l c h / 0.12);
+          background: oklch(from var(--cqp-teal) l c h / 0.12);
+          border: 1px solid oklch(from var(--cqp-teal) l c h / 0.12);
           border-radius: var(--radius-lg);
           overflow: hidden;
           margin-top: clamp(2rem, 3.5vw, 3.5rem);
@@ -501,7 +330,7 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
         }
 
         .benefits-stat-item-value {
-          font-family: 'Boska', Georgia, serif;
+          font-family: var(--font-display);
           font-size: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
           font-weight: 900;
           line-height: 1;
@@ -510,6 +339,7 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
         }
 
         .benefits-stat-item-label {
+          font-family: var(--font-body);
           font-size: 0.75rem;
           font-weight: 500;
           color: rgba(255,255,255,0.45);
@@ -518,7 +348,6 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
           line-height: 1.3;
         }
 
-        /* ---- CTA row ---- */
         .benefits-cta-row {
           display: flex;
           flex-wrap: wrap;
@@ -530,6 +359,7 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
         }
 
         .benefits-cta-text {
+          font-family: var(--font-body);
           font-size: var(--text-sm);
           color: rgba(255,255,255,0.55);
           max-width: 42ch;
@@ -541,6 +371,7 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
           align-items: center;
           gap: 0.5rem;
           padding: 0.875rem 1.875rem;
+          font-family: var(--font-body);
           background: var(--cqp-teal);
           color: #ffffff;
           font-weight: 700;
@@ -561,13 +392,12 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
           transform: translateY(-2px);
         }
 
-        /* ---- Responsive ---- */
-        @media (max-width: 640px) {
+        @media (max-width: 960px) {
           .benefits-grid {
             grid-template-columns: 1fr;
           }
-          .benefit-card:first-child {
-            grid-row: auto;
+          .benefit-item {
+            padding-top: 1.25rem;
           }
           .benefits-header {
             flex-direction: column;
@@ -581,21 +411,15 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
           }
         }
 
-        /* ---- Reduced motion ---- */
         @media (prefers-reduced-motion: reduce) {
-          .benefit-card,
-          .benefit-card::before,
+          .benefit-item,
           .benefits-cta-btn,
           .benefits-stat-item {
             transition: none !important;
           }
-          .benefit-card:hover { transform: none; }
         }
       `}</style>
 
-      {/* ------------------------------------------------------------------ */}
-      {/* Section                                                             */}
-      {/* ------------------------------------------------------------------ */}
       <section
         id={sectionId}
         ref={sectionRef}
@@ -604,7 +428,6 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
       >
         <div className="benefits-inner">
 
-          {/* Header */}
           <header className="benefits-header">
             <div className="benefits-header-left">
               <div className="benefits-eyebrow" aria-hidden="true">
@@ -619,7 +442,6 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
               </h2>
             </div>
 
-            {/* Animated course counter */}
             <div className="benefits-header-stat" aria-label={`Mais de ${TOTAL_CURSOS} cursos disponíveis`}>
               <span className="benefits-stat-number" aria-hidden="true">
                 <span ref={countRef}>0</span>
@@ -628,43 +450,30 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
             </div>
           </header>
 
-          {/* Cards */}
           <div className="benefits-grid">
-
-            {/* Card 1 — Tall / Feature (modalidades) */}
-            <BenefitCard
-              tag="Modalidade"
+            <BenefitItem
+              number="01"
               title="Estude como e onde preferir"
               description="Escolha entre presencial, EAD ou o modelo flexível que combina os dois. Cada curso indica as modalidades disponíveis para que você encaixe o aprendizado na sua rotina."
               detail="Presencial · EAD · Híbrido"
-              illustration={<IllustrationModality />}
-              accent
               delay={0}
             />
-
-            {/* Card 2 — Mensalidades */}
-            <BenefitCard
-              tag="Investimento"
+            <BenefitItem
+              number="02"
               title="Mensalidades que cabem no seu bolso"
               description="Planos a partir de R$\u00a0150/mês com parcelamento facilitado. Sem taxa de matrícula oculta e com bolsas de estudo para quem se qualificar."
               detail="A partir de R$\u00a0150 por mês"
-              illustration={<IllustrationPrice />}
               delay={120}
             />
-
-            {/* Card 3 — Plataforma */}
-            <BenefitCard
-              tag="Tecnologia"
+            <BenefitItem
+              number="03"
               title="Plataforma exclusiva de aprendizado"
               description="Acesse aulas gravadas, materiais didáticos e acompanhe seu progresso em qualquer dispositivo. Certificado digital emitido automaticamente ao concluir."
               detail="Certificado reconhecido pelo mercado"
-              illustration={<IllustrationPlatform />}
               delay={220}
             />
-
           </div>
 
-          {/* Stats strip */}
           <div className="benefits-stats" role="list" aria-label="Números do CQP">
             {[
               { value: '+2.000', label: 'Alunos formados' },
@@ -679,7 +488,6 @@ export default function BenefitsSection({ sectionId = 'modalidades' }: BenefitsS
             ))}
           </div>
 
-          {/* CTA row */}
           <div className="benefits-cta-row">
             <p className="benefits-cta-text">
               Dúvidas sobre qual curso escolher? Nossa equipe orienta você gratuitamente.
