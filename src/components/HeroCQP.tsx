@@ -181,7 +181,7 @@ export default function HeroCQP() {
     next?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
-  // Animação de entrada inline (substitui as classes reveal/revealed do design system anterior)
+  // Animação de entrada inline
   const fadeIn = (delay: number): React.CSSProperties => ({
     opacity: contentVisible ? 1 : 0,
     transform: contentVisible ? 'translateY(0)' : 'translateY(20px)',
@@ -219,14 +219,15 @@ export default function HeroCQP() {
         }}
         aria-label="Seção principal — CQP"
       >
-        {/* Vídeo de fundo */}
+        {/* Vídeo de fundo com múltiplos codecs e poster mapeados no /public/videos/ */}
         <video
           ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
-          poster="/video/background-poster.jpg"
+          preload="auto"
+          poster="/videos/background-poster.jpg"
           aria-hidden="true"
           style={{
             position: 'absolute',
@@ -235,9 +236,11 @@ export default function HeroCQP() {
             height: '100%',
             objectFit: 'cover',
             zIndex: 0,
+            pointerEvents: 'none',
           }}
         >
-          <source src="/video/background-video.mp4" type="video/mp4" />
+          <source src="/videos/background-video.webm" type="video/webm" />
+          <source src="/videos/background-video.mp4" type="video/mp4" />
         </video>
 
         {/* Overlay — gradiente navy */}
@@ -315,7 +318,6 @@ export default function HeroCQP() {
               backdropFilter: 'blur(4px)',
             }}
           >
-            {/* MapPin SVG inline */}
             <svg
               width="13"
               height="13"
@@ -421,7 +423,6 @@ export default function HeroCQP() {
                   'translateY(0)';
               }}
             >
-              {/* WhatsApp SVG inline */}
               <svg
                 width="20"
                 height="20"
@@ -509,7 +510,6 @@ export default function HeroCQP() {
             padding: '0.5rem',
           }}
         >
-          {/* ChevronDown SVG inline */}
           <svg
             className="hero-scroll-icon"
             width="28"
