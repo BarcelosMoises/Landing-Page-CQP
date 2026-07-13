@@ -13,7 +13,7 @@ import ContactSection   from '../components/ContactSection';
 // Constants
 // ---------------------------------------------------------------------------
 const WHATSAPP_NUMBER = '5522998684334';
-const VIDEO_SRC       = '/video/background-video.mp4';
+const VIDEO_SRC       = '/videos/background-video';
 
 // ---------------------------------------------------------------------------
 // Back-to-top button

@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 // Types
 // ---------------------------------------------------------------------------
 export interface HeroSectionProps {
-  /** Caminho relativo ou URL do vídeo de fundo */
+  /** Caminho base do vídeo (sem extensão). Ex: '/videos/background-video' */
   videoSrc?: string;
   /** Número do WhatsApp no formato internacional sem o + (ex: 5522998684334) */
   whatsappNumber?: string;
@@ -16,7 +16,7 @@ export interface HeroSectionProps {
 // Component
 // ---------------------------------------------------------------------------
 export default function HeroSection({
-  videoSrc = './video/background-video.mp4',
+  videoSrc = '/videos/background-video',
   whatsappNumber = '5522998684334',
   scrollTargetId = 'sobre',
 }: HeroSectionProps) {
@@ -24,6 +24,7 @@ export default function HeroSection({
   const subRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   // Entrance animation via IntersectionObserver
   useEffect(() => {
@@ -60,6 +61,38 @@ export default function HeroSection({
     });
 
     return () => observer.disconnect();
+  }, []);
+
+  // Video autoplay — waits for canplaythrough to avoid race conditions
+  useEffect(() => {
+    const vid = videoRef.current;
+    if (!vid) return;
+
+    const play = () => {
+      vid.play().catch(() => {
+        // Retry once on user interaction if autoplay blocked
+        const retry = () => {
+          vid.play().catch(() => {});
+          document.removeEventListener('click', retry);
+          document.removeEventListener('touchstart', retry);
+        };
+        document.addEventListener('click', retry, { once: true });
+        document.addEventListener('touchstart', retry, { once: true });
+      });
+    };
+
+    // If already ready, play immediately; otherwise wait
+    if (vid.readyState >= 3) {
+      play();
+    } else {
+      vid.addEventListener('canplaythrough', play, { once: true });
+      // Safety timeout: force play after 3s even if canplaythrough hasn't fired
+      const timeout = setTimeout(play, 3000);
+      return () => {
+        vid.removeEventListener('canplaythrough', play);
+        clearTimeout(timeout);
+      };
+    }
   }, []);
 
   const whatsappHref = `https://api.whatsapp.com/send/?phone=${whatsappNumber}&text=Ol%C3%A1!+Tenho+interesse+em+saber+mais+sobre+os+cursos+do+CQP.&type=phone_number&app_absent=0`;
@@ -391,17 +424,21 @@ export default function HeroSection({
         className="hero-section"
         aria-label="Seção principal — Centro de Qualificação Profissional"
       >
-        {/* Background video */}
+        {/* Background video with codec fallback */}
         <video
+          ref={videoRef}
           className="hero-video"
-          src={videoSrc}
           autoPlay
           loop
           muted
           playsInline
           aria-hidden="true"
-          preload="metadata"
-        />
+          preload="auto"
+          poster="/videos/background-poster.jpg"
+        >
+          <source src={`${videoSrc}.webm`} type="video/webm" />
+          <source src={`${videoSrc}.mp4`} type="video/mp4" />
+        </video>
 
         {/* Gradient overlay */}
         <div className="hero-overlay" aria-hidden="true" />
