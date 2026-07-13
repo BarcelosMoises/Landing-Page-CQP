@@ -454,13 +454,6 @@ export default function ContactSection({
           justify-content: space-between;
         }
 
-        .contact-actions-note {
-          font-size: 0.84rem;
-          color: rgba(255,255,255,0.52);
-          line-height: 1.55;
-          max-width: 34ch;
-        }
-
         .contact-submit {
           display: inline-flex;
           align-items: center;
@@ -511,13 +504,6 @@ export default function ContactSection({
           box-shadow: 0 16px 36px rgba(51,184,184,0.45);
         }
 
-        .contact-disclaimer {
-          margin-top: 1rem;
-          font-size: 0.76rem;
-          color: rgba(255,255,255,0.4);
-          line-height: 1.55;
-        }
-
         @media (max-width: 960px) {
           .contact-grid {
             grid-template-columns: 1fr;
@@ -565,9 +551,6 @@ export default function ContactSection({
             <div className="contact-info-stack" ref={infoRef}>
               <article className="contact-card" aria-labelledby="contact-info-title">
                 <h3 id="contact-info-title">Informações de contato</h3>
-                <p>
-                  Estes dados ainda podem ser refinados com as informações oficiais da escola, mas a estrutura já está pronta para produção.
-                </p>
 
                 <div className="contact-list">
                   <div className="contact-list-item">
@@ -577,16 +560,6 @@ export default function ContactSection({
                     <div>
                       <span className="contact-list-item-label">WhatsApp</span>
                       <a href={floatingWhatsappHref} target="_blank" rel="noopener noreferrer">{whatsappNumber}</a>
-                    </div>
-                  </div>
-
-                  <div className="contact-list-item">
-                    <ContactIcon>
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.89.32 1.77.59 2.62a2 2 0 0 1-.45 2.11L8.1 9.55a16 16 0 0 0 6.34 6.34l1.1-1.1a2 2 0 0 1 2.11-.45c.85.27 1.73.47 2.62.59A2 2 0 0 1 22 16.92z"/></svg>
-                    </ContactIcon>
-                    <div>
-                      <span className="contact-list-item-label">Telefone</span>
-                      <span>{phoneNumber}</span>
                     </div>
                   </div>
 
@@ -623,15 +596,9 @@ export default function ContactSection({
                   </SocialLink>
                 </div>
 
-                <p className="contact-disclaimer">
-                  Dados como telefone fixo, endereço exato e links sociais ainda podem ser substituídos pelos oficiais do cliente antes do deploy.
-                </p>
-              </article>
-
               <article className="contact-map-card" ref={mapRef} aria-labelledby="contact-map-title">
                 <div className="contact-map-card-head">
                   <h3 id="contact-map-title">Onde estamos</h3>
-                  <p>Mapa incorporado com fallback simples para Google Maps.</p>
                   <a
                     className="contact-map-fallback"
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${address}, ${cityState}`)}`}
@@ -709,9 +676,6 @@ export default function ContactSection({
               </div>
 
               <div className="contact-actions">
-                <p className="contact-actions-note">
-                  O formulário não envia para backend. Ele prepara a mensagem e direciona para o WhatsApp, que é o objetivo principal de conversão da landing page.
-                </p>
 
                 <a
                   href={whatsappHref}
