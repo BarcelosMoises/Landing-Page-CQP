@@ -4,6 +4,8 @@
 // Gerado a partir dos arquivos reais em /images — sem cursos inventados.
 // =============================================================================
 
+import { CURSOS_POS_GRADUACAO } from '../src/components/dadosPosGraduacao';
+
 export type Modalidade = 'presencial' | 'online' | 'hibrido';
 
 export interface Curso {
@@ -21,6 +23,7 @@ export type CategoriaSlug =
   | 'profissionalizantes'
   | 'treinamentos'
   | 'graduacoes'
+  | 'pos-graduacoes'
   | 'idiomas'
   | 'kids';
 
@@ -58,6 +61,12 @@ export const CATEGORIAS: Categoria[] = [
     label: 'Graduações e Tecnólogos',
     descricao: 'Cursos superiores presenciais e EAD',
     icone: 'GraduationCap',
+  },
+  {
+    slug: 'pos-graduacoes',
+    label: 'Pós-Graduação',
+    descricao: 'Especializações e MBAs para impulsionar sua carreira',
+    icone: 'Award',
   },
   {
     slug: 'idiomas',
@@ -275,6 +284,7 @@ export const TODOS_OS_CURSOS: Curso[] = [
   ...CURSOS_PROFISSIONALIZANTES,
   ...CURSOS_TREINAMENTOS,
   ...CURSOS_GRADUACOES,
+  ...CURSOS_POS_GRADUACAO,
   ...CURSOS_IDIOMAS,
   ...CURSOS_KIDS,
 ];
@@ -291,6 +301,7 @@ export const CURSOS_POR_CATEGORIA: Record<CategoriaSlug, Curso[]> = {
   profissionalizantes: CURSOS_PROFISSIONALIZANTES,
   treinamentos:        CURSOS_TREINAMENTOS,
   graduacoes:          CURSOS_GRADUACOES,
+  'pos-graduacoes':    CURSOS_POS_GRADUACAO,
   idiomas:             CURSOS_IDIOMAS,
   kids:                CURSOS_KIDS,
 };

@@ -39,6 +39,7 @@ const CATEGORY_ICONS: Record<string, string> = {
   profissionalizantes: `<rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>`,
   treinamentos: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
   graduacoes: `<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>`,
+  'pos-graduacoes': `<circle cx="12" cy="12" r="10"/><polygon points="12 6 14.5 10.5 19.5 11.5 16 15 16.5 20 12 18 7.5 20 8 15 4.5 11.5 9.5 10.5"/>`,
   idiomas: `<path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/>`,
   kids: `<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>`,
 };
