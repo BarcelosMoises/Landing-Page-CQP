@@ -903,7 +903,7 @@ function CategoriaBadge({ config }: { config: CategoriaConfig }) {
   );
 }
 
-function CardHeader({ config, titulo }: { config: CategoriaConfig; titulo: string }) {
+function CardHeader({ config }: { config: CategoriaConfig }) {
   const Icon = config.icone;
   return (
     <div
@@ -959,7 +959,7 @@ function CardHeader({ config, titulo }: { config: CategoriaConfig; titulo: strin
           boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
         }}
       >
-        <Icon size={20} strokeWidth={1.5} color="var(--color-text)" style={{ opacity: 0.7 }} />
+        <Icon size={20} strokeWidth={1.5} style={{ color: 'var(--color-text)', opacity: 0.7 }} />
       </div>
     </div>
   );
@@ -998,7 +998,7 @@ function CourseCard({ curso, config }: { curso: CursoPosGraduacao; config: Categ
         borderColor: hovered ? 'oklch(from var(--cqp-teal) l c h / 0.35)' : 'var(--color-border)',
       }}
     >
-      <CardHeader config={config} titulo={curso.titulo} />
+      <CardHeader config={config} />
 
       <div
         style={{
