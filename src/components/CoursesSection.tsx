@@ -49,11 +49,11 @@ const CATEGORY_ICONS: Record<string, string> = {
 // ---------------------------------------------------------------------------
 function ModalidadeBadge({ m }: { m: string }) {
   const map: Record<string, { label: string; color: string; bg: string }> = {
-    presencial: { label: 'Presencial', color: 'var(--cqp-teal-dark)', bg: 'oklch(from var(--cqp-teal) l c h / 0.10)' },
-    online: { label: 'EAD', color: '#1a4a7a', bg: 'rgba(26, 74, 122, 0.10)' },
-    hibrido: { label: 'Híbrido', color: '#5a3d8a', bg: 'rgba(90, 61, 138, 0.10)' },
+    presencial: { label: 'Presencial', color: 'var(--cqp-teal-light)', bg: 'rgba(51, 184, 184, 0.12)' },
+    online: { label: 'EAD', color: '#7eb8da', bg: 'rgba(126, 184, 218, 0.12)' },
+    hibrido: { label: 'Híbrido', color: '#b89eda', bg: 'rgba(184, 158, 218, 0.12)' },
   };
-  const info = map[m] ?? { label: m, color: '#444', bg: 'rgba(68,68,68,0.10)' };
+  const info = map[m] ?? { label: m, color: 'rgba(255,255,255,0.6)', bg: 'rgba(255,255,255,0.08)' };
   return (
     <span
       style={{
@@ -77,7 +77,7 @@ function ModalidadeBadge({ m }: { m: string }) {
 }
 
 // ---------------------------------------------------------------------------
-// Course Card — Clean 16:9 layout with smart image crop
+// Course Card — Glassmorphism premium sobre fundo navy
 // ---------------------------------------------------------------------------
 function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
   const cardRef = useRef<HTMLAnchorElement>(null);
@@ -124,24 +124,30 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        background: 'var(--color-surface)',
-        border: '1px solid var(--color-divider)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        border: hovered
+          ? '1px solid rgba(255, 255, 255, 0.18)'
+          : '1px solid rgba(255, 255, 255, 0.08)',
         borderRadius: 'var(--radius-lg)',
         overflow: 'hidden',
         textDecoration: 'none',
-        transition: 'box-shadow 280ms var(--ease-out-expo), transform 280ms var(--ease-out-expo), border-color 280ms var(--ease-out-expo)',
-        boxShadow: hovered ? 'var(--shadow-teal)' : 'none',
+        transition: 'box-shadow 280ms var(--ease-out-expo), transform 280ms var(--ease-out-expo), border-color 280ms var(--ease-out-expo), background 280ms var(--ease-out-expo)',
+        boxShadow: hovered
+          ? '0 8px 32px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(51, 184, 184, 0.15)'
+          : '0 2px 8px rgba(0, 0, 0, 0.15)',
         transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
-        borderColor: hovered ? 'oklch(from var(--cqp-teal) l c h / 0.35)' : 'var(--color-divider)',
+        background: hovered ? 'rgba(255, 255, 255, 0.06)' : 'rgba(255, 255, 255, 0.03)',
       }}
     >
+      {/* Imagem do curso */}
       <div
         className="course-card-img-wrap"
         style={{
           position: 'relative',
           width: '100%',
           aspectRatio: '16 / 9',
-          background: 'var(--color-surface-2)',
+          background: 'rgba(255, 255, 255, 0.04)',
           overflow: 'hidden',
         }}
       >
@@ -167,6 +173,7 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
           }}
         />
 
+        {/* Fallback quando a imagem não carrega */}
         <div
           className="course-card-img-fallback"
           aria-hidden="true"
@@ -176,7 +183,7 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
             justifyContent: 'center',
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(135deg, #e0f5f5 0%, #f0fafa 100%)',
+            background: 'linear-gradient(135deg, rgba(51,184,184,0.12) 0%, rgba(51,184,184,0.04) 100%)',
           }}
         >
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--cqp-teal)" strokeWidth="1.25">
@@ -187,6 +194,7 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
         </div>
       </div>
 
+      {/* Corpo do card */}
       <div
         className="course-card-body"
         style={{
@@ -203,7 +211,7 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
             fontFamily: 'var(--font-body)',
             fontSize: '0.95rem',
             fontWeight: 700,
-            color: 'var(--color-text)',
+            color: 'var(--color-text-on-navy)',
             lineHeight: 1.35,
             margin: 0,
           }}
@@ -219,7 +227,7 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
               gap: '0.3rem',
               fontFamily: 'var(--font-body)',
               fontSize: '0.75rem',
-              color: 'var(--color-text-muted)',
+              color: 'var(--color-text-muted-on-navy)',
               fontWeight: 500,
               margin: 0,
             }}
@@ -246,6 +254,7 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
         </div>
       </div>
 
+      {/* Rodapé — "Saiba mais" à esquerda, seta à direita */}
       <div
         className="course-card-link"
         style={{
@@ -256,12 +265,20 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
           fontFamily: 'var(--font-body)',
           fontSize: '0.8125rem',
           fontWeight: 600,
-          color: hovered ? 'var(--cqp-teal-dark)' : 'var(--color-text-muted)',
+          color: hovered ? 'var(--cqp-teal-light)' : 'var(--color-text-muted-on-navy)',
           transition: 'color 200ms var(--ease-out-expo)',
         }}
       >
         <span>Saiba mais</span>
-        <span style={{ transform: hovered ? 'translateX(4px)' : 'translateX(0)', transition: 'transform 200ms var(--ease-out-expo)' }}>→</span>
+        <span
+          style={{
+            transform: hovered ? 'translateX(4px)' : 'translateX(0)',
+            transition: 'transform 200ms var(--ease-out-expo)',
+            color: hovered ? 'var(--cqp-teal)' : 'var(--color-text-faint-on-navy)',
+          }}
+        >
+          →
+        </span>
       </div>
     </a>
   );
@@ -332,43 +349,57 @@ export default function CoursesSection({
   return (
     <>
       <style>{`
-        .courses-section { background: var(--color-bg); padding-block: clamp(4rem, 7vw, 7rem); padding-inline: clamp(1rem, 4vw, 2.5rem); }
+        .courses-section { background: var(--cqp-navy); padding-block: clamp(4rem, 7vw, 7rem); padding-inline: clamp(1rem, 4vw, 2.5rem); }
         .courses-inner { max-width: 1200px; margin-inline: auto; }
         .courses-header { margin-bottom: clamp(2rem, 3.5vw, 3.5rem); }
-        .courses-eyebrow { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cqp-teal-dark); margin-bottom: 0.75rem; }
+        .courses-eyebrow { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cqp-teal-light); margin-bottom: 0.75rem; }
         .courses-eyebrow-line { display: block; width: 24px; height: 2px; background: var(--cqp-teal); border-radius: 9999px; }
-        .courses-title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; color: var(--color-text); margin-bottom: 0.75rem; text-wrap: balance; }
-        .courses-title-accent { color: var(--cqp-teal-dark); }
-        .courses-subtitle { font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-text-muted); max-width: 56ch; line-height: 1.65; }
+        .courses-title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; color: var(--color-text-on-navy); margin-bottom: 0.75rem; text-wrap: balance; }
+        .courses-title-accent { color: var(--cqp-teal); }
+        .courses-subtitle { font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-text-muted-on-navy); max-width: 56ch; line-height: 1.65; }
+
+        /* Search — glassmorphic */
         .courses-search-wrap { position: relative; max-width: 480px; margin-bottom: clamp(1.5rem, 2.5vw, 2.5rem); }
-        .courses-search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--color-text-faint); pointer-events: none; flex-shrink: 0; }
-        .courses-search-input { width: 100%; padding: 0.75rem 2.75rem 0.75rem 2.75rem; font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-text); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); outline: none; transition: border-color 180ms var(--ease-out-expo), box-shadow 180ms var(--ease-out-expo); }
-        .courses-search-input::placeholder { color: var(--color-text-faint); }
-        .courses-search-input:focus { border-color: var(--cqp-teal); box-shadow: 0 0 0 3px oklch(from var(--cqp-teal) l c h / 0.15); }
-        .courses-search-clear { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: var(--color-surface-2); border: none; border-radius: 50%; cursor: pointer; color: var(--color-text-muted); transition: background 150ms, color 150ms; padding: 0; }
-        .courses-search-clear:hover { background: var(--color-border); color: var(--color-text); }
+        .courses-search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--color-text-faint-on-navy); pointer-events: none; flex-shrink: 0; }
+        .courses-search-input { width: 100%; padding: 0.75rem 2.75rem 0.75rem 2.75rem; font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-text-on-navy); background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.10); border-radius: var(--radius-lg); outline: none; transition: border-color 180ms var(--ease-out-expo), box-shadow 180ms var(--ease-out-expo), background 180ms var(--ease-out-expo); }
+        .courses-search-input::placeholder { color: var(--color-text-faint-on-navy); }
+        .courses-search-input:focus { border-color: var(--cqp-teal); box-shadow: 0 0 0 3px rgba(51, 184, 184, 0.15); background: rgba(255, 255, 255, 0.08); }
+        .courses-search-clear { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.08); border: none; border-radius: 50%; cursor: pointer; color: var(--color-text-muted-on-navy); transition: background 150ms, color 150ms; padding: 0; }
+        .courses-search-clear:hover { background: rgba(255, 255, 255, 0.15); color: var(--color-text-on-navy); }
+
+        /* Tabs — glassmorphic pills */
         .courses-tabs { display: flex; gap: 0.375rem; flex-wrap: wrap; margin-bottom: clamp(1.5rem, 2.5vw, 2.5rem); }
-        .courses-tab { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1.15rem; font-family: var(--font-body); font-size: 0.8125rem; font-weight: 600; color: var(--color-text-muted); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-sm); cursor: pointer; transition: color 160ms var(--ease-out-expo), background 160ms var(--ease-out-expo), border-color 160ms var(--ease-out-expo), box-shadow 160ms var(--ease-out-expo); white-space: nowrap; line-height: 1; }
-        .courses-tab:hover { color: var(--cqp-teal-dark); border-color: var(--cqp-teal); background: oklch(from var(--cqp-teal) l c h / 0.04); }
-        .courses-tab[aria-selected="true"] { color: #ffffff; background: var(--cqp-teal-dark); border-color: var(--cqp-teal-dark); box-shadow: 0 2px 8px rgba(12,97,97,0.25); }
+        .courses-tab { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1.15rem; font-family: var(--font-body); font-size: 0.8125rem; font-weight: 600; color: var(--color-text-muted-on-navy); background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-sm); cursor: pointer; transition: color 160ms var(--ease-out-expo), background 160ms var(--ease-out-expo), border-color 160ms var(--ease-out-expo), box-shadow 160ms var(--ease-out-expo); white-space: nowrap; line-height: 1; }
+        .courses-tab:hover { color: var(--cqp-teal-light); border-color: rgba(51, 184, 184, 0.35); background: rgba(51, 184, 184, 0.08); }
+        .courses-tab[aria-selected="true"] { color: #ffffff; background: var(--cqp-teal-dark); border-color: var(--cqp-teal-dark); box-shadow: 0 2px 12px rgba(12, 97, 97, 0.35); }
         .courses-tab-icon { width: 14px; height: 14px; flex-shrink: 0; }
-        .courses-count { font-family: var(--font-body); font-size: 0.8125rem; color: var(--color-text-muted); margin-bottom: 1.25rem; font-weight: 500; }
-        .courses-count strong { color: var(--cqp-teal-dark); }
+
+        .courses-count { font-family: var(--font-body); font-size: 0.8125rem; color: var(--color-text-muted-on-navy); margin-bottom: 1.25rem; font-weight: 500; }
+        .courses-count strong { color: var(--cqp-teal-light); }
+
+        /* Grid */
         .courses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); gap: clamp(0.875rem, 1.5vw, 1.25rem); margin-bottom: clamp(1.5rem, 2.5vw, 2.5rem); }
+
+        /* Load more */
         .courses-load-more { display: flex; justify-content: center; margin-bottom: clamp(1.5rem, 2.5vw, 2.5rem); }
-        .courses-load-more-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 2rem; font-family: var(--font-body); background: var(--color-surface); color: var(--cqp-teal-dark); font-weight: 700; font-size: var(--text-sm); border: 1.5px solid var(--cqp-teal); border-radius: 9999px; cursor: pointer; transition: background 180ms var(--ease-out-expo), color 180ms var(--ease-out-expo), box-shadow 180ms var(--ease-out-expo); }
-        .courses-load-more-btn:hover, .courses-load-more-btn:focus-visible { background: var(--cqp-teal); color: #ffffff; box-shadow: 0 4px 16px rgba(51,184,184,0.30); }
-        .courses-empty { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 4rem 1.5rem; color: var(--color-text-muted); }
-        .courses-empty-icon { width: 48px; height: 48px; margin-bottom: 1rem; color: var(--color-text-faint); }
-        .courses-empty h3 { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; color: var(--color-text); margin-bottom: 0.5rem; }
+        .courses-load-more-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 2rem; font-family: var(--font-body); background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: var(--cqp-teal-light); font-weight: 700; font-size: var(--text-sm); border: 1.5px solid rgba(51, 184, 184, 0.30); border-radius: 9999px; cursor: pointer; transition: background 180ms var(--ease-out-expo), color 180ms var(--ease-out-expo), box-shadow 180ms var(--ease-out-expo), border-color 180ms var(--ease-out-expo); }
+        .courses-load-more-btn:hover, .courses-load-more-btn:focus-visible { background: var(--cqp-teal); color: #ffffff; border-color: var(--cqp-teal); box-shadow: 0 4px 20px rgba(51, 184, 184, 0.35); }
+
+        /* Empty state */
+        .courses-empty { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 4rem 1.5rem; color: var(--color-text-muted-on-navy); }
+        .courses-empty-icon { width: 48px; height: 48px; margin-bottom: 1rem; color: var(--color-text-faint-on-navy); }
+        .courses-empty h3 { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; color: var(--color-text-on-navy); margin-bottom: 0.5rem; }
         .courses-empty p { font-family: var(--font-body); font-size: var(--text-sm); max-width: 36ch; line-height: 1.6; }
         .courses-empty-reset { margin-top: 1.25rem; padding: 0.55rem 1.25rem; font-family: var(--font-body); background: var(--cqp-teal); color: #ffffff; font-weight: 700; font-size: var(--text-sm); border: none; border-radius: 9999px; cursor: pointer; transition: background 180ms var(--ease-out-expo); }
         .courses-empty-reset:hover { background: var(--cqp-teal-dark); }
-        .courses-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 3vw, 2.5rem); background: var(--cqp-navy); border-radius: var(--radius-lg); margin-top: clamp(1.5rem, 3vw, 2.5rem); }
+
+        /* Footer CTA */
+        .courses-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 3vw, 2.5rem); background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-lg); margin-top: clamp(1.5rem, 3vw, 2.5rem); }
         .courses-footer-text h3 { font-family: var(--font-display); font-size: clamp(1.1rem, 0.9rem + 1vw, 1.6rem); font-weight: 800; color: #ffffff; margin-bottom: 0.35rem; line-height: 1.2; }
-        .courses-footer-text p { font-family: var(--font-body); font-size: var(--text-sm); color: rgba(255,255,255,0.60); max-width: 44ch; line-height: 1.55; }
-        .courses-footer-cta { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.875rem 1.75rem; font-family: var(--font-body); background: var(--cqp-teal); color: #ffffff; font-weight: 700; font-size: var(--text-sm); border-radius: 9999px; text-decoration: none; flex-shrink: 0; transition: background 180ms var(--ease-out-expo), box-shadow 180ms var(--ease-out-expo), transform 180ms var(--ease-out-expo); box-shadow: 0 4px 20px rgba(51,184,184,0.35); }
-        .courses-footer-cta:hover, .courses-footer-cta:focus-visible { background: var(--cqp-teal-dark); box-shadow: 0 6px 28px rgba(51,184,184,0.50); transform: translateY(-2px); }
+        .courses-footer-text p { font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-text-muted-on-navy); max-width: 44ch; line-height: 1.55; }
+        .courses-footer-cta { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.875rem 1.75rem; font-family: var(--font-body); background: var(--cqp-teal); color: #ffffff; font-weight: 700; font-size: var(--text-sm); border-radius: 9999px; text-decoration: none; flex-shrink: 0; transition: background 180ms var(--ease-out-expo), box-shadow 180ms var(--ease-out-expo), transform 180ms var(--ease-out-expo); box-shadow: 0 4px 20px rgba(51, 184, 184, 0.35); }
+        .courses-footer-cta:hover, .courses-footer-cta:focus-visible { background: var(--cqp-teal-dark); box-shadow: 0 6px 28px rgba(51, 184, 184, 0.50); transform: translateY(-2px); }
+
         @media (prefers-reduced-motion: reduce) { .course-card, .course-card-img, .courses-tab, .courses-footer-cta, .courses-load-more-btn { transition: none !important; } .course-card:hover { transform: none; } .course-card:hover .course-card-img { transform: none; } }
         @media (max-width: 480px) { .courses-tabs { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 0.5rem; scrollbar-width: none; } .courses-tabs::-webkit-scrollbar { display: none; } .courses-tab { flex-shrink: 0; } .courses-footer { flex-direction: column; align-items: flex-start; } .courses-footer-cta { width: 100%; justify-content: center; } }
       `}</style>
