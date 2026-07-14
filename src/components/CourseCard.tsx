@@ -1,51 +1,45 @@
-// CourseCard.tsx
+// CourseCard.tsx — Glassmorphism premium sobre fundo navy
+// Usado por PosGraduacaoSection.tsx
 import { useState, useRef } from 'react';
-import { ChevronRight } from 'lucide-react';
 import { CursoPosGraduacao, CategoriaConfig, Modalidade } from './types';
 import { WHATSAPP_NUMBER } from './helpers';
 
+// ---------------------------------------------------------------------------
+// ModalidadeBadge — teal glow premium
+// ---------------------------------------------------------------------------
 function ModalidadeBadge({ modalidade }: { modalidade: Modalidade }) {
-  const isEAD = modalidade === 'EAD';
+  const label = modalidade === 'EAD' ? 'ONLINE / EAD' : 'SEMIPRESENCIAL';
   return (
     <span
+      className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide uppercase"
       style={{
-        display: 'inline-flex',
-        alignItems: 'center',
         fontFamily: 'var(--font-body)',
-        fontSize: '0.65rem',
-        fontWeight: 600,
-        letterSpacing: '0.05em',
-        textTransform: 'uppercase',
-        color: isEAD ? '#1A4A7A' : '#5A3D8A',
-        background: isEAD ? 'rgba(26, 74, 122, 0.08)' : 'rgba(90, 61, 138, 0.08)',
-        border: isEAD ? '1px solid rgba(26, 74, 122, 0.18)' : '1px solid rgba(90, 61, 138, 0.18)',
-        borderRadius: '9999px',
-        padding: '0.15rem 0.55rem',
-        lineHeight: 1.4,
+        color: 'var(--cqp-teal-light)',
+        background: 'rgba(51, 184, 184, 0.10)',
+        border: '1px solid rgba(51, 184, 184, 0.20)',
+        boxShadow: '0 0 12px rgba(51, 184, 184, 0.05)',
+        lineHeight: 1.3,
       }}
     >
-      {isEAD ? 'ONLINE / EAD' : 'SEMIPRESENCIAL'}
+      {label}
     </span>
   );
 }
 
+// ---------------------------------------------------------------------------
+// CategoriaBadge — teal glow premium
+// ---------------------------------------------------------------------------
 function CategoriaBadge({ config }: { config: CategoriaConfig }) {
   return (
     <span
+      className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide uppercase"
       style={{
-        display: 'inline-flex',
-        alignItems: 'center',
         fontFamily: 'var(--font-body)',
-        fontSize: '0.65rem',
-        fontWeight: 600,
-        letterSpacing: '0.05em',
-        textTransform: 'uppercase',
-        color: config.badgeText,
-        background: config.badgeBg,
-        border: `1px solid ${config.badgeText}20`,
-        borderRadius: '9999px',
-        padding: '0.15rem 0.55rem',
-        lineHeight: 1.4,
+        color: 'var(--cqp-teal-light)',
+        background: 'rgba(51, 184, 184, 0.10)',
+        border: '1px solid rgba(51, 184, 184, 0.20)',
+        boxShadow: '0 0 12px rgba(51, 184, 184, 0.05)',
+        lineHeight: 1.3,
       }}
     >
       {config.label}
@@ -53,57 +47,51 @@ function CategoriaBadge({ config }: { config: CategoriaConfig }) {
   );
 }
 
+// ---------------------------------------------------------------------------
+// CardHeader — gradiente da categoria com ícone central
+// ---------------------------------------------------------------------------
 function CardHeader({ config }: { config: CategoriaConfig }) {
   const Icon = config.icone;
   return (
     <div
+      className="relative w-full overflow-hidden flex items-center justify-center"
       style={{
-        position: 'relative',
-        width: '100%',
         aspectRatio: '16 / 9',
         background: config.gradient,
-        overflow: 'hidden',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
       }}
     >
+      {/* Orbes decorativos */}
       <div
         aria-hidden="true"
+        className="absolute rounded-full"
         style={{
-          position: 'absolute',
           top: '-15%',
           right: '-10%',
           width: '55%',
           height: '55%',
-          borderRadius: '50%',
           background: 'rgba(255,255,255,0.25)',
         }}
       />
       <div
         aria-hidden="true"
+        className="absolute rounded-full"
         style={{
-          position: 'absolute',
           bottom: '-20%',
           left: '-5%',
           width: '40%',
           height: '40%',
-          borderRadius: '50%',
           background: 'rgba(255,255,255,0.18)',
         }}
       />
+
+      {/* Ícone central */}
       <div
+        className="relative z-10 rounded-full flex items-center justify-center"
         style={{
-          position: 'relative',
-          zIndex: 1,
           width: '3rem',
           height: '3rem',
-          borderRadius: '50%',
           background: '#ffffff',
           border: '1.5px solid rgba(0,0,0,0.06)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
           boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
         }}
       >
@@ -111,10 +99,22 @@ function CardHeader({ config }: { config: CategoriaConfig }) {
           <Icon size={20} strokeWidth={1.5} />
         </span>
       </div>
+
+      {/* Overlay gradiente escuro na base — contraste para o texto */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to top, rgba(0, 18, 32, 0.60) 0%, rgba(0, 18, 32, 0.10) 40%, transparent 70%)',
+        }}
+      />
     </div>
   );
 }
 
+// ---------------------------------------------------------------------------
+// CourseCard — Glassmorphism premium
+// ---------------------------------------------------------------------------
 export function CourseCard({ curso, config }: { curso: CursoPosGraduacao; config: CategoriaConfig }) {
   const [hovered, setHovered] = useState(false);
   const cardRef = useRef<HTMLAnchorElement>(null);
@@ -129,6 +129,7 @@ export function CourseCard({ curso, config }: { curso: CursoPosGraduacao; config
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
+      className="group"
       aria-label={`Saiba mais sobre ${curso.titulo}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -137,36 +138,37 @@ export function CourseCard({ curso, config }: { curso: CursoPosGraduacao; config
       style={{
         display: 'flex',
         flexDirection: 'column',
-        background: 'var(--color-surface)',
-        border: '1px solid var(--color-border)',
-        borderRadius: 'var(--radius-2xl)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        border: hovered
+          ? '1px solid rgba(255, 255, 255, 0.18)'
+          : '1px solid rgba(255, 255, 255, 0.08)',
+        borderRadius: 'var(--radius-lg)',
         overflow: 'hidden',
         textDecoration: 'none',
-        transition: 'box-shadow 280ms var(--ease-out-expo), transform 280ms var(--ease-out-expo), border-color 280ms var(--ease-out-expo)',
-        boxShadow: hovered ? 'var(--shadow-md)' : 'var(--shadow-sm)',
+        transition: 'box-shadow 280ms var(--ease-out-expo), transform 280ms var(--ease-out-expo), border-color 280ms var(--ease-out-expo), background 280ms var(--ease-out-expo)',
+        boxShadow: hovered
+          ? '0 8px 32px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(51, 184, 184, 0.15)'
+          : '0 2px 8px rgba(0, 0, 0, 0.15)',
         transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
-        borderColor: hovered ? 'oklch(from var(--cqp-teal) l c h / 0.35)' : 'var(--color-border)',
+        background: hovered ? 'rgba(255, 255, 255, 0.06)' : 'rgba(255, 255, 255, 0.03)',
       }}
     >
       <CardHeader config={config} />
 
+      {/* ── Corpo do card ── */}
       <div
-        style={{
-          padding: '1rem 1.125rem 0.5rem',
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0.5rem',
-        }}
+        className="flex flex-col gap-2 flex-1"
+        style={{ padding: '1rem 1.125rem 0.75rem' }}
       >
         <h3
+          className="m-0"
           style={{
             fontFamily: 'var(--font-body)',
             fontSize: '0.925rem',
             fontWeight: 700,
-            color: 'var(--color-text)',
+            color: 'var(--color-text-on-navy)',
             lineHeight: 1.35,
-            margin: 0,
             display: '-webkit-box',
             WebkitLineClamp: 2,
             WebkitBoxOrient: 'vertical',
@@ -176,40 +178,38 @@ export function CourseCard({ curso, config }: { curso: CursoPosGraduacao; config
           {curso.titulo}
         </h3>
 
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '0.35rem',
-          }}
-        >
+        {/* Badges com gap-2 — cada modalidade em sua própria badge */}
+        <div className="flex flex-wrap gap-2">
           <ModalidadeBadge modalidade={curso.modalidade} />
           <CategoriaBadge config={config} />
         </div>
       </div>
 
+      {/* ── Rodapé: "Saiba mais" ← → seta ── */}
       <div
+        className="flex items-center justify-between w-full pt-4 border-t mt-auto"
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0.5rem 1.125rem 1rem',
+          borderColor: 'rgba(255, 255, 255, 0.05)',
+          padding: '1rem 1.125rem',
           fontFamily: 'var(--font-body)',
-          fontSize: '0.8125rem',
-          fontWeight: 600,
-          color: hovered ? 'var(--cqp-teal-dark)' : 'var(--color-text-muted)',
-          transition: 'color 200ms var(--ease-out-expo)',
         }}
       >
-        <span>Saiba mais</span>
         <span
+          className="text-sm font-medium transition-colors"
           style={{
-            display: 'inline-flex',
-            transform: hovered ? 'translateX(4px)' : 'translateX(0)',
-            transition: 'transform 200ms var(--ease-out-expo)',
+            color: hovered ? 'var(--cqp-teal)' : 'rgba(255, 255, 255, 0.55)',
           }}
         >
-          <ChevronRight size={16} strokeWidth={2} />
+          Saiba mais
+        </span>
+        <span
+          className="inline-block transition-transform duration-300"
+          style={{
+            transform: hovered ? 'translateX(6px)' : 'translateX(0)',
+            color: hovered ? 'var(--cqp-teal)' : 'rgba(255, 255, 255, 0.35)',
+          }}
+        >
+          →
         </span>
       </div>
     </a>
