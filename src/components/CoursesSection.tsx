@@ -48,27 +48,29 @@ const CATEGORY_ICONS: Record<string, string> = {
 // Helpers
 // ---------------------------------------------------------------------------
 function ModalidadeBadge({ m }: { m: string }) {
-  const map: Record<string, { label: string; color: string; bg: string }> = {
-    presencial: { label: 'Presencial', color: 'var(--cqp-teal-light)', bg: 'rgba(51, 184, 184, 0.12)' },
-    online: { label: 'EAD', color: '#7eb8da', bg: 'rgba(126, 184, 218, 0.12)' },
-    hibrido: { label: 'Híbrido', color: '#b89eda', bg: 'rgba(184, 158, 218, 0.12)' },
+  const map: Record<string, { label: string }> = {
+    presencial: { label: 'Presencial' },
+    online: { label: 'EAD' },
+    hibrido: { label: 'Híbrido' },
   };
-  const info = map[m] ?? { label: m, color: 'rgba(255,255,255,0.6)', bg: 'rgba(255,255,255,0.08)' };
+  const info = map[m] ?? { label: m };
   return (
     <span
       style={{
         display: 'inline-flex',
         alignItems: 'center',
         fontFamily: 'var(--font-body)',
-        fontSize: '0.7rem',
+        fontSize: '0.65rem',
         fontWeight: 600,
         letterSpacing: '0.06em',
         textTransform: 'uppercase',
-        color: info.color,
-        background: info.bg,
-        border: `1px solid ${info.color}30`,
+        color: 'var(--cqp-teal-light)',
+        background: 'rgba(51, 184, 184, 0.10)',
+        border: '1px solid rgba(51, 184, 184, 0.20)',
         borderRadius: '9999px',
-        padding: '0.15rem 0.55rem',
+        padding: '0.2rem 0.6rem',
+        boxShadow: '0 0 8px rgba(51, 184, 184, 0.12)',
+        lineHeight: 1.3,
       }}
     >
       {info.label}
@@ -82,6 +84,17 @@ function ModalidadeBadge({ m }: { m: string }) {
 function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
   const cardRef = useRef<HTMLAnchorElement>(null);
   const [hovered, setHovered] = useState(false);
+  const [imgFailed, setImgFailed] = useState(false);
+
+  // Deriva iniciais do nome do curso (até 3 palavras)
+  const iniciais = useMemo(() => {
+    return curso.nome
+      .split(' ')
+      .filter((p) => p.length > 1 && !/^(de|da|do|e|em|com|para|dos|das|nos|nas|ao|aos|às)$/i.test(p))
+      .slice(0, 3)
+      .map((p) => p[0].toUpperCase())
+      .join('');
+  }, [curso.nome]);
 
   useEffect(() => {
     const el = cardRef.current;
@@ -140,57 +153,128 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
         background: hovered ? 'rgba(255, 255, 255, 0.06)' : 'rgba(255, 255, 255, 0.03)',
       }}
     >
-      {/* Imagem do curso */}
+      {/* Imagem do curso ou fallback glassmórfico */}
       <div
         className="course-card-img-wrap"
         style={{
           position: 'relative',
           width: '100%',
           aspectRatio: '16 / 9',
-          background: 'rgba(255, 255, 255, 0.04)',
+          background: 'linear-gradient(135deg, rgba(6, 26, 42, 0.95) 0%, rgba(0, 18, 32, 0.98) 50%, rgba(6, 26, 42, 0.95) 100%)',
           overflow: 'hidden',
         }}
       >
-        <img
-          src={curso.imagem}
-          alt={curso.nome}
-          loading="lazy"
-          decoding="async"
-          className="course-card-img"
-          onError={(e) => {
-            const t = e.currentTarget;
-            t.style.display = 'none';
-            const fallback = t.nextElementSibling as HTMLElement;
-            if (fallback) fallback.style.display = 'flex';
-          }}
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            objectPosition: 'top center',
-            transition: 'transform 500ms var(--ease-out-expo)',
-            transform: hovered ? 'scale(1.04)' : 'scale(1)',
-          }}
-        />
+        {!imgFailed && (
+          <img
+            src={curso.imagem}
+            alt={curso.nome}
+            loading="lazy"
+            decoding="async"
+            className="course-card-img"
+            onError={() => setImgFailed(true)}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'top center',
+              transition: 'transform 500ms var(--ease-out-expo), opacity 400ms var(--ease-out-expo)',
+              transform: hovered ? 'scale(1.04)' : 'scale(1)',
+            }}
+          />
+        )}
 
-        {/* Fallback quando a imagem não carrega */}
+        {/* Fallback Glassmórfico Premium */}
         <div
           className="course-card-img-fallback"
           aria-hidden="true"
           style={{
-            display: 'none',
+            display: imgFailed ? 'flex' : 'none',
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(135deg, rgba(51,184,184,0.12) 0%, rgba(51,184,184,0.04) 100%)',
+            background: 'linear-gradient(135deg, rgba(6, 26, 42, 0.95) 0%, rgba(0, 18, 32, 0.98) 50%, rgba(6, 26, 42, 0.95) 100%)',
           }}
         >
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--cqp-teal)" strokeWidth="1.25">
-            <rect x="3" y="3" width="18" height="18" rx="3"/>
-            <circle cx="8.5" cy="8.5" r="1.5"/>
-            <path d="m21 15-5-5L5 21"/>
+          {/* Orbes decorativos glass */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              top: '-20%',
+              right: '-15%',
+              width: '60%',
+              height: '60%',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(51, 184, 184, 0.08) 0%, transparent 70%)',
+              filter: 'blur(20px)',
+            }}
+          />
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              bottom: '-25%',
+              left: '-10%',
+              width: '50%',
+              height: '50%',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(51, 184, 184, 0.05) 0%, transparent 70%)',
+              filter: 'blur(16px)',
+            }}
+          />
+
+          {/* Logo CQP em marca d'água */}
+          <svg
+            aria-hidden="true"
+            width="64"
+            height="64"
+            viewBox="0 0 48 48"
+            fill="none"
+            style={{
+              position: 'absolute',
+              opacity: 0.06,
+              width: '70%',
+              height: '70%',
+            }}
+          >
+            <rect x="4" y="8" width="40" height="32" rx="3" stroke="var(--cqp-teal)" strokeWidth="1.5" />
+            <path d="M14 20h20M14 26h16M14 32h12" stroke="var(--cqp-teal)" strokeWidth="1.5" strokeLinecap="round" />
+            <circle cx="38" cy="18" r="5" stroke="var(--cqp-teal)" strokeWidth="1.2" />
+            <path d="M36.5 18L37.8 19.3L39.5 17" stroke="var(--cqp-teal)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
+
+          {/* Iniciais do curso */}
+          <span
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+              fontWeight: 700,
+              letterSpacing: '0.04em',
+              color: 'rgba(51, 184, 184, 0.18)',
+              textTransform: 'uppercase',
+              userSelect: 'none',
+            }}
+          >
+            {iniciais}
+          </span>
+
+          {/* Linha decorativa */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              width: '2rem',
+              height: '2px',
+              marginTop: '0.5rem',
+              background: 'linear-gradient(90deg, transparent, rgba(51, 184, 184, 0.25), transparent)',
+              borderRadius: '9999px',
+            }}
+          />
         </div>
       </div>
 
