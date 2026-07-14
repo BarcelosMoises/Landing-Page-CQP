@@ -42,15 +42,15 @@ landing-page-cqp/
 │   │   └── ContactSection.tsx   # Formulário de contato + mapa + informações
 │   │
 │   ├── styles/
-│   │   ├── globals.css          # Estilos globais e tokens CSS
-│   │   └── tokens.css           # CSS Custom Properties (cores, tipografia, espaçamento)
+│   │   ├── globals.css          # Estilos globais (reset, scrollbar, utilitários)
+│   │   └── tokens.css           # CSS Custom Properties (--cqp-teal, --cqp-navy, fontes, sombras)
 │   │
 │   └── pages/
 │       └── index.tsx            # Página principal — compõe os componentes em ordem
 │
 ├── public/
 │   ├── images/              # Imagens dos cursos (migradas de /images no protótipo)
-│   ├── video/               # Vídeos (migrados de /video no protótipo)
+│   ├── videos/              # Vídeos (background-video.webm, background-video.mp4)
 │   └── favicon.ico
 │
 ├── ARCHITECTURE.md          # Este arquivo
@@ -86,6 +86,10 @@ Com `data/cursos.ts`, um curso novo é adicionado com 3 linhas de código. A bus
 ### Número de WhatsApp
 
 O número está centralizado em `src/pages/index.tsx`, na constante `WHATSAPP_NUMBER`. **Altere apenas neste arquivo** — todos os componentes que usam WhatsApp recebem o número via prop.
+
+### Tokens de Design
+
+As cores da marca são definidas em `src/styles/tokens.css` como `--cqp-teal` (#33B8B8), `--cqp-teal-dark` (#0c6161), `--cqp-navy` (#001220). Os componentes referenciam `var(--cqp-teal)` diretamente — nunca use hexadecimais hardcoded.
 
 ---
 

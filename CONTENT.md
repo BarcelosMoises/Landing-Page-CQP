@@ -29,20 +29,26 @@
 - Contato
 
 **Outros elementos**:
-- Logo da CQP (`max-height: 90px`)
+- Logo da CQP (imagem .webp, altura 36px)
+- Menu mobile com drawer lateral
 
 ---
 
 ## Seção 2 — Hero
 
-**Tipo**: Vídeo de fundo com overlay escuro.
+**Tipo**: Vídeo de fundo (`/videos/background-video.webm` + `.mp4` fallback) com overlay navy.
 
-**Copy**:
+**Copy atual**:
 
 ```
-Título: Construa sua carreira em Macaé
-Subtítulo: Mais de 150 cursos técnicos, profissionalizantes, graduações e NRs para sua formação.
-CTA: Ver todos os cursos →
+Badge: Matrículas abertas 2026
+Título: Centro de Qualificação Profissional
+Subtítulo: Do técnico à pós-graduação — cursos presenciais, semipresenciais e
+          EAD com mensalidades acessíveis, plataforma exclusiva e certificação
+          reconhecida pelo mercado.
+CTA primário: Fale pelo WhatsApp
+CTA secundário: Conheça os cursos →
+Stats: +150 Cursos | EAD & Presencial | R$150 A partir de | CREA Certificado
 ```
 
 ---
@@ -77,23 +83,26 @@ CTA: Ver todos os cursos →
 
 **Fundo**: navy (`#001220`).
 
-**Conteúdo**: cards com ícones destacando as modalidades de ensino (presencial, online, híbrido) e diferenciais da escola.
+**Itens**:
+1. **Estude como e onde preferir** — Presencial · EAD · Híbrido
+2. **Mensalidades que cabem no seu bolso** — A partir de R$150 por mês
+3. **Plataforma exclusiva de aprendizado** — Certificado reconhecido pelo mercado
+
+**Stats row**: +2.000 Alunos formados | 17 Cursos técnicos com diploma | +50 NRs e treinamentos | 6 anos De experiência em Carapebus (dinâmico: `new Date().getFullYear() - 2020`)
 
 ---
 
 ## Seção 5 — Depoimentos
 
-**Fundo**: teal claro (`#7aeeee`).
+**Fundo**: `var(--color-surface-offset)`.
 
 **Estrutura de cada depoimento**:
-- Foto circular (200×200px, borda teal 7px)
-- Texto do depoimento com aspas decorativas (caractere `"`, `font-size: 48px`, cor teal)
+- Foto circular com borda teal
+- Texto do depoimento com aspas decorativas
 - Nome do aluno
 - Curso realizado
 
-**Implementação atual**: Bootstrap Carousel com setas teal.
-
-**Modernização**: componente `TestimonialsSection.tsx` com carrossel CSS puro + `IntersectionObserver` para animação de entrada.
+**Implementação**: componente `TestimonialsSection.tsx` com carrossel CSS puro + `IntersectionObserver` para animação de entrada.
 
 ---
 
@@ -106,6 +115,7 @@ CTA: Ver todos os cursos →
 - Informações de contato: WhatsApp, E-mail, Endereço
 - Formulário com campos: Nome, E-mail, Telefone, Mensagem
 - Botão de envio via WhatsApp
+- WhatsApp flutuante (botão fixo no canto inferior direito)
 
 **Endereço**: Rua Prata Mancebo nº148 — Centro, Carapebus — RJ, Brazil
 
@@ -113,29 +123,22 @@ CTA: Ver todos os cursos →
 
 ## Seção 7 — Footer
 
-**Fundo**: teal (`#7aeeee`) → modernização usa teal escuro (`navy-700`).
+**Fundo**: navy (`#001220`).
 
 **Conteúdo**:
 - Copyright: `© CQP [ano] — Todos os direitos reservados`
-- Links de redes sociais (ícones inline)
-- Altura fixa de `80px` no protótipo → modernização usa `padding-block` variável
+- Links: WhatsApp, Cursos, Contato
+- Logo SVG inline com símbolo teal
 
 ---
 
-## SVG Divisores de Seção
+## Informações de Contato
 
-O protótipo usa 6 SVGs (`layer1.svg` a `layer6.svg`) como divisores de ondas entre seções. Ficam em `images/SVGs/`.
-
-Na modernização, esses divisores são mantidos mas referenciados via `<img>` com `loading="lazy"` e `aria-hidden="true"`.
-
----
-
-## Botão "Voltar ao Topo"
-
-O protótipo tem `.btn-3` (botão circular preto que expande para "Back to Top" em hover). Na modernização, manter o comportamento mas com tokens da marca:
-- Fundo: `bg-primary`
-- Hover: expansão + texto "Voltar ao topo"
-- Posição: `fixed bottom-6 right-6`
+Botão circular com backdrop-blur que aparece após o hero sair da viewport:
+- Fundo: `rgba(0,18,32,0.80)` com `backdrop-filter: blur(8px)`
+- Ícone: seta para cima (SVG inline)
+- Posição: `fixed bottom-6 right-6` (acima do botão WhatsApp flutuante)
+- Animação: fade + scale via `IntersectionObserver`
 
 ---
 

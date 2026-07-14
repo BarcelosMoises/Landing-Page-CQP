@@ -78,6 +78,28 @@ const DEFAULT_CITY_STATE = 'Carapebus — RJ, Brazil';
 
 ---
 
+## Atualizar o Vídeo de Background
+
+O vídeo do Hero fica em `public/videos/`. Para substituir:
+
+1. Coloque os novos arquivos como `background-video.webm` e `background-video.mp4` em `public/videos/`
+2. O caminho base está em `src/pages/index.tsx`: `const VIDEO_SRC = '/videos/background-video';`
+3. O componente `HeroSection.tsx` usa `<source>` elements com fallback WebM → MP4
+
+---
+
+## Anos de Experiência
+
+O contador de anos em `BenefitsSection.tsx` é dinâmico:
+
+```ts
+{ value: `${new Date().getFullYear() - 2020}\xa0anos`, label: 'De experiência em Carapebus' }
+```
+
+A escola foi fundada em 2020. O cálculo se atualiza automaticamente a cada ano.
+
+---
+
 ## Estrutura de Branches
 
 ```
@@ -160,4 +182,4 @@ A partir daí, cada commit na branch configurada dispara um novo deploy automati
 - [ ] Imagem do curso está em `public/images/` com dimensões corretas
 - [ ] Link WhatsApp do novo curso abre com a mensagem pré-preenchida
 - [ ] Página funciona em mobile (375px) e desktop (1280px)
-- [ ] Nenhum valor hexadecimal hardcoded no código novo — apenas tokens CSS ou variáveis
+- [ ] Nenhum valor hexadecimal hardcoded — usar `var(--cqp-teal)`, `var(--cqp-navy)`, etc.

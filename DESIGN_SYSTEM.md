@@ -9,16 +9,15 @@
 
 A CQP usa uma paleta **teal + navy** que transmite confiança, profissionalismo e modernidade — adequada para uma escola técnica que atende tanto estudantes jovens quanto profissionais de indústria e saúde.
 
-| Elemento | Valor original (protótipo) | Valor modernizado |
+| Elemento | Valor | Uso |
 |---|---|---|
-| Cor primária | `#33B8B8` (teal) | `var(--color-primary)` → `#01696f` |
-| Cor primária clara | `#7aeeee` | `var(--color-primary-highlight)` |
-| Fundo escuro | `#001220` (navy) | `#001220` (navy) |
-| Fundo seções | `#7aeeee` | Substituído por `var(--color-surface)` |
-| Sombra de card | `5px 5px 10px #33B8B8` | `shadow-card` → sombra com OKLCH |
+| Cor primária | `--cqp-teal` → `#33B8B8` | CTAs, links, ícones ativos |
+| Cor primária escura | `--cqp-teal-dark` → `#0c6161` | Hover states, tabs ativas |
+| Cor primária clara | `--cqp-teal-light` → `#7aeeee` | Destaques sutis, badges |
+| Fundo escuro | `--cqp-navy` → `#001220` | Hero, Benefícios, Contato, Footer |
+| Fundo navy suave | `--cqp-navy-soft` → `#061a2a` | Variação de seções escuras |
 
-> ⚠️ **Problema do protótipo original**: sombra teal em **todos** os cards cria ruído visual.
-> Na versão modernizada, a sombra teal é reservada para elementos de destaque (CTAs, card em hover).
+> ⚠️ **Regra**: nunca use hexadecimais hardcoded nos componentes. Sempre referencie `var(--cqp-teal)`, `var(--cqp-navy)`, etc.
 
 ---
 
@@ -26,45 +25,36 @@ A CQP usa uma paleta **teal + navy** que transmite confiança, profissionalismo 
 
 Definidas em `src/styles/tokens.css`.
 
-### Modo Claro (`:root, [data-theme="light"]`)
+### Cores da Marca
 
 ```css
-/* Superfícies */
---color-bg:               #f7f6f2;   /* fundo da página */
---color-surface:          #f9f8f5;   /* cards padrão */
---color-surface-2:        #fbfbf9;   /* cards elevados */
---color-surface-offset:   #f3f0ec;   /* fundos de seção alternada */
---color-surface-dynamic:  #e6e4df;   /* skeleton shimmer */
---color-divider:          #dcd9d5;   /* linhas divisórias */
---color-border:           #d4d1ca;   /* bordas de input */
-
-/* Texto */
---color-text:             #28251d;   /* texto principal */
---color-text-muted:       #7a7974;   /* texto secundário */
---color-text-faint:       #bab9b4;   /* placeholders, labels terciários */
---color-text-inverse:     #f9f8f4;   /* texto sobre fundo escuro */
-
-/* Primária — teal CQP */
---color-primary:          #01696f;
---color-primary-hover:    #0c4e54;
---color-primary-active:   #0f3638;
---color-primary-highlight:#cedcd8;
-
-/* Semânticos */
---color-success:          #437a22;
---color-warning:          #964219;
---color-error:            #a12c7b;
---color-notification:     #a13544;
+--cqp-teal:        #33B8B8;   /* primária */
+--cqp-teal-dark:   #0c6161;   /* hover / active */
+--cqp-teal-light:  #7aeeee;   /* highlight */
+--cqp-navy:        #001220;   /* fundo escuro */
+--cqp-navy-soft:   #061a2a;   /* fundo escuro alternativo */
 ```
 
-### Modo Escuro (`[data-theme="dark"]`)
+### Superfícies (modo claro)
 
 ```css
---color-bg:               #171614;
---color-surface:          #1c1b19;
---color-text:             #cdccca;
---color-primary:          #4f98a3;   /* teal mais claro para contraste em fundo escuro */
---color-primary-hover:    #227f8b;
+--color-bg:             #f7f6f2;   /* fundo da página */
+--color-surface:        #ffffff;   /* cards */
+--color-surface-2:      #f3f0ec;   /* fundos alternados */
+--color-border:         oklch(from #33B8B8 l c h / 0.15);
+--color-border-strong:  oklch(from #33B8B8 l c h / 0.30);
+```
+
+### Texto
+
+```css
+--color-text:                #001220;
+--color-text-muted:          rgba(0, 18, 32, 0.62);
+--color-text-faint:          rgba(0, 18, 32, 0.38);
+--color-text-inverse:        #ffffff;
+--color-text-on-navy:        #ffffff;
+--color-text-muted-on-navy:  rgba(255, 255, 255, 0.62);
+--color-text-faint-on-navy:  rgba(255, 255, 255, 0.38);
 ```
 
 ---
@@ -87,17 +77,18 @@ Definidas em `src/styles/tokens.css`.
 
 ### Escala Tipográfica Fluida
 
-Todos os tamanhos usam `clamp()` — a fonte cresce suavemente com a viewport, sem quebras bruscas.
+Todos os tamanhos usam `clamp()` — a fonte cresce suavemente com a viewport.
 
 | Token CSS | Resolução | Uso |
 |---|---|---|
 | `--text-xs` | 12–14px | Labels, badges, metadata |
 | `--text-sm` | 14–16px | Botões, links de nav |
 | `--text-base` | 16–18px | **Padrão para corpo de texto** |
-| `--text-lg` | 18–24px | Subtítulos, headings de seção |
-| `--text-xl` | 24–36px | Títulos de página (Boska) |
-| `--text-2xl` | 32–56px | Hero heading |
-| `--text-hero` | 48–128px | Momento hero máximo |
+| `--text-lg` | 16–22px | Subtítulos |
+| `--text-xl` | 20–28px | Títulos de seção |
+| `--text-2xl` | 24–48px | Títulos de página (Boska) |
+| `--text-3xl` | 32–72px | Headings grandes |
+| `--text-hero` | 36–88px | Hero heading máximo |
 
 **Regra**: fonte **Boska** apenas em `--text-xl` (24px) e acima. Abaixo disso, sempre **Satoshi**.
 
@@ -124,17 +115,13 @@ Use `clamp()` para espaçamento responsivo entre seções.
 
 ## Sombras
 
-| Token | Uso |
-|---|---|
-| `shadow-sm` | Cards em repouso |
-| `shadow-md` | Dropdowns, popovers |
-| `shadow-lg` | Modais, painéis flutuantes |
-| `shadow-teal` | CTAs primários, card em hover state |
-| `shadow-wa` | Botão WhatsApp flutuante |
-| `shadow-card` | Todos os cards de curso (substitui `5px 5px 10px #33B8B8`) |
-| `shadow-card-hover` | Card de curso no estado `:hover` |
-
-> **Diferença do protótipo**: a sombra teal era aplicada a **todos** os cards indiscriminadamente. Agora `shadow-teal` é reservada para o estado hover e para CTAs de destaque.
+| Token | Valor | Uso |
+|---|---|---|
+| `--shadow-sm` | `0 1px 3px rgba(0,18,32,0.06)` | Cards em repouso |
+| `--shadow-md` | `0 4px 12px rgba(0,18,32,0.10)` | Dropdowns |
+| `--shadow-lg` | `0 12px 32px rgba(0,18,32,0.14)` | Modais |
+| `--shadow-xl` | `0 24px 64px rgba(0,18,32,0.18)` | Painéis flutuantes |
+| `--shadow-cta` | `0 4px 24px rgba(51,184,184,0.35)` | Botão primário do hero (teal glow) |
 
 ---
 
@@ -144,13 +131,16 @@ Use `clamp()` para espaçamento responsivo entre seções.
 
 ```tsx
 <button style={{
-  background: 'var(--color-primary)',
-  color: 'var(--color-text-inverse)',
-  fontWeight: 600,
-  padding: '0.75rem 1.5rem',
-  borderRadius: '0.5rem',
+  background: 'var(--cqp-teal)',
+  color: '#ffffff',
+  fontWeight: 700,
+  padding: '0.875rem 1.75rem',
+  borderRadius: '9999px',
   border: 'none',
   cursor: 'pointer',
+  boxShadow: 'var(--shadow-cta)',
+  fontFamily: 'var(--font-body)',
+  fontSize: 'var(--text-sm)',
 }}>
   Saiba mais
 </button>
@@ -166,13 +156,15 @@ Use `clamp()` para espaçamento responsivo entre seções.
   style={{
     background: '#25D366',
     color: '#fff',
-    fontWeight: 600,
+    fontWeight: 700,
     display: 'inline-flex',
     alignItems: 'center',
     gap: '0.5rem',
-    padding: '0.75rem 1.5rem',
+    padding: '0.875rem 1.75rem',
     borderRadius: '9999px',
     textDecoration: 'none',
+    fontFamily: 'var(--font-body)',
+    fontSize: 'var(--text-sm)',
   }}
 >
   <WhatsAppIcon /> Fale conosco
@@ -184,16 +176,16 @@ Use `clamp()` para espaçamento responsivo entre seções.
 ```tsx
 <article style={{
   background: 'var(--color-surface)',
-  borderRadius: '0.75rem',
+  borderRadius: 'var(--radius-lg)',
   overflow: 'hidden',
-  boxShadow: 'var(--shadow-card)',
-  transition: 'box-shadow 300ms ease',
+  border: '1px solid var(--color-border)',
+  transition: 'box-shadow 280ms var(--ease-out-expo), transform 280ms var(--ease-out-expo)',
 }}>
   <img src={curso.imagem} alt={curso.nome} style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover' }} loading="lazy" />
   <div style={{ padding: '1rem' }}>
-    <h3 style={{ fontFamily: 'Boska, Georgia, serif', fontWeight: 600 }}>{curso.nome}</h3>
-    {curso.extra && <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem' }}>{curso.extra}</p>}
-    <a href={getCursoWhatsAppUrl(curso)}>Tenho interesse</a>
+    <h3 style={{ fontFamily: 'var(--font-body)', fontWeight: 700, fontSize: '0.95rem' }}>{curso.nome}</h3>
+    {curso.extra && <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>{curso.extra}</p>}
+    <span style={{ color: 'var(--cqp-teal-dark)', fontWeight: 600 }}>Saiba mais →</span>
   </div>
 </article>
 ```
@@ -202,11 +194,10 @@ Use `clamp()` para espaçamento responsivo entre seções.
 
 ## Anti-padrões a Evitar
 
-| Anti-padrão | Encontrado no protótipo | Solução |
-|---|---|---|
-| Sombra teal em todos os cards | `box-shadow: 5px 5px 10px #33B8B8` em `.card`, `.single-item`, `.card-search` | Usar `shadow-card`; sombra teal só em hover |
-| `min-height` hardcoded | `min-height: 96px`, `192px`, `72px` nos cards | CSS Grid com `align-items: start` |
-| Valores mágicos | `margin-top: -460px`, `padding-top: 150px` | Tokens de espaçamento com `clamp()` |
-| Fonte única | Poppins para tudo | Boska (display) + Satoshi (body) |
-| Paleta sem sistema | `#33B8B8`, `#7aeeee`, `#0c6161`, `#001220` espalhados | CSS Custom Properties semânticas |
-| Bootstrap acoplado ao HTML | Classes `col-md-4`, `d-flex` no markup | CSS Grid + estilos inline |
+| Anti-padrão | Solução |
+|---|---|
+| Hexadecimais hardcoded (`#33B8B8`, `#001220`) | Usar `var(--cqp-teal)`, `var(--cqp-navy)` |
+| `min-height` fixo em cards | CSS Grid com `align-items: start` |
+| Valores mágicos de margin/padding | Tokens de espaçamento com `clamp()` |
+| Fonte única (Poppins) | Boska (display) + Satoshi (body) |
+| Bootstrap acoplado ao HTML | CSS Grid + estilos inline |
