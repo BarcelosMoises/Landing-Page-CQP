@@ -152,21 +152,31 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
         style={{ aspectRatio: '16 / 9' }}
       >
         {!imageError ? (
-          <img
-            src={curso.imagem}
-            alt={curso.nome}
-            loading="lazy"
-            decoding="async"
-            onError={() => setImageError(true)}
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              objectPosition: 'top center',
-              transition: 'transform 500ms var(--ease-out-expo), opacity 400ms var(--ease-out-expo)',
-              transform: hovered ? 'scale(1.04)' : 'scale(1)',
-            }}
-          />
+          <>
+            <img
+              src={curso.imagem}
+              alt={curso.nome}
+              loading="lazy"
+              decoding="async"
+              onError={() => setImageError(true)}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'top center',
+                transition: 'transform 500ms var(--ease-out-expo), opacity 400ms var(--ease-out-expo)',
+                transform: hovered ? 'scale(1.04)' : 'scale(1)',
+              }}
+            />
+            {/* Overlay gradiente escuro na base — garante legibilidade sobre fotos claras */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: 'linear-gradient(to top, rgba(0, 18, 32, 0.80) 0%, rgba(0, 18, 32, 0.20) 40%, transparent 70%)',
+              }}
+            />
+          </>
         ) : (
           /* Fallback Glassmórfico Premium */
           <div
@@ -291,7 +301,7 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
           </p>
         )}
 
-        <div className="flex flex-wrap gap-[0.3rem] mt-[0.15rem]">
+        <div className="flex flex-wrap gap-2 mt-[0.15rem]">
           {curso.modalidades.map((m) => (
             <ModalidadeBadge key={m} m={m} />
           ))}
@@ -300,22 +310,26 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
 
       {/* ── Rodapé: "Saiba mais" ← → seta ── */}
       <div
-        className="flex items-center justify-between w-full"
+        className="flex items-center justify-between w-full pt-4 border-t mt-auto"
         style={{
-          padding: '0.5rem 1.125rem 1rem',
+          borderColor: 'rgba(255, 255, 255, 0.05)',
+          padding: '1rem 1.125rem',
           fontFamily: 'var(--font-body)',
-          fontSize: '0.8125rem',
-          fontWeight: 600,
-          color: hovered ? 'var(--cqp-teal-light)' : 'var(--color-text-muted-on-navy)',
-          transition: 'color 200ms var(--ease-out-expo)',
         }}
       >
-        <span>Saiba mais</span>
+        <span
+          className="text-sm font-medium transition-colors"
+          style={{
+            color: hovered ? 'var(--cqp-teal)' : 'rgba(255, 255, 255, 0.55)',
+          }}
+        >
+          Saiba mais
+        </span>
         <span
           className="inline-block transition-transform duration-300"
           style={{
             transform: hovered ? 'translateX(6px)' : 'translateX(0)',
-            color: hovered ? 'var(--cqp-teal)' : 'var(--color-text-faint-on-navy)',
+            color: hovered ? 'var(--cqp-teal)' : 'rgba(255, 255, 255, 0.35)',
           }}
         >
           →
