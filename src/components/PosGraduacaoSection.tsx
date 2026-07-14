@@ -959,7 +959,9 @@ function CardHeader({ config }: { config: CategoriaConfig }) {
           boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
         }}
       >
-        <Icon size={20} strokeWidth={1.5} style={{ color: 'var(--color-text)', opacity: 0.7 }} />
+        <span style={{ display: 'flex', color: 'var(--color-text)', opacity: 0.7 }}>
+          <Icon size={20} strokeWidth={1.5} />
+        </span>
       </div>
     </div>
   );
