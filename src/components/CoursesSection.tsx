@@ -56,20 +56,13 @@ function ModalidadeBadge({ m }: { m: string }) {
   const info = map[m] ?? { label: m };
   return (
     <span
+      className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide uppercase"
       style={{
-        display: 'inline-flex',
-        alignItems: 'center',
         fontFamily: 'var(--font-body)',
-        fontSize: '0.65rem',
-        fontWeight: 600,
-        letterSpacing: '0.06em',
-        textTransform: 'uppercase',
         color: 'var(--cqp-teal-light)',
         background: 'rgba(51, 184, 184, 0.10)',
         border: '1px solid rgba(51, 184, 184, 0.20)',
-        borderRadius: '9999px',
-        padding: '0.2rem 0.6rem',
-        boxShadow: '0 0 8px rgba(51, 184, 184, 0.12)',
+        boxShadow: '0 0 12px rgba(51, 184, 184, 0.05)',
         lineHeight: 1.3,
       }}
     >
@@ -84,9 +77,9 @@ function ModalidadeBadge({ m }: { m: string }) {
 function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
   const cardRef = useRef<HTMLAnchorElement>(null);
   const [hovered, setHovered] = useState(false);
-  const [imgFailed, setImgFailed] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
-  // Deriva iniciais do nome do curso (até 3 palavras)
+  // Deriva iniciais do nome do curso (até 3 palavras, ignora artigos/preposições)
   const iniciais = useMemo(() => {
     return curso.nome
       .split(' ')
@@ -128,7 +121,7 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
       href={getCursoWhatsAppUrl(curso)}
       target="_blank"
       rel="noopener noreferrer"
-      className="course-card"
+      className="course-card group"
       aria-label={`Saiba mais sobre o curso de ${curso.nome}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -153,25 +146,18 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
         background: hovered ? 'rgba(255, 255, 255, 0.06)' : 'rgba(255, 255, 255, 0.03)',
       }}
     >
-      {/* Imagem do curso ou fallback glassmórfico */}
+      {/* ── Imagem do curso ou fallback glassmórfico ── */}
       <div
-        className="course-card-img-wrap"
-        style={{
-          position: 'relative',
-          width: '100%',
-          aspectRatio: '16 / 9',
-          background: 'linear-gradient(135deg, rgba(6, 26, 42, 0.95) 0%, rgba(0, 18, 32, 0.98) 50%, rgba(6, 26, 42, 0.95) 100%)',
-          overflow: 'hidden',
-        }}
+        className="relative w-full overflow-hidden"
+        style={{ aspectRatio: '16 / 9' }}
       >
-        {!imgFailed && (
+        {!imageError ? (
           <img
             src={curso.imagem}
             alt={curso.nome}
             loading="lazy"
             decoding="async"
-            className="course-card-img"
-            onError={() => setImgFailed(true)}
+            onError={() => setImageError(true)}
             style={{
               width: '100%',
               height: '100%',
@@ -181,139 +167,120 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
               transform: hovered ? 'scale(1.04)' : 'scale(1)',
             }}
           />
+        ) : (
+          /* Fallback Glassmórfico Premium */
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 flex flex-col items-center justify-center"
+            style={{
+              background: 'linear-gradient(135deg, rgba(6, 26, 42, 0.95) 0%, rgba(0, 18, 32, 0.98) 50%, rgba(6, 26, 42, 0.95) 100%)',
+            }}
+          >
+            {/* Overlay radial teal */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: 'radial-gradient(ellipse at top, rgba(51, 184, 184, 0.10) 0%, transparent 60%)',
+              }}
+            />
+
+            {/* Orbes decorativos */}
+            <div
+              aria-hidden="true"
+              className="absolute rounded-full"
+              style={{
+                top: '-20%',
+                right: '-15%',
+                width: '60%',
+                height: '60%',
+                background: 'radial-gradient(circle, rgba(51, 184, 184, 0.08) 0%, transparent 70%)',
+                filter: 'blur(20px)',
+              }}
+            />
+            <div
+              aria-hidden="true"
+              className="absolute rounded-full"
+              style={{
+                bottom: '-25%',
+                left: '-10%',
+                width: '50%',
+                height: '50%',
+                background: 'radial-gradient(circle, rgba(51, 184, 184, 0.05) 0%, transparent 70%)',
+                filter: 'blur(16px)',
+              }}
+            />
+
+            {/* Ícone Award/GraduationCap estilizado em marca d'água */}
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 48 48"
+              fill="none"
+              className="absolute opacity-20"
+              style={{ width: '55%', height: '55%', filter: 'blur(1px)' }}
+            >
+              {/* Capelo (GraduationCap) */}
+              <path d="M4 18L24 8l20 10-20 10L4 18z" stroke="var(--cqp-teal)" strokeWidth="1.2" fill="none" />
+              <path d="M8 22v8c0 2 7 4 16 4s16-2 16-4v-8" stroke="var(--cqp-teal)" strokeWidth="1.2" fill="none" />
+              <path d="M24 18v8" stroke="var(--cqp-teal)" strokeWidth="1.2" />
+              {/* Borla */}
+              <path d="M32 14l-4 2" stroke="var(--cqp-teal)" strokeWidth="1" strokeLinecap="round" />
+            </svg>
+
+            {/* Iniciais do curso */}
+            <span
+              className="relative z-10 select-none uppercase"
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+                fontWeight: 700,
+                letterSpacing: '0.04em',
+                color: 'rgba(51, 184, 184, 0.18)',
+              }}
+            >
+              {iniciais}
+            </span>
+
+            {/* Linha decorativa */}
+            <div
+              aria-hidden="true"
+              className="relative z-10 mt-2 rounded-full"
+              style={{
+                width: '2rem',
+                height: '2px',
+                background: 'linear-gradient(90deg, transparent, rgba(51, 184, 184, 0.25), transparent)',
+              }}
+            />
+          </div>
         )}
-
-        {/* Fallback Glassmórfico Premium */}
-        <div
-          className="course-card-img-fallback"
-          aria-hidden="true"
-          style={{
-            display: imgFailed ? 'flex' : 'none',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(135deg, rgba(6, 26, 42, 0.95) 0%, rgba(0, 18, 32, 0.98) 50%, rgba(6, 26, 42, 0.95) 100%)',
-          }}
-        >
-          {/* Orbes decorativos glass */}
-          <div
-            aria-hidden="true"
-            style={{
-              position: 'absolute',
-              top: '-20%',
-              right: '-15%',
-              width: '60%',
-              height: '60%',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(51, 184, 184, 0.08) 0%, transparent 70%)',
-              filter: 'blur(20px)',
-            }}
-          />
-          <div
-            aria-hidden="true"
-            style={{
-              position: 'absolute',
-              bottom: '-25%',
-              left: '-10%',
-              width: '50%',
-              height: '50%',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(51, 184, 184, 0.05) 0%, transparent 70%)',
-              filter: 'blur(16px)',
-            }}
-          />
-
-          {/* Logo CQP em marca d'água */}
-          <svg
-            aria-hidden="true"
-            width="64"
-            height="64"
-            viewBox="0 0 48 48"
-            fill="none"
-            style={{
-              position: 'absolute',
-              opacity: 0.06,
-              width: '70%',
-              height: '70%',
-            }}
-          >
-            <rect x="4" y="8" width="40" height="32" rx="3" stroke="var(--cqp-teal)" strokeWidth="1.5" />
-            <path d="M14 20h20M14 26h16M14 32h12" stroke="var(--cqp-teal)" strokeWidth="1.5" strokeLinecap="round" />
-            <circle cx="38" cy="18" r="5" stroke="var(--cqp-teal)" strokeWidth="1.2" />
-            <path d="M36.5 18L37.8 19.3L39.5 17" stroke="var(--cqp-teal)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-
-          {/* Iniciais do curso */}
-          <span
-            style={{
-              position: 'relative',
-              zIndex: 1,
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
-              fontWeight: 700,
-              letterSpacing: '0.04em',
-              color: 'rgba(51, 184, 184, 0.18)',
-              textTransform: 'uppercase',
-              userSelect: 'none',
-            }}
-          >
-            {iniciais}
-          </span>
-
-          {/* Linha decorativa */}
-          <div
-            aria-hidden="true"
-            style={{
-              position: 'relative',
-              zIndex: 1,
-              width: '2rem',
-              height: '2px',
-              marginTop: '0.5rem',
-              background: 'linear-gradient(90deg, transparent, rgba(51, 184, 184, 0.25), transparent)',
-              borderRadius: '9999px',
-            }}
-          />
-        </div>
       </div>
 
-      {/* Corpo do card */}
+      {/* ── Corpo do card ── */}
       <div
-        className="course-card-body"
-        style={{
-          padding: '1rem 1.125rem 0.75rem',
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0.45rem',
-        }}
+        className="flex flex-col gap-[0.45rem] flex-1"
+        style={{ padding: '1rem 1.125rem 0.75rem' }}
       >
         <h3
-          className="course-card-title"
+          className="m-0"
           style={{
             fontFamily: 'var(--font-body)',
             fontSize: '0.95rem',
             fontWeight: 700,
             color: 'var(--color-text-on-navy)',
             lineHeight: 1.35,
-            margin: 0,
           }}
         >
           {curso.nome}
         </h3>
+
         {curso.extra && (
           <p
-            className="course-card-extra"
+            className="flex items-center gap-[0.3rem] m-0"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.3rem',
               fontFamily: 'var(--font-body)',
               fontSize: '0.75rem',
               color: 'var(--color-text-muted-on-navy)',
               fontWeight: 500,
-              margin: 0,
             }}
           >
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -323,28 +290,18 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
             {curso.extra}
           </p>
         )}
-        <div
-          className="course-card-badges"
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '0.3rem',
-            marginTop: '0.15rem',
-          }}
-        >
+
+        <div className="flex flex-wrap gap-[0.3rem] mt-[0.15rem]">
           {curso.modalidades.map((m) => (
             <ModalidadeBadge key={m} m={m} />
           ))}
         </div>
       </div>
 
-      {/* Rodapé — "Saiba mais" à esquerda, seta à direita */}
+      {/* ── Rodapé: "Saiba mais" ← → seta ── */}
       <div
-        className="course-card-link"
+        className="flex items-center justify-between w-full"
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
           padding: '0.5rem 1.125rem 1rem',
           fontFamily: 'var(--font-body)',
           fontSize: '0.8125rem',
@@ -355,9 +312,9 @@ function CourseCard({ curso, visible }: { curso: Curso; visible: boolean }) {
       >
         <span>Saiba mais</span>
         <span
+          className="inline-block transition-transform duration-300"
           style={{
-            transform: hovered ? 'translateX(4px)' : 'translateX(0)',
-            transition: 'transform 200ms var(--ease-out-expo)',
+            transform: hovered ? 'translateX(6px)' : 'translateX(0)',
             color: hovered ? 'var(--cqp-teal)' : 'var(--color-text-faint-on-navy)',
           }}
         >
