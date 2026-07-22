@@ -102,9 +102,14 @@ function CourseCard({ curso, whatsappNumber }: CourseCardProps) {
   const whatsappHref = `https://wa.me/${whatsappNumber}?text=${whatsappMsg}`;
 
   // Estilos base do card
+  // height: 100% garante que o card preencha o wrapper do grid (que já é
+  // estirado pelo align-items: stretch padrão), evitando o vazio abaixo do
+  // card quando ele compartilha linha com cards de altura diferente (ex.:
+  // cards tipográficos de pós-graduação na aba "Todos").
   const cardStyle: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
+    height: '100%',
     background: 'var(--cqp-carbon)',
     border: '1px solid var(--color-border)',
     borderRadius: '12px',
@@ -254,6 +259,7 @@ function TypographicGlassCard({ curso, whatsappNumber }: CourseCardProps) {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        height: '100%',
         minHeight: '13rem',
         padding: '1.5rem 1.375rem 1.25rem',
         overflow: 'hidden',
@@ -699,7 +705,11 @@ export default function CoursesSection({ whatsappNumber, sectionId = 'cursos' }:
             }}
           >
             {filteredCourses.map((curso) => (
-              <div key={`${curso.categoria}-${curso.nome}`} role="listitem">
+              <div
+                key={`${curso.categoria}-${curso.nome}`}
+                role="listitem"
+                style={{ height: '100%' }}
+              >
                 <CourseCard curso={curso} whatsappNumber={whatsappNumber} />
               </div>
             ))}
