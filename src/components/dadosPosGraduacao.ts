@@ -6,12 +6,15 @@
 
 import { type Curso } from '../../data/cursos';
 
+// Sem `imagem`: o cliente não possui capa para nenhum dos 289 cursos de
+// pós-graduação. O CourseCard renderiza esses casos como card tipográfico
+// em glassmorphism (ver CoursesSection.tsx) em vez de tentar carregar um
+// arquivo inexistente.
 function p(id: string, nome: string, extra?: string): Curso {
   return {
     id,
     nome,
     categoria: 'pos-graduacoes',
-    imagem: '/images/cursos-pos/capa-padrao-pos.png',
     modalidades: ['online'],
     extra,
   };

@@ -12,7 +12,7 @@ export interface Curso {
   id: string;
   nome: string;
   categoria: CategoriaSlug;
-  imagem: string;          // caminho relativo a /public (Next.js)
+  imagem?: string;         // caminho relativo a /public — omitido nos cursos sem capa (ex.: pós-graduação)
   modalidades: Modalidade[];
   extra?: string;          // duração, carga horária, nível
   whatsapp?: string;       // mensagem pré-preenchida para o link

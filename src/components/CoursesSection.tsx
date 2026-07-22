@@ -88,10 +88,13 @@ interface CourseCardProps {
 }
 
 function CourseCard({ curso, whatsappNumber }: CourseCardProps) {
-  const isPosGrad = curso.categoria === 'pos-graduacoes';
   const hasImage = Boolean(curso.imagem);
-  const categoriaLabel =
-    CATEGORIAS.find((cat) => cat.slug === curso.categoria)?.label ?? 'Curso';
+
+  // Cursos sem capa (ex.: as 289 pós-graduações) usam o card tipográfico
+  // em glassmorphism — nunca tentam carregar uma imagem inexistente.
+  if (!hasImage) {
+    return <TypographicGlassCard curso={curso} whatsappNumber={whatsappNumber} />;
+  }
 
   const whatsappMsg = encodeURIComponent(
     `Olá! Tenho interesse no curso: ${curso.nome}. Gostaria de mais informações.`
@@ -122,92 +125,20 @@ function CourseCard({ curso, whatsappNumber }: CourseCardProps) {
         (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
       }}
     >
-      {/* ── Imagem (cursos com foto) ou painel tipográfico (pós-graduação, sem imagem) ── */}
-      {hasImage ? (
-        <div style={{ aspectRatio: '16/9', overflow: 'hidden', flexShrink: 0 }}>
-          <img
-            src={curso.imagem}
-            alt={curso.nome}
-            loading="lazy"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              display: 'block',
-            }}
-          />
-        </div>
-      ) : (
-        // Painel tipográfico — substitui o placeholder vazio das pós-graduações.
-        // Sem ícones genéricos (chapéu de formatura etc.); a categoria vira uma
-        // letra-fantasma em Boska com opacidade baixa + textura radial sutil,
-        // dando profundidade ao card sem recorrer a glassmorphism/blur.
-        <div
-          aria-hidden="true"
+      {/* ── Imagem ── */}
+      <div style={{ aspectRatio: '16/9', overflow: 'hidden', flexShrink: 0 }}>
+        <img
+          src={curso.imagem}
+          alt={curso.nome}
+          loading="lazy"
           style={{
-            position: 'relative',
-            padding: '1.5rem 1.25rem 1.25rem',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            minHeight: '7.5rem',
-            overflow: 'hidden',
-            background:
-              'radial-gradient(120% 140% at 100% 0%, rgba(51,184,184,0.10) 0%, transparent 55%), var(--cqp-carbon)',
-            borderBottom: '1px solid var(--color-border)',
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
           }}
-        >
-          <span
-            style={{
-              position: 'absolute',
-              right: '-0.35rem',
-              bottom: '-1.1rem',
-              fontFamily: 'var(--font-display)',
-              fontSize: '4.5rem',
-              fontWeight: 700,
-              lineHeight: 1,
-              color: 'rgba(51,184,184,0.07)',
-              userSelect: 'none',
-              pointerEvents: 'none',
-            }}
-          >
-            {curso.nome.charAt(0)}
-          </span>
-          <span
-            style={{
-              position: 'relative',
-              fontSize: '0.7rem',
-              fontWeight: 600,
-              letterSpacing: '0.06em',
-              color: 'var(--color-text-muted-on-dark)',
-              fontFamily: 'var(--font-body)',
-            }}
-          >
-            {categoriaLabel}
-          </span>
-          {isPosGrad && (
-            <span
-              style={{
-                position: 'relative',
-                display: 'inline-flex',
-                alignSelf: 'flex-start',
-                padding: '0.2rem 0.6rem',
-                borderRadius: '4px',
-                background: 'rgba(51,184,184,0.12)',
-                border: '1px solid rgba(51,184,184,0.3)',
-                color: 'var(--cqp-teal)',
-                fontSize: '0.65rem',
-                fontWeight: 700,
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                fontFamily: 'var(--font-body)',
-              }}
-            >
-              EAD
-            </span>
-          )}
-        </div>
-      )}
+        />
+      </div>
 
       {/* ── Corpo do card ── */}
       <div
@@ -295,6 +226,181 @@ function CourseCard({ curso, whatsappNumber }: CourseCardProps) {
           Tenho interesse
         </a>
       </div>
+    </article>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// TypographicGlassCard — Card tipográfico em glassmorphism
+// Usado pelos 289 cursos de pós-graduação (sem capa). Nada de placeholder
+// vazio ou ícone de imagem quebrada: a tipografia em Boska carrega o peso
+// visual, sobre uma superfície de vidro (blur + borda interna 1px + sombra
+// tintada) — dial "True glassmorphism" da skill de redesign, sem exagero de
+// blur (proibido pelo DESIGN_SYSTEM.md).
+// ---------------------------------------------------------------------------
+function TypographicGlassCard({ curso, whatsappNumber }: CourseCardProps) {
+  const categoriaLabel =
+    CATEGORIAS.find((cat) => cat.slug === curso.categoria)?.label ?? 'Curso';
+
+  const whatsappMsg = encodeURIComponent(
+    `Olá! Tenho interesse na Pós-Graduação em ${curso.nome}. Gostaria de mais informações.`
+  );
+  const whatsappHref = `https://wa.me/${whatsappNumber}?text=${whatsappMsg}`;
+
+  return (
+    <article
+      style={{
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        minHeight: '13rem',
+        padding: '1.5rem 1.375rem 1.25rem',
+        overflow: 'hidden',
+        borderRadius: '12px',
+        fontFamily: 'var(--font-body)',
+        background:
+          'radial-gradient(130% 100% at 100% 0%, rgba(51,184,184,0.09) 0%, transparent 60%), rgba(255,255,255,0.035)',
+        backdropFilter: 'blur(14px)',
+        WebkitBackdropFilter: 'blur(14px)',
+        border: '1px solid rgba(255,255,255,0.08)',
+        boxShadow:
+          'inset 0 1px 0 rgba(255,255,255,0.06), 0 2px 10px rgba(0,0,0,0.25)',
+        transition: 'border-color 0.24s ease, transform 0.24s ease, box-shadow 0.24s ease',
+      }}
+      onMouseEnter={(e) => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.borderColor = 'rgba(51,184,184,0.3)';
+        el.style.transform = 'translateY(-3px)';
+        el.style.boxShadow =
+          'inset 0 1px 0 rgba(255,255,255,0.09), 0 12px 28px rgba(12,97,97,0.22)';
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.borderColor = 'rgba(255,255,255,0.08)';
+        el.style.transform = 'translateY(0)';
+        el.style.boxShadow =
+          'inset 0 1px 0 rgba(255,255,255,0.06), 0 2px 10px rgba(0,0,0,0.25)';
+      }}
+    >
+      {/* Letra-fantasma decorativa — profundidade sem ícone genérico */}
+      <span
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          right: '-0.5rem',
+          bottom: '-1.4rem',
+          fontFamily: 'var(--font-display)',
+          fontSize: '6rem',
+          fontWeight: 700,
+          lineHeight: 1,
+          color: 'rgba(51,184,184,0.06)',
+          userSelect: 'none',
+          pointerEvents: 'none',
+        }}
+      >
+        {curso.nome.charAt(0)}
+      </span>
+
+      {/* Cabeçalho: eyebrow + badge EAD */}
+      <div
+        style={{
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '0.5rem',
+        }}
+      >
+        <span
+          style={{
+            fontSize: '0.68rem',
+            fontWeight: 600,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            color: 'var(--color-text-muted-on-dark)',
+          }}
+        >
+          {categoriaLabel}
+        </span>
+        <span
+          style={{
+            display: 'inline-flex',
+            padding: '0.2rem 0.6rem',
+            borderRadius: '4px',
+            background: 'rgba(51,184,184,0.12)',
+            border: '1px solid rgba(51,184,184,0.3)',
+            color: 'var(--cqp-teal)',
+            fontSize: '0.65rem',
+            fontWeight: 700,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+          }}
+        >
+          EAD
+        </span>
+      </div>
+
+      {/* Título expandido — carrega o peso visual do card (Design Text-First) */}
+      <h3
+        style={{
+          position: 'relative',
+          margin: '1.1rem 0 0',
+          fontFamily: 'var(--font-display)',
+          fontSize: 'clamp(1.15rem, 1.5vw, 1.45rem)',
+          fontWeight: 600,
+          lineHeight: 1.22,
+          letterSpacing: '-0.01em',
+          color: 'var(--color-text-inverse)',
+          textWrap: 'pretty' as React.CSSProperties['textWrap'],
+        }}
+      >
+        {curso.nome}
+      </h3>
+
+      {/* CTA WhatsApp */}
+      <a
+        href={whatsappHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Tenho interesse na Pós-Graduação em ${curso.nome} — falar pelo WhatsApp`}
+        style={{
+          position: 'relative',
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '0.45rem',
+          marginTop: '1.25rem',
+          padding: '0.65rem 1rem',
+          borderRadius: '8px',
+          background: 'var(--cqp-teal)',
+          color: 'var(--cqp-black)',
+          fontSize: '0.82rem',
+          fontWeight: 700,
+          textDecoration: 'none',
+          letterSpacing: '0.01em',
+          transition: 'background 0.18s ease',
+          width: '100%',
+        }}
+        onMouseEnter={(e) =>
+          ((e.currentTarget as HTMLAnchorElement).style.background = 'var(--cqp-teal-dark)')
+        }
+        onMouseLeave={(e) =>
+          ((e.currentTarget as HTMLAnchorElement).style.background = 'var(--cqp-teal)')
+        }
+        onFocus={(e) => {
+          (e.currentTarget as HTMLAnchorElement).style.background = 'var(--cqp-teal-dark)';
+          (e.currentTarget as HTMLAnchorElement).style.boxShadow =
+            '0 0 0 3px rgba(51,184,184,0.35)';
+        }}
+        onBlur={(e) => {
+          (e.currentTarget as HTMLAnchorElement).style.background = 'var(--cqp-teal)';
+          (e.currentTarget as HTMLAnchorElement).style.boxShadow = 'none';
+        }}
+      >
+        <IconWhatsApp />
+        Tenho interesse
+      </a>
     </article>
   );
 }
