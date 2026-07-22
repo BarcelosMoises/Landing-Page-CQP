@@ -109,6 +109,9 @@ export default function HeroSection({
     <>
       <style>{`
         /* Hero wrapper */
+        /* padding-top reserva o espaço da navbar fixa (68px + respiro) para
+           que a centralização vertical nunca empurre o texto para trás do
+           header — independente de quantas linhas o título/subtítulo ocupam. */
         .hero-section {
           position: relative;
           width: 100%;
@@ -117,6 +120,7 @@ export default function HeroSection({
           align-items: center;
           justify-content: center;
           overflow: hidden;
+          padding-top: 88px;
           background-color: var(--cqp-black);
         }
 
@@ -180,7 +184,17 @@ export default function HeroSection({
             max-width: 640px;
             margin-inline: 0 auto;
             padding-left: clamp(var(--space-6), 8vw, 6rem);
+            /* Bloco mais estreito quebra em mais linhas — compacta o
+               espaçamento vertical para caber com folga em telas de
+               notebook (1440x900 e menores) sem cortar o painel de stats. */
+            padding-block: var(--space-8);
+            gap: 0;
           }
+
+          .hero-badge   { margin-bottom: var(--space-4); }
+          .hero-heading { margin-bottom: var(--space-4); }
+          .hero-sub     { margin-bottom: var(--space-6); }
+          .hero-stats   { margin-top: var(--space-8); }
         }
 
         /* Eyebrow badge — quadrado, não pílula genérica */
