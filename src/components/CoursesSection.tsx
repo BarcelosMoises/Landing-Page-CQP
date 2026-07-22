@@ -10,6 +10,7 @@ import { TODOS_OS_CURSOS, buscarCursos, CATEGORIAS, type Curso } from '../../dat
 // ---------------------------------------------------------------------------
 interface CoursesSectionProps {
   whatsappNumber: string;
+  sectionId?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -301,7 +302,7 @@ function CourseCard({ curso, whatsappNumber }: CourseCardProps) {
 // ---------------------------------------------------------------------------
 // CoursesSection — Principal
 // ---------------------------------------------------------------------------
-export default function CoursesSection({ whatsappNumber }: CoursesSectionProps) {
+export default function CoursesSection({ whatsappNumber, sectionId = 'cursos' }: CoursesSectionProps) {
   const [activeTab, setActiveTab] = useState<string>('todos');
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query, 280);
@@ -339,7 +340,7 @@ export default function CoursesSection({ whatsappNumber }: CoursesSectionProps) 
 
   return (
     <section
-      id="cursos"
+      id={sectionId}
       aria-label="Catálogo de Cursos CQP"
       style={{
         position: 'relative',
