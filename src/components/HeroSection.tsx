@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { TOTAL_CURSOS } from '../../data/cursos';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -111,12 +112,12 @@ export default function HeroSection({
         .hero-section {
           position: relative;
           width: 100%;
-          min-height: 100svh;
+          min-height: 100dvh;
           display: flex;
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          background-color: var(--cqp-navy);
+          background-color: var(--cqp-black);
         }
 
         /* Subtle geometric grid pattern over the video */
@@ -143,22 +144,23 @@ export default function HeroSection({
           pointer-events: none;
         }
 
-        /* Dark overlay with depth gradient */
+        /* Dark overlay with depth gradient — tons de carbono, nunca navy/azul */
         .hero-overlay {
           position: absolute;
           inset: 0;
           z-index: 1;
           background:
-            radial-gradient(ellipse at 50% 0%, rgba(0, 18, 32, 0.55) 0%, transparent 60%),
+            radial-gradient(ellipse at 20% 0%, rgba(51, 184, 184, 0.10) 0%, transparent 55%),
             linear-gradient(
               to bottom,
-              rgba(0, 18, 32, 0.72) 0%,
-              rgba(0, 18, 32, 0.52) 50%,
-              rgba(0, 18, 32, 0.88) 100%
+              rgba(9, 10, 15, 0.74) 0%,
+              rgba(9, 10, 15, 0.55) 50%,
+              rgba(9, 10, 15, 0.92) 100%
             );
         }
 
-        /* Content */
+        /* Content — assimétrico: alinhado à esquerda em telas amplas,
+           centralizado apenas no mobile. Rompe o padrão "tudo centralizado". */
         .hero-content {
           position: relative;
           z-index: 10;
@@ -171,7 +173,17 @@ export default function HeroSection({
           margin-inline: auto;
         }
 
-        /* Eyebrow badge */
+        @media (min-width: 900px) {
+          .hero-content {
+            align-items: flex-start;
+            text-align: left;
+            max-width: 640px;
+            margin-inline: 0 auto;
+            padding-left: clamp(var(--space-6), 8vw, 6rem);
+          }
+        }
+
+        /* Eyebrow badge — quadrado, não pílula genérica */
         .hero-badge {
           display: inline-flex;
           align-items: center;
@@ -183,7 +195,7 @@ export default function HeroSection({
           text-transform: uppercase;
           color: var(--cqp-teal);
           border: 1px solid oklch(from var(--cqp-teal) l c h / 0.35);
-          border-radius: 9999px;
+          border-radius: 4px;
           padding: 0.3rem 0.9rem;
           margin-bottom: var(--space-6);
           background: rgba(51, 184, 184, 0.08);
@@ -246,28 +258,32 @@ export default function HeroSection({
           margin-bottom: var(--space-8);
         }
 
-        /* CTA group */
+        /* CTA group — assimétrico, alinhado com o texto acima */
         .hero-cta {
           display: flex;
           flex-wrap: wrap;
-          gap: var(--space-4);
+          gap: var(--space-6);
           justify-content: center;
           align-items: center;
         }
 
-        /* Primary CTA */
+        @media (min-width: 900px) {
+          .hero-cta { justify-content: flex-start; }
+        }
+
+        /* Primary CTA — único botão preenchido da seção */
         .hero-btn-primary {
           display: inline-flex;
           align-items: center;
           gap: 0.5rem;
           padding: 0.875rem 1.75rem;
           background: var(--cqp-teal);
-          color: #fff;
+          color: var(--cqp-black);
           font-family: var(--font-body);
           font-weight: 700;
           font-size: var(--text-sm);
           border: none;
-          border-radius: 9999px;
+          border-radius: 8px;
           text-decoration: none;
           cursor: pointer;
           transition: background 200ms var(--ease-out-expo),
@@ -276,45 +292,74 @@ export default function HeroSection({
           box-shadow: var(--shadow-cta);
         }
 
-        .hero-btn-primary:hover,
-        .hero-btn-primary:focus-visible {
+        .hero-btn-primary:hover {
           background: var(--cqp-teal-dark);
+          color: #fff;
           box-shadow: 0 8px 32px rgba(51, 184, 184, 0.5);
           transform: translateY(-2px);
+        }
+
+        .hero-btn-primary:focus-visible {
+          outline: 2px solid var(--cqp-teal-light);
+          outline-offset: 3px;
         }
 
         .hero-btn-primary:active {
           transform: translateY(0);
         }
 
-        /* Secondary CTA — ghost */
-        .hero-btn-secondary {
+        /* Secondary CTA — link de texto com sublinhado animado.
+           Substitui o clichê "botão ghost ao lado do botão preenchido". */
+        .hero-link-secondary {
           display: inline-flex;
           align-items: center;
-          gap: 0.5rem;
-          padding: 0.875rem 1.75rem;
-          background: transparent;
+          gap: 0.4rem;
+          background: none;
           color: rgba(255, 255, 255, 0.85);
           font-family: var(--font-body);
           font-weight: 600;
           font-size: var(--text-sm);
-          border: 1px solid rgba(255, 255, 255, 0.25);
-          border-radius: 9999px;
           text-decoration: none;
           cursor: pointer;
-          transition: border-color 200ms var(--ease-out-expo),
-                      color 200ms var(--ease-out-expo),
-                      background 200ms var(--ease-out-expo);
+          padding: 0.5rem 0.1rem;
+          position: relative;
+          transition: color 200ms var(--ease-out-expo), gap 200ms var(--ease-out-expo);
         }
 
-        .hero-btn-secondary:hover,
-        .hero-btn-secondary:focus-visible {
-          border-color: var(--cqp-teal);
+        .hero-link-secondary::after {
+          content: '';
+          position: absolute;
+          left: 0.1rem;
+          bottom: 0.3rem;
+          width: calc(100% - 0.2rem);
+          height: 1px;
+          background: currentColor;
+          opacity: 0.35;
+          transform: scaleX(0.7);
+          transform-origin: left;
+          transition: transform 240ms var(--ease-out-expo), opacity 240ms var(--ease-out-expo);
+        }
+
+        .hero-link-secondary:hover,
+        .hero-link-secondary:focus-visible {
           color: var(--cqp-teal);
-          background: rgba(51, 184, 184, 0.08);
+          gap: 0.6rem;
         }
 
-        /* Stats row — cohesive translucent panel */
+        .hero-link-secondary:hover::after,
+        .hero-link-secondary:focus-visible::after {
+          transform: scaleX(1);
+          opacity: 0.7;
+        }
+
+        .hero-link-secondary:focus-visible {
+          outline: 2px solid var(--cqp-teal-light);
+          outline-offset: 4px;
+          border-radius: 2px;
+        }
+
+        /* Stats row — painel em tom carbono (nunca slate/navy), com borda
+           interna de refração para um glassmorphism real. */
         .hero-stats {
           display: inline-flex;
           flex-wrap: wrap;
@@ -322,12 +367,18 @@ export default function HeroSection({
           justify-content: center;
           margin-top: var(--space-12);
           padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1.25rem, 3vw, 2.25rem);
-          background: rgba(15, 23, 42, 0.5);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 9999px;
-          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+          background: rgba(18, 20, 28, 0.6);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border: 1px solid rgba(51, 184, 184, 0.14);
+          border-radius: 12px;
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.05),
+            0 16px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (min-width: 900px) {
+          .hero-stats { margin-inline: 0; }
         }
 
         .hero-stat {
@@ -345,6 +396,7 @@ export default function HeroSection({
           color: var(--cqp-teal);
           line-height: 1;
           letter-spacing: -0.03em;
+          font-variant-numeric: tabular-nums;
         }
 
         .hero-stat-label {
@@ -382,9 +434,15 @@ export default function HeroSection({
           padding: var(--space-4);
         }
 
-        .hero-scroll-btn:hover,
+        .hero-scroll-btn:hover {
+          color: var(--cqp-teal);
+        }
+
         .hero-scroll-btn:focus-visible {
           color: var(--cqp-teal);
+          outline: 2px solid var(--cqp-teal-light);
+          outline-offset: 3px;
+          border-radius: 4px;
         }
 
         .hero-scroll-btn svg {
@@ -490,7 +548,7 @@ export default function HeroSection({
               Fale pelo WhatsApp
             </a>
 
-            <a href={`#${scrollTargetId}`} className="hero-btn-secondary">
+            <a href={`#${scrollTargetId}`} className="hero-link-secondary">
               Conheça os cursos
               <svg
                 width="16"
@@ -509,7 +567,7 @@ export default function HeroSection({
           {/* Stats row */}
           <div ref={statsRef} className="hero-stats" role="list" aria-label="Números do CQP">
             <div className="hero-stat" role="listitem">
-              <span className="hero-stat-value">+150</span>
+              <span className="hero-stat-value">+{TOTAL_CURSOS}</span>
               <span className="hero-stat-label">Cursos</span>
             </div>
             <div className="hero-stat-divider" aria-hidden="true" />
