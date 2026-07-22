@@ -109,9 +109,6 @@ export default function HeroSection({
     <>
       <style>{`
         /* Hero wrapper */
-        /* padding-top reserva o espaço da navbar fixa (68px + respiro) para
-           que a centralização vertical nunca empurre o texto para trás do
-           header — independente de quantas linhas o título/subtítulo ocupam. */
         .hero-section {
           position: relative;
           width: 100%;
@@ -120,7 +117,6 @@ export default function HeroSection({
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          padding-top: 88px;
           background-color: var(--cqp-black);
         }
 
@@ -163,8 +159,9 @@ export default function HeroSection({
             );
         }
 
-        /* Content — assimétrico: alinhado à esquerda em telas amplas,
-           centralizado apenas no mobile. Rompe o padrão "tudo centralizado". */
+        /* Content — centralizado. Um hero full-bleed com vídeo de fundo já
+           fornece movimento/assimetria própria; a quebra de simetria da
+           skill de redesign foi aplicada em outra seção mais adequada. */
         .hero-content {
           position: relative;
           z-index: 10;
@@ -175,26 +172,6 @@ export default function HeroSection({
           padding: var(--space-16) var(--space-6);
           max-width: 900px;
           margin-inline: auto;
-        }
-
-        @media (min-width: 900px) {
-          .hero-content {
-            align-items: flex-start;
-            text-align: left;
-            max-width: 640px;
-            margin-inline: 0 auto;
-            padding-left: clamp(var(--space-6), 8vw, 6rem);
-            /* Bloco mais estreito quebra em mais linhas — compacta o
-               espaçamento vertical para caber com folga em telas de
-               notebook (1440x900 e menores) sem cortar o painel de stats. */
-            padding-block: var(--space-8);
-            gap: 0;
-          }
-
-          .hero-badge   { margin-bottom: var(--space-4); }
-          .hero-heading { margin-bottom: var(--space-4); }
-          .hero-sub     { margin-bottom: var(--space-6); }
-          .hero-stats   { margin-top: var(--space-8); }
         }
 
         /* Eyebrow badge — quadrado, não pílula genérica */
@@ -279,10 +256,6 @@ export default function HeroSection({
           gap: var(--space-6);
           justify-content: center;
           align-items: center;
-        }
-
-        @media (min-width: 900px) {
-          .hero-cta { justify-content: flex-start; }
         }
 
         /* Primary CTA — único botão preenchido da seção */
@@ -389,10 +362,6 @@ export default function HeroSection({
           box-shadow:
             inset 0 1px 0 rgba(255, 255, 255, 0.05),
             0 16px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        @media (min-width: 900px) {
-          .hero-stats { margin-inline: 0; }
         }
 
         .hero-stat {
