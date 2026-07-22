@@ -87,8 +87,10 @@ interface CourseCardProps {
 }
 
 function CourseCard({ curso, whatsappNumber }: CourseCardProps) {
-  const isPosGrad = curso.categoria === 'pos-graduacao';
+  const isPosGrad = curso.categoria === 'pos-graduacoes';
   const hasImage = Boolean(curso.imagem);
+  const categoriaLabel =
+    CATEGORIAS.find((cat) => cat.slug === curso.categoria)?.label ?? 'Curso';
 
   const whatsappMsg = encodeURIComponent(
     `Olá! Tenho interesse no curso: ${curso.nome}. Gostaria de mais informações.`
@@ -119,7 +121,7 @@ function CourseCard({ curso, whatsappNumber }: CourseCardProps) {
         (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
       }}
     >
-      {/* ── Imagem ou bloco text-first para pós-graduação ── */}
+      {/* ── Imagem (cursos com foto) ou painel tipográfico (pós-graduação, sem imagem) ── */}
       {hasImage ? (
         <div style={{ aspectRatio: '16/9', overflow: 'hidden', flexShrink: 0 }}>
           <img
@@ -135,19 +137,57 @@ function CourseCard({ curso, whatsappNumber }: CourseCardProps) {
           />
         </div>
       ) : (
-        // Text-first block (pós-graduações / cursos sem imagem)
+        // Painel tipográfico — substitui o placeholder vazio das pós-graduações.
+        // Sem ícones genéricos (chapéu de formatura etc.); a categoria vira uma
+        // letra-fantasma em Boska com opacidade baixa + textura radial sutil,
+        // dando profundidade ao card sem recorrer a glassmorphism/blur.
         <div
+          aria-hidden="true"
           style={{
-            padding: '1.25rem 1.25rem 0',
+            position: 'relative',
+            padding: '1.5rem 1.25rem 1.25rem',
             display: 'flex',
             flexDirection: 'column',
-            gap: '0.5rem',
+            justifyContent: 'space-between',
+            minHeight: '7.5rem',
+            overflow: 'hidden',
+            background:
+              'radial-gradient(120% 140% at 100% 0%, rgba(51,184,184,0.10) 0%, transparent 55%), var(--cqp-carbon)',
+            borderBottom: '1px solid var(--color-border)',
           }}
         >
-          {/* Badge EAD obrigatório para pós-graduação */}
+          <span
+            style={{
+              position: 'absolute',
+              right: '-0.35rem',
+              bottom: '-1.1rem',
+              fontFamily: 'var(--font-display)',
+              fontSize: '4.5rem',
+              fontWeight: 700,
+              lineHeight: 1,
+              color: 'rgba(51,184,184,0.07)',
+              userSelect: 'none',
+              pointerEvents: 'none',
+            }}
+          >
+            {curso.nome.charAt(0)}
+          </span>
+          <span
+            style={{
+              position: 'relative',
+              fontSize: '0.7rem',
+              fontWeight: 600,
+              letterSpacing: '0.06em',
+              color: 'var(--color-text-muted-on-dark)',
+              fontFamily: 'var(--font-body)',
+            }}
+          >
+            {categoriaLabel}
+          </span>
           {isPosGrad && (
             <span
               style={{
+                position: 'relative',
                 display: 'inline-flex',
                 alignSelf: 'flex-start',
                 padding: '0.2rem 0.6rem',
@@ -178,28 +218,6 @@ function CourseCard({ curso, whatsappNumber }: CourseCardProps) {
           gap: '0.75rem',
         }}
       >
-        {/* Badge EAD no topo quando há imagem (pós-grad) */}
-        {hasImage && isPosGrad && (
-          <span
-            style={{
-              display: 'inline-flex',
-              alignSelf: 'flex-start',
-              padding: '0.2rem 0.6rem',
-              borderRadius: '4px',
-              background: 'rgba(51,184,184,0.12)',
-              border: '1px solid rgba(51,184,184,0.3)',
-              color: 'var(--cqp-teal)',
-              fontSize: '0.65rem',
-              fontWeight: 700,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              fontFamily: 'var(--font-body)',
-            }}
-          >
-            EAD
-          </span>
-        )}
-
         {/* Título */}
         <h3
           style={{
@@ -209,6 +227,7 @@ function CourseCard({ curso, whatsappNumber }: CourseCardProps) {
             lineHeight: 1.35,
             color: 'var(--color-text-inverse)',
             fontFamily: 'var(--font-body)',
+            textWrap: 'pretty' as React.CSSProperties['textWrap'],
           }}
         >
           {curso.nome}
@@ -261,12 +280,15 @@ function CourseCard({ curso, whatsappNumber }: CourseCardProps) {
           onMouseLeave={(e) =>
             ((e.currentTarget as HTMLAnchorElement).style.background = 'var(--cqp-teal)')
           }
-          onFocus={(e) =>
-            ((e.currentTarget as HTMLAnchorElement).style.background = 'var(--cqp-teal-dark)')
-          }
-          onBlur={(e) =>
-            ((e.currentTarget as HTMLAnchorElement).style.background = 'var(--cqp-teal)')
-          }
+          onFocus={(e) => {
+            (e.currentTarget as HTMLAnchorElement).style.background = 'var(--cqp-teal-dark)';
+            (e.currentTarget as HTMLAnchorElement).style.boxShadow =
+              '0 0 0 3px rgba(51,184,184,0.35)';
+          }}
+          onBlur={(e) => {
+            (e.currentTarget as HTMLAnchorElement).style.background = 'var(--cqp-teal)';
+            (e.currentTarget as HTMLAnchorElement).style.boxShadow = 'none';
+          }}
         >
           <IconWhatsApp />
           Tenho interesse
@@ -320,12 +342,15 @@ export default function CoursesSection({ whatsappNumber }: CoursesSectionProps) 
       id="cursos"
       aria-label="Catálogo de Cursos CQP"
       style={{
-        background: 'var(--cqp-black)',
+        position: 'relative',
+        background:
+          'radial-gradient(70% 60% at 15% 0%, rgba(51,184,184,0.06) 0%, transparent 60%), var(--cqp-black)',
         padding: 'clamp(4rem, 8vw, 7rem) clamp(1rem, 5vw, 2rem)',
+        overflow: 'hidden',
       }}
     >
       {/* ── Máximo de largura ── */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative' }}>
 
         {/* ── Cabeçalho da Seção ── */}
         <header style={{ marginBottom: 'clamp(2rem, 4vw, 3rem)' }}>
@@ -350,6 +375,7 @@ export default function CoursesSection({ whatsappNumber }: CoursesSectionProps) 
               lineHeight: 1.1,
               color: 'var(--color-text-inverse)',
               fontFamily: 'var(--font-display)',
+              textWrap: 'balance' as React.CSSProperties['textWrap'],
             }}
           >
             Encontre o curso<br />
@@ -363,6 +389,7 @@ export default function CoursesSection({ whatsappNumber }: CoursesSectionProps) 
               color: 'var(--color-text-muted-on-dark)',
               lineHeight: 1.65,
               fontFamily: 'var(--font-body)',
+              textWrap: 'pretty' as React.CSSProperties['textWrap'],
             }}
           >
             Do técnico à pós-graduação — presencial, EAD e híbrido.
@@ -412,12 +439,14 @@ export default function CoursesSection({ whatsappNumber }: CoursesSectionProps) 
               boxSizing: 'border-box',
               transition: 'border-color 0.18s ease',
             }}
-            onFocus={(e) =>
-              ((e.target as HTMLInputElement).style.borderColor = 'rgba(51,184,184,0.5)')
-            }
-            onBlur={(e) =>
-              ((e.target as HTMLInputElement).style.borderColor = 'var(--color-border)')
-            }
+            onFocus={(e) => {
+              (e.target as HTMLInputElement).style.borderColor = 'rgba(51,184,184,0.5)';
+              (e.target as HTMLInputElement).style.boxShadow = '0 0 0 3px rgba(51,184,184,0.25)';
+            }}
+            onBlur={(e) => {
+              (e.target as HTMLInputElement).style.borderColor = 'var(--color-border)';
+              (e.target as HTMLInputElement).style.boxShadow = 'none';
+            }}
           />
           {query && (
             <button
@@ -496,6 +525,13 @@ export default function CoursesSection({ whatsappNumber }: CoursesSectionProps) 
                         'var(--color-text-muted-on-dark)';
                     }
                   }}
+                  onFocus={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.boxShadow =
+                      '0 0 0 3px rgba(51,184,184,0.35)';
+                  }}
+                  onBlur={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.boxShadow = 'none';
+                  }}
                 >
                   {tab.label}
                   <span
@@ -503,6 +539,7 @@ export default function CoursesSection({ whatsappNumber }: CoursesSectionProps) 
                       fontSize: '0.7rem',
                       fontWeight: 600,
                       opacity: 0.75,
+                      fontVariantNumeric: 'tabular-nums',
                     }}
                   >
                     ({tab.count})
@@ -526,7 +563,7 @@ export default function CoursesSection({ whatsappNumber }: CoursesSectionProps) 
         >
           {debouncedQuery ? (
             <>
-              <strong style={{ color: 'var(--color-text-inverse)' }}>
+              <strong style={{ color: 'var(--color-text-inverse)', fontVariantNumeric: 'tabular-nums' }}>
                 {filteredCourses.length}
               </strong>{' '}
               resultado{filteredCourses.length !== 1 ? 's' : ''} para{' '}
@@ -534,7 +571,7 @@ export default function CoursesSection({ whatsappNumber }: CoursesSectionProps) 
             </>
           ) : (
             <>
-              <strong style={{ color: 'var(--color-text-inverse)' }}>
+              <strong style={{ color: 'var(--color-text-inverse)', fontVariantNumeric: 'tabular-nums' }}>
                 {filteredCourses.length}
               </strong>{' '}
               curso{filteredCourses.length !== 1 ? 's' : ''} encontrado
@@ -625,6 +662,13 @@ export default function CoursesSection({ whatsappNumber }: CoursesSectionProps) 
               onMouseLeave={(e) =>
                 ((e.currentTarget as HTMLAnchorElement).style.background = 'var(--cqp-teal)')
               }
+              onFocus={(e) => {
+                (e.currentTarget as HTMLAnchorElement).style.boxShadow =
+                  '0 0 0 3px rgba(51,184,184,0.35)';
+              }}
+              onBlur={(e) => {
+                (e.currentTarget as HTMLAnchorElement).style.boxShadow = 'none';
+              }}
             >
               <IconWhatsApp />
               Falar com um consultor
@@ -694,6 +738,13 @@ export default function CoursesSection({ whatsappNumber }: CoursesSectionProps) 
             onMouseLeave={(e) =>
               ((e.currentTarget as HTMLAnchorElement).style.background = 'var(--cqp-teal)')
             }
+            onFocus={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.boxShadow =
+                '0 0 0 3px rgba(51,184,184,0.35)';
+            }}
+            onBlur={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.boxShadow = 'none';
+            }}
           >
             <IconWhatsApp />
             Falar com um consultor agora
